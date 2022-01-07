@@ -9,6 +9,6 @@ public class User : IdentityUser
 
     public User()
     {
-        UserInfo = new(Id);
+        UserInfo = new(Id, UserName, PhoneNumber);
     }
 }

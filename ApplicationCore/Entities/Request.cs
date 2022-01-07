@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApplicationCore.Entities;
 
@@ -11,6 +12,9 @@ public abstract class Request : BaseEntity
     [MaxLength(64)] public string ContactName { get; set; }
     public string DeparturePlace { get; set; }
     public string DestinationPlace { get; set; }
+
+    [Column(TypeName = "decimal(10, 2)")]
+    [Range(0, 10000000)] public decimal? Price { get; set; }
     [MaxLength(512)] public string? Details { get; set; }
 
     public Request(string userId, string contactPhoneNumber, string contactName,

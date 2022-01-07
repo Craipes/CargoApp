@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApplicationCore.Entities;
 
-public class CargoResponse : BaseEntity
+public class CargoResponse
 {
     public int CargoRequestId { get; set; }
     public CargoRequest? CargoRequest { get; set; }
 
     //Check
-    public string? SenderId { get; set; }
+    public string SenderId { get; set; }
     public UserInfo? Sender { get; set; }
 
     [Column(TypeName = "decimal(6, 3)")]
@@ -28,4 +28,10 @@ public class CargoResponse : BaseEntity
     [Range(0.0010f, 50000f)] public float? CargoVolume { get; set; }
 
     [MaxLength(512)] public string? Comment { get; set; }
+
+    public CargoResponse(int cargoRequestId, string senderId)
+    {
+        CargoRequestId = cargoRequestId;
+        SenderId = senderId;
+    }
 }
