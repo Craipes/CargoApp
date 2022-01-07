@@ -5,9 +5,9 @@ namespace ApplicationCore.Entities;
 
 public class UserInfo
 {
-    public string Id { get; set; }
-    [MaxLength(256)] public string UserName { get; set; }
-    [Phone] public string PhoneNumber { get; set; }
+    public string Id { get; set; } = null!;
+    [MaxLength(64)] public string Name { get; set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
     [Phone] public string? DefaultPhoneNumber { get; set; }
 
     [Column(TypeName = "decimal(3, 2)")]
@@ -23,10 +23,8 @@ public class UserInfo
     public List<CargoResponse> CargoResponses { get; set; } = new();
 
 
-    public UserInfo(string id, string userName, string phoneNumber)
+    public UserInfo(string id)
     {
         Id = id;
-        UserName = userName;
-        PhoneNumber = phoneNumber;
     }
 }

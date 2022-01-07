@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<CargoAppContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DebugConnection")));
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DebugConnection"));
+    options.EnableSensitiveDataLogging();
+});
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {

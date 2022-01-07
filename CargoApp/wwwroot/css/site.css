@@ -16,3 +16,17 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.main-search-box {
+    border-radius: 10%;
+}
+
+.main-search-box-left {
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
+}
+
+.main-search-box-right {
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+}

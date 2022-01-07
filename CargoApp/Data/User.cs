@@ -9,6 +9,17 @@ public class User : IdentityUser
 
     public User()
     {
-        UserInfo = new(Id, UserName, PhoneNumber);
+        UserInfo = new(Id);
+    }
+
+    public void SetInfo(string name)
+    {
+        UserInfo.Name = name;
+        UserInfo.PhoneNumber = PhoneNumber;
+    }
+
+    public void UpdateUserInfo()
+    {
+        UserInfo.PhoneNumber = PhoneNumber;
     }
 }

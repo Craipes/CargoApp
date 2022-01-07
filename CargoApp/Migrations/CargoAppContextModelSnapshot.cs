@@ -281,6 +281,11 @@ namespace CargoApp.Migrations
                     b.Property<string>("DefaultPhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .ValueGeneratedOnUpdateSometimes()
@@ -292,13 +297,6 @@ namespace CargoApp.Migrations
 
                     b.Property<int>("ReviewsCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("UserName");
 
                     b.HasKey("Id");
 
@@ -342,6 +340,7 @@ namespace CargoApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("PhoneNumber");
@@ -356,10 +355,8 @@ namespace CargoApp.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .ValueGeneratedOnUpdateSometimes()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("UserName");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -372,8 +369,7 @@ namespace CargoApp.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("PhoneNumber")
-                        .IsUnique()
-                        .HasFilter("[PhoneNumber] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Users", (string)null);
                 });
