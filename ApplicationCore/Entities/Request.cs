@@ -13,6 +13,7 @@ public abstract class Request : BaseEntity
     public string DeparturePlace { get; set; }
     public string DestinationPlace { get; set; }
 
+    [DataType(DataType.Currency)]
     [Column(TypeName = "decimal(10, 2)")]
     [Range(0, 10000000)] public decimal? Price { get; set; }
     [MaxLength(512)] public string? Details { get; set; }

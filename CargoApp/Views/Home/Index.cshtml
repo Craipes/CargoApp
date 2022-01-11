@@ -1,14 +1,56 @@
-﻿@{
+﻿@model IndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center main-search-box">
-    <div class="d-flex justify-content-between">
-        <div class="w-100 main-search-box-left bg-primary">
-            <h4>I need a driver</h4>
+<div class="text-center main-search-box shadow mx-auto w-75">
+    <div class="d-flex">
+        <div class="main-search-box-left w-50 bg-primary text-white">
+            <span class="fs-3">I need a driver</span>
         </div>
-        <div class="w-100 main-search-box-right">
-            <h4>I need a cargo</h4>
+        <div class="main-search-box-right w-50">
+            <span class="fs-3">I need a cargo</span>
+        </div>
+    </div>
+    <div class="p-3">
+        <div>
+            <form method="post" asp-action="CarRequest" asp-controller="Home">
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CarRequest.ContactPhoneNumber>Contact phone</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CarRequest.ContactPhoneNumber />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CarRequest.ContactName>Contact name</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CarRequest.ContactName />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CarRequest.DeparturePlace>Departure place</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CarRequest.DeparturePlace />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CarRequest.DestinationPlace>Destination place</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CarRequest.DestinationPlace />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CarRequest.Price>Price</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CarRequest.Price />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-center" asp-for=CarRequest.Details>Details</label>
+                    <textarea class="form-control" asp-for=CarRequest.Details rows="4"></textarea>
+                </div>
+                @*<hr />*@
+            </form>
         </div>
     </div>
 </div>

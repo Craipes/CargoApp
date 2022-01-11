@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Models;
 using CargoApp.Data;
+using CargoApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            User user = new() { PhoneNumber = model.PhoneNumber, UserName = model.PhoneNumber };
+            User user = new() { PhoneNumber = model.PhoneNumber, UserName = model.Name };
             user.SetInfo(model.Name);
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -51,10 +52,14 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await signInManager.PasswordSignInAsync(model.PhoneNumber, model.Password, model.RememberMe, false);
-            if (result.Succeeded)
+            var user = await userManager.FindByPhoneAsync(model.PhoneNumber);
+            if (user != null)
             {
-                return RedirectToAction("Index", "Home");
+                var result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
         }
         return View(model);

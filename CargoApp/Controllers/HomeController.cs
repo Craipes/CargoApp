@@ -1,4 +1,4 @@
-﻿using CargoApp.Models;
+﻿using CargoApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
