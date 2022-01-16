@@ -1,6 +1,11 @@
 using CargoApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using StreetRegister;
+
+//XmlDataExtractor localityExtractor = new("D://UA_DB.xml");
+//localityExtractor.AddDistinct();
+//localityExtractor.RunAndSave("D://UA_DB_EXTRACTOR.xml");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +20,8 @@ builder.Services.AddDbContext<CargoAppContext>(options =>
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
+    options.User.AllowedUserNameCharacters = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+àáâã´äåºæçè³¿éêëìíîïğñòóôõö÷øùüşÿ¸ıúûÀÁÂÃ¥ÄÅªÆÇÈ²¯ÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÜŞß¨İÚÛ";
+
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireDigit = false;
@@ -46,5 +53,23 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//Seeding db
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    try
+    {
+        UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
+        CargoAppContext context = services.GetRequiredService<CargoAppContext>();
+        await CargoAppContextSeed.SeedAsync(userManager, context);
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "An error occurred seeding the DB.");
+    }
+}
 
 app.Run();

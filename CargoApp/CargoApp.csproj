@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
+    <ProjectReference Include="..\StreetRegister\StreetRegister.csproj" />
   </ItemGroup>
 
   <ItemGroup>

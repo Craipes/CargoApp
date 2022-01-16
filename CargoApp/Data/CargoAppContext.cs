@@ -1,7 +1,7 @@
 ﻿using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
+using StreetRegister.Models;
 
 namespace CargoApp.Data;
 
@@ -14,6 +14,8 @@ public class CargoAppContext : IdentityDbContext<User>
     public DbSet<CargoRequest> CargoRequests { get; set; } = null!;
     public DbSet<CargoResponse> CargoResponses { get; set; } = null!;
 
+    public DbSet<Locality> Localities { get; set; } = null!;
+
     public CargoAppContext(DbContextOptions<CargoAppContext> options) : base(options)
     {
         Database.EnsureCreated();
@@ -23,6 +25,7 @@ public class CargoAppContext : IdentityDbContext<User>
     {
         base.OnModelCreating(builder);
 
+        //Base options
         builder.Entity<Review>()
             .HasOne(r => r.Receiver)
             .WithMany(r => r.ReviewsReceived)
