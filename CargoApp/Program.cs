@@ -1,6 +1,7 @@
 using CargoApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using StreetRegister;
 
 //XmlDataExtractor localityExtractor = new("D://UA_DB.xml");
@@ -32,6 +33,11 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     .AddEntityFrameworkStores<CargoAppContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "CargoApp", Version = "v1" });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,6 +46,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CargoApp"));
 }
 
 app.UseHttpsRedirection();
@@ -63,7 +74,7 @@ using (var scope = app.Services.CreateScope())
     {
         UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
         CargoAppContext context = services.GetRequiredService<CargoAppContext>();
-        await CargoAppContextSeed.SeedAsync(userManager, context);
+        //await CargoAppContextSeed.SeedAsync(userManager, context, true, "D://UA_DB_EXTRACTOR.xml");
     }
     catch (Exception ex)
     {

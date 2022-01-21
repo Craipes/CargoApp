@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoApp.Migrations
 {
     [DbContext(typeof(CargoAppContext))]
-    [Migration("20220116203812_LocalitiesAdded")]
-    partial class LocalitiesAdded
+    [Migration("20220118201259_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

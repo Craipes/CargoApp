@@ -20,4 +20,6 @@ public class Locality
         CityRegion = cityRegion;
         StreetName = streetName;
     }
+
+    public string GetFull() => string.Join(" ", Region, District, City, CityRegion, StreetName);
 }

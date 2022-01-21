@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoApp.Migrations
 {
     [DbContext(typeof(CargoAppContext))]
-    [Migration("20220107125412_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220118201327_LocalitiesIndexesAdded")]
+    partial class LocalitiesIndexesAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -507,6 +507,52 @@ namespace CargoApp.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("StreetRegister.Models.Locality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CityRegion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("District")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("City");
+
+                    b.HasIndex("CityRegion");
+
+                    b.HasIndex("District");
+
+                    b.HasIndex("Region");
+
+                    b.HasIndex("StreetName");
+
+                    b.ToTable("Localities");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Car", b =>

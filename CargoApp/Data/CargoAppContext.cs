@@ -18,7 +18,7 @@ public class CargoAppContext : IdentityDbContext<User>
 
     public CargoAppContext(DbContextOptions<CargoAppContext> options) : base(options)
     {
-        Database.EnsureCreated();
+        //Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -83,6 +83,15 @@ public class CargoAppContext : IdentityDbContext<User>
             user.Property(u => u.PhoneNumber).IsRequired().HasColumnName("PhoneNumber");
 
             user.ToTable("Users");
+        });
+
+        builder.Entity<Locality>(locality =>
+        {
+            locality.HasIndex(l => l.Region);
+            locality.HasIndex(l => l.District);
+            locality.HasIndex(l => l.City);
+            locality.HasIndex(l => l.CityRegion);
+            locality.HasIndex(l => l.StreetName);
         });
     }
 }

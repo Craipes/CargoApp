@@ -24,6 +24,24 @@ namespace CargoApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Localities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CityRegion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StreetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsVisible = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Localities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -447,6 +465,9 @@ namespace CargoApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "CarResponses");
+
+            migrationBuilder.DropTable(
+                name: "Localities");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
