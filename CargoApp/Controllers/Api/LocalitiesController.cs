@@ -20,11 +20,12 @@ namespace CargoApp.Controllers.Api
         {
             if (search != null)
             {
-                var result = db.Localities
+                var result = db.Settlements
                     .AsNoTracking()
                     .Where(l => (l.Region + " " + l.District + " " +
-                    l.City + " " + l.CityRegion + " " + l.StreetName).Contains(search))
-                    //.Where(l => l.City.Contains(search))
+                    l.City + " " + l.CityRegion).Contains(search))
+                    //.Where(l => (l.Region.StartsWith(search)) || l.District.StartsWith(search)
+                    //    || l.City.StartsWith(search) || l.CityRegion.StartsWith(search))
                     .Take(10)
                     .Select(l => l.GetFull());
 

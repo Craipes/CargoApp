@@ -74,7 +74,7 @@ using (var scope = app.Services.CreateScope())
     {
         UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
         CargoAppContext context = services.GetRequiredService<CargoAppContext>();
-        //await CargoAppContextSeed.SeedAsync(userManager, context, true, "D://UA_DB_EXTRACTOR.xml");
+        await CargoAppContextSeed.SeedAsync(userManager, context/*, true, "D://UA_DB_EXTRACTOR.xml"*/);
     }
     catch (Exception ex)
     {

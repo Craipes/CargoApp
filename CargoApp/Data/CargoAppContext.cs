@@ -14,7 +14,7 @@ public class CargoAppContext : IdentityDbContext<User>
     public DbSet<CargoRequest> CargoRequests { get; set; } = null!;
     public DbSet<CargoResponse> CargoResponses { get; set; } = null!;
 
-    public DbSet<Locality> Localities { get; set; } = null!;
+    public DbSet<Settlement> Settlements { get; set; } = null!;
 
     public CargoAppContext(DbContextOptions<CargoAppContext> options) : base(options)
     {
@@ -85,13 +85,12 @@ public class CargoAppContext : IdentityDbContext<User>
             user.ToTable("Users");
         });
 
-        builder.Entity<Locality>(locality =>
+        builder.Entity<Settlement>(locality =>
         {
             locality.HasIndex(l => l.Region);
             locality.HasIndex(l => l.District);
             locality.HasIndex(l => l.City);
             locality.HasIndex(l => l.CityRegion);
-            locality.HasIndex(l => l.StreetName);
         });
     }
 }

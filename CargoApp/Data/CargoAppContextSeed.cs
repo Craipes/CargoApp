@@ -15,7 +15,10 @@ public static class CargoAppContextSeed
         if (seedLocalities && localitiesPath != null)
         {
             XmlDataExtractor extractor = new(localitiesPath);
-            context.Localities.AddRange(extractor.RunAndGet());
+            extractor.AddDistinct();
+            context.Settlements.RemoveRange(context.Settlements);
+            context.Settlements.AddRange(extractor.RunAndGet());
+            //extractor.RunAndSave("D://UA_DB_SETTLEMENTS.xml");
             await context.SaveChangesAsync();
         }
     }

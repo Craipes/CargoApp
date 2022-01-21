@@ -1,4 +1,5 @@
 ﻿using StreetRegister.Models;
+using System.Linq;
 using System.Xml;
 
 namespace StreetRegister;
@@ -17,16 +18,15 @@ public class XmlDataExtractor
         extractActions = LoadXml;
     }
 
-    public IEnumerable<Locality> RunAndGet()
+    public IEnumerable<Settlement> RunAndGet()
     {
         extractActions();
-        return query.Select(s => new Locality
+        return query.Select(s => new Settlement
         (
             s["OBL_NAME"]!.InnerText,
             s["REGION_NAME"]!.InnerText,
             s["CITY_NAME"]!.InnerText,
-            s["CITY_REGION_NAME"]!.InnerText,
-            s["STREET_NAME"]!.InnerText
+            s["CITY_REGION_NAME"]!.InnerText
         ));
     }
 
@@ -52,6 +52,12 @@ public class XmlDataExtractor
         if (dataRoot != null)
         {
             query = dataRoot.ChildNodes.Cast<XmlNode>();
+            foreach (var node in query)
+            {
+                node.RemoveChild(node.ChildNodes[^1]!);
+            }
+            //query = dataRoot.ChildNodes.Cast<XmlNode>()
+            //    .Where(s => string.IsNullOrEmpty(s["STREET_NAME"]?.InnerText));
         }
         else
         {
