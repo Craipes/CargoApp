@@ -38,6 +38,17 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "CargoApp", Version = "v1" });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Base policy",
+                      builder =>
+                      {
+                          builder.AllowAnyOrigin();
+                          //builder.WithOrigins("http://example.com",
+                          //                    "http://www.contoso.com");
+                      });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -74,7 +85,8 @@ using (var scope = app.Services.CreateScope())
     {
         UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
         CargoAppContext context = services.GetRequiredService<CargoAppContext>();
-        await CargoAppContextSeed.SeedAsync(userManager, context/*, true, "D://UA_DB_EXTRACTOR.xml"*/);
+        await CargoAppContextSeed.SeedUsersAsync(userManager);
+        //await CargoAppContextSeed.RecreateSettlements(context, "D://WEIRD_CHECK_DB.xml");
     }
     catch (Exception ex)
     {

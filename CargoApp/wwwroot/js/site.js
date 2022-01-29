@@ -1,4 +1,79 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
+    let carRequestForm = $("#car-request-form");
+    let cargoRequestForm = $("#cargo-request-form");
+    let carBtn = $("#car-btn");
+    let carBtnParent = carBtn.parent();
+    let cargoBtn = $("#cargo-btn");
+    let cargoBtnParent = cargoBtn.parent();
 
-// Write your JavaScript code.
+    carBtn.click(function () {
+        carBtn.removeClass("text-black");
+        carBtn.addClass("text-white");
+        carBtnParent.addClass("bg-primary");
+
+        cargoBtn.removeClass("text-white");
+        cargoBtn.addClass("text-black");
+        cargoBtnParent.removeClass("bg-primary");
+
+        cargoRequestForm.hide();
+        carRequestForm.show();
+    });
+    cargoBtn.click(function () {
+        cargoBtn.removeClass("text-black");
+        cargoBtn.addClass("text-white");
+        cargoBtnParent.addClass("bg-primary");
+
+        carBtn.removeClass("text-white");
+        carBtn.addClass("text-black");
+        carBtnParent.removeClass("bg-primary");
+
+        carRequestForm.hide();
+        cargoRequestForm.show();
+    });
+});
+
+function getSettlementAutocomplete(selector, placeHolder) {
+    let autocomplete = new autoComplete({
+        selector: selector,
+        placeHolder: placeHolder,
+        data: {
+            src: async (query) => {
+                try {
+                    const search = await fetch(`api/Settlements/Search?search=${query}`);
+                    const data = await search.json();
+
+                    return data;
+                }
+                catch (error) {
+                    return error;
+                }
+            }
+        },
+        resultsList: {
+            element: (list, data) => {
+                if (!data.results.length) {
+                    const message = document.createElement("div");
+                    message.setAttribute("class", "no_result");
+                    message.innerHTML = `<span>Не знайдено результатів для "${data.query}"</span>`;
+                    list.prepend(message);
+                }
+            },
+            maxResults: 10,
+            noResults: true,
+        },
+        resultItem: {
+            highlight: true
+        },
+        threshold: 3,
+        debounce: 0,
+        events: {
+            input: {
+                selection: (event) => {
+                    const selection = event.detail.selection.value;
+                    autocomplete.input.value = selection;
+                }
+            }
+        }
+    });
+    return autocomplete;
+}

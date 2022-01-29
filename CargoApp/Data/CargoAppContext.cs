@@ -85,12 +85,12 @@ public class CargoAppContext : IdentityDbContext<User>
             user.ToTable("Users");
         });
 
-        builder.Entity<Settlement>(locality =>
+        builder.Entity<Settlement>(settlement =>
         {
-            locality.HasIndex(l => l.Region);
-            locality.HasIndex(l => l.District);
-            locality.HasIndex(l => l.City);
-            locality.HasIndex(l => l.CityRegion);
+            settlement.HasIndex(l => l.Region);
+            settlement.HasIndex(l => l.District);
+            settlement.HasIndex(l => l.City);
+            settlement.HasIndex(l => l.CityRegion);
         });
     }
 }

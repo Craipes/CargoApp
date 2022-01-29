@@ -8,12 +8,14 @@ public class XmlDataExtractor
 {
     public string XmlPath { get; }
 
+    private readonly bool hideNoneCities;
     private Action extractActions;
     private XmlElement? dataRoot;
     private IEnumerable<XmlNode> query = null!;
 
-    public XmlDataExtractor(string xmlPath)
+    public XmlDataExtractor(string xmlPath, bool hideNoneCities = true)
     {
+        this.hideNoneCities = hideNoneCities;
         XmlPath = xmlPath;
         extractActions = LoadXml;
     }
@@ -21,13 +23,27 @@ public class XmlDataExtractor
     public IEnumerable<Settlement> RunAndGet()
     {
         extractActions();
-        return query.Select(s => new Settlement
-        (
-            s["OBL_NAME"]!.InnerText,
-            s["REGION_NAME"]!.InnerText,
-            s["CITY_NAME"]!.InnerText,
-            s["CITY_REGION_NAME"]!.InnerText
-        ));
+        if (hideNoneCities)
+        {
+            return query.Select(s => new Settlement
+            (
+                s["OBL_NAME"]!.InnerText,
+                s["REGION_NAME"]!.InnerText,
+                s["CITY_NAME"]!.InnerText,
+                s["CITY_REGION_NAME"]!.InnerText,
+                !string.IsNullOrEmpty(s["CITY_NAME"]!.InnerText)
+            ));
+        }
+        else
+        {
+            return query.Select(s => new Settlement
+            (
+               s["OBL_NAME"]!.InnerText,
+               s["REGION_NAME"]!.InnerText,
+               s["CITY_NAME"]!.InnerText,
+               s["CITY_REGION_NAME"]!.InnerText
+            ));
+        }
     }
 
     public void RunAndSave(string savePath)
@@ -52,10 +68,10 @@ public class XmlDataExtractor
         if (dataRoot != null)
         {
             query = dataRoot.ChildNodes.Cast<XmlNode>();
-            foreach (var node in query)
-            {
-                node.RemoveChild(node.ChildNodes[^1]!);
-            }
+            //foreach (var node in query)
+            //{
+            //    node.RemoveChild(node.ChildNodes[^1]!);
+            //}
             //query = dataRoot.ChildNodes.Cast<XmlNode>()
             //    .Where(s => string.IsNullOrEmpty(s["STREET_NAME"]?.InnerText));
         }

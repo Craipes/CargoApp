@@ -28,3 +28,11 @@ body {
 .main-search-box-right {
     border-top-right-radius: 15px;
 }
+
+.autoComplete_wrapper {
+    width: 100%;
+}
+
+mark {
+    padding: 0;
+}

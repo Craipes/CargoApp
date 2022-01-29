@@ -7,16 +7,19 @@ public class Settlement
     public string District { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
     public string CityRegion { get; set; } = string.Empty;
+    public string NormalizedSettlement { get; set; } = string.Empty;
     public bool IsVisible { get; set; } = true;
 
     public Settlement() { }
 
-    public Settlement(string region, string district, string city, string cityRegion)
+    public Settlement(string region, string district, string city, string cityRegion, bool isVisible = true)
     {
         Region = region;
         District = district;
         City = city;
         CityRegion = cityRegion;
+        IsVisible = isVisible;
+        NormalizedSettlement = GetFull().ToUpperInvariant();
     }
 
     public string GetFull()

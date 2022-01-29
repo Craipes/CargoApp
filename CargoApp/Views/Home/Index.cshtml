@@ -5,14 +5,14 @@
 
 <div class="text-center main-search-box shadow mx-auto w-75">
     <div class="d-flex">
-        <div class="main-search-box-left w-50 bg-primary text-white">
-            <span class="fs-3">I need a driver</span>
+        <div class="main-search-box-left w-50 bg-primary position-relative">
+            <a class="fs-3 text-white text-decoration-none stretched-link" href="#" id="car-btn">I need a driver</a>
         </div>
-        <div class="main-search-box-right w-50">
-            <span class="fs-3">I need a cargo</span>
+        <div class="main-search-box-right w-50 position-relative">
+            <a class="fs-3 text-black text-decoration-none stretched-link" href="#" id="cargo-btn">I need a cargo</a>
         </div>
     </div>
-    <div class="p-3">
+    <div class="p-3" id="car-request-form">
         <div>
             <form method="post" asp-action="CarRequest" asp-controller="Home">
                 <div class="mb-3 row">
@@ -30,13 +30,13 @@
                 <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CarRequest.DeparturePlace>Departure place</label>
                     <div class="col-10">
-                        <input class="form-control" asp-for=CarRequest.DeparturePlace />
+                        <input class="form-control w-100" id="car-departure" asp-for=CarRequest.DeparturePlace autocomplete="off" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CarRequest.DestinationPlace>Destination place</label>
                     <div class="col-10">
-                        <input class="form-control" asp-for=CarRequest.DestinationPlace />
+                        <input class="form-control w-100" id ="car-destination" asp-for=CarRequest.DestinationPlace autocomplete="off" />
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -49,8 +49,65 @@
                     <label class="form-label text-center" asp-for=CarRequest.Details>Details</label>
                     <textarea class="form-control" asp-for=CarRequest.Details rows="4"></textarea>
                 </div>
-                @*<hr />*@
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="p-3" id="cargo-request-form" style="display: none;">
+        <div>
+            <form method="post" asp-action="CargoRequest" asp-controller="Home">
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CargoRequest.ContactPhoneNumber>Contact phone</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CargoRequest.ContactPhoneNumber />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CargoRequest.ContactName>Contact name</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CargoRequest.ContactName />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CargoRequest.DeparturePlace>Departure place</label>
+                    <div class="col-10">
+                        <input class="form-control w-100" id="cargo-departure" asp-for=CargoRequest.DeparturePlace autocomplete="off" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CargoRequest.DestinationPlace>Destination place</label>
+                    <div class="col-10">
+                        <input class="form-control w-100" id ="cargo-destination" asp-for=CargoRequest.DestinationPlace autocomplete="off" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CargoRequest.DepartureTime>Departure time</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CargoRequest.DepartureTime />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CargoRequest.Price>Price</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CargoRequest.Price />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-center" asp-for=CargoRequest.Details>Details</label>
+                    <textarea class="form-control" asp-for=CargoRequest.Details rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const carDepartureAutocomplete = getSettlementAutocomplete("#car-departure", "Departure place...");
+        const carDestinationAutocomplete = getSettlementAutocomplete("#car-destination", "Destination place...");
+
+        const cargoDepartureAutocomplete = getSettlementAutocomplete("#cargo-departure", "Departure place...");
+        const cargoDestinationAutocomplete = getSettlementAutocomplete("#cargo-destination", "Destination place...");
+    </script>
+}
