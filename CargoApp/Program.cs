@@ -1,8 +1,8 @@
 using CargoApp.Data;
+using CargoApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using StreetRegister;
 
 //XmlDataExtractor localityExtractor = new("D://UA_DB.xml");
 //localityExtractor.AddDistinct();
@@ -48,6 +48,10 @@ builder.Services.AddCors(options =>
                           //                    "http://www.contoso.com");
                       });
 });
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<UserIdManager>();
 
 var app = builder.Build();
 

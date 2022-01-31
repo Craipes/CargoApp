@@ -15,6 +15,7 @@
     <div class="p-3" id="car-request-form">
         <div>
             <form method="post" asp-action="CarRequest" asp-controller="Home">
+                <input asp-for=IsCarRequest checked="checked" hidden="hidden" />
                 <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CarRequest.ContactPhoneNumber>Contact phone</label>
                     <div class="col-10">
@@ -40,6 +41,18 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CarRequest.CargoMass>Cargo mass</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CarRequest.CargoMass />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2" asp-for=CarRequest.CargoVolume>Cargo volume</label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for=CarRequest.CargoVolume />
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CarRequest.Price>Price</label>
                     <div class="col-10">
                         <input class="form-control" asp-for=CarRequest.Price />
@@ -56,6 +69,7 @@
     <div class="p-3" id="cargo-request-form" style="display: none;">
         <div>
             <form method="post" asp-action="CargoRequest" asp-controller="Home">
+                <input asp-for=IsCargoRequest checked="checked" hidden="hidden" />
                 <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CargoRequest.ContactPhoneNumber>Contact phone</label>
                     <div class="col-10">

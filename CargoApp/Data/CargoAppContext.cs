@@ -1,7 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using StreetRegister.Models;
 
 namespace CargoApp.Data;
 
@@ -68,12 +67,41 @@ public class CargoAppContext : IdentityDbContext<User>
             .HasForeignKey(r => r.SenderId)
             .OnDelete(DeleteBehavior.NoAction);
 
+        builder.Entity<CarRequest>(request =>
+        {
+            request
+                .HasOne(r => r.DeparturePlace)
+                .WithMany()
+                .HasForeignKey(r => r.DeparturePlaceId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            request
+                .HasOne(r => r.DestinationPlace)
+                .WithMany()
+                .HasForeignKey(r => r.DestinationPlaceId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        builder.Entity<CargoRequest>(request =>
+        {
+            request
+                .HasOne(r => r.DeparturePlace)
+                .WithMany()
+                .HasForeignKey(r => r.DeparturePlaceId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            request
+                .HasOne(r => r.DestinationPlace)
+                .WithMany()
+                .HasForeignKey(r => r.DestinationPlaceId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+
         builder.Entity<User>(user =>
         {
-            user.HasIndex(u => u.PhoneNumber).IsUnique();
-
             user.HasOne(u => u.UserInfo).WithOne().HasForeignKey<UserInfo>(u => u.Id);
             user.Property(u => u.PhoneNumber).IsRequired().HasColumnName("PhoneNumber");
+            user.HasIndex(u => u.PhoneNumber).IsUnique();
 
             user.ToTable("Users");
         });
@@ -81,6 +109,7 @@ public class CargoAppContext : IdentityDbContext<User>
         builder.Entity<UserInfo>(user =>
         {
             user.Property(u => u.PhoneNumber).IsRequired().HasColumnName("PhoneNumber");
+            user.HasIndex(u => u.PhoneNumber).IsUnique();
 
             user.ToTable("Users");
         });

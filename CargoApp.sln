@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CargoApp", "CargoApp\CargoA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{A2EC55FC-98D1-4EEB-9750-19A440C78098}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreetRegister", "StreetRegister\StreetRegister.csproj", "{15F91A78-FCF1-4B3D-BF84-994C22787056}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{A2EC55FC-98D1-4EEB-9750-19A440C78098}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2EC55FC-98D1-4EEB-9750-19A440C78098}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2EC55FC-98D1-4EEB-9750-19A440C78098}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15F91A78-FCF1-4B3D-BF84-994C22787056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15F91A78-FCF1-4B3D-BF84-994C22787056}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15F91A78-FCF1-4B3D-BF84-994C22787056}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15F91A78-FCF1-4B3D-BF84-994C22787056}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

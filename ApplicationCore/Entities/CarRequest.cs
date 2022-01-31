@@ -25,8 +25,8 @@ public class CarRequest : Request
     public List<CarResponse> Responses { get; set; } = new();
 
     public CarRequest(string userId, string contactPhoneNumber, string contactName,
-        string departurePlace, string destinationPlace) 
-        : base(userId, contactPhoneNumber, contactName, departurePlace, destinationPlace)
+        int departurePlaceId, int destinationPlaceId, decimal? price, string? details) 
+        : base(userId, contactPhoneNumber, contactName, departurePlaceId, destinationPlaceId, price, details)
     {
     }
 }

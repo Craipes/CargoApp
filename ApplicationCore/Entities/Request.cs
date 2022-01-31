@@ -10,8 +10,10 @@ public abstract class Request : BaseEntity
 
     [Phone] public string ContactPhoneNumber { get; set; }
     [MaxLength(64)] public string ContactName { get; set; }
-    public string DeparturePlace { get; set; }
-    public string DestinationPlace { get; set; }
+    public int DeparturePlaceId { get; set; }
+    public Settlement? DeparturePlace { get; set; }
+    public int DestinationPlaceId { get; set; }
+    public Settlement? DestinationPlace { get; set; }
 
     [DataType(DataType.Currency)]
     [Column(TypeName = "decimal(10, 2)")]
@@ -19,12 +21,14 @@ public abstract class Request : BaseEntity
     [MaxLength(512)] public string? Details { get; set; }
 
     public Request(string userId, string contactPhoneNumber, string contactName,
-        string departurePlace, string destinationPlace)
+        int departurePlaceId, int destinationPlaceId, decimal? price, string? details)
     {
         UserId = userId;
         ContactPhoneNumber = contactPhoneNumber;
         ContactName = contactName;
-        DeparturePlace = departurePlace;
-        DestinationPlace = destinationPlace;
+        DeparturePlaceId = departurePlaceId;
+        DestinationPlaceId = destinationPlaceId;
+        Price = price;
+        Details = details;
     }
 }

@@ -8,8 +8,8 @@ public class CargoRequest : Request
     public List<CargoResponse> Responses { get; set; } = new();
 
     public CargoRequest(string userId, string contactPhoneNumber, string contactName,
-        string departurePlace, string destinationPlace) 
-        : base(userId, contactPhoneNumber, contactName, departurePlace, destinationPlace)
+        int departurePlaceId, int destinationPlaceId, decimal? price, string? details) 
+        : base(userId, contactPhoneNumber, contactName, departurePlaceId, destinationPlaceId, price, details)
     {
     }
 }
