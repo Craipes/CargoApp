@@ -13,8 +13,8 @@ public class Car : BaseEntity
     [MaxLength(64)] public string? Model { get; set; }
     [MaxLength(32)] public string? Color { get; set; }
 
-    [Column(TypeName = "decimal(6, 3)")]
-    [Range(0.050f, 100f)] public float? MaxMass { get; set; }
+    [Column(TypeName = "decimal(8, 1)")]
+    [Range(0.5f, 1000000f)] public float MaxMass { get; set; }
 
     [Column(TypeName = "decimal(5, 2)")]
     [Range(0.10f, 100f)] public float? MaxLength { get; set; }

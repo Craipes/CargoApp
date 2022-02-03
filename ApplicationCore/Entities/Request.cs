@@ -20,6 +20,8 @@ public abstract class Request : BaseEntity
     [Range(0, 10000000)] public decimal? Price { get; set; }
     [MaxLength(512)] public string? Details { get; set; }
 
+    public DateTime AddTime { get; set; } = DateTime.UtcNow;
+
     public Request(string userId, string contactPhoneNumber, string contactName,
         int departurePlaceId, int destinationPlaceId, decimal? price, string? details)
     {

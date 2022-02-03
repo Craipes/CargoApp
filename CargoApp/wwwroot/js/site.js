@@ -30,6 +30,14 @@
         carRequestForm.hide();
         cargoRequestForm.show();
     });
+
+    $(".clear-group").each(function () {
+        let input = $(".clear-input", $(this));
+        let btn = $(".clear-btn", $(this));
+        btn.click(function () {
+            input.val("");
+        });
+    });
 });
 
 function getSettlementAutocomplete(selector, placeHolder) {
@@ -39,7 +47,7 @@ function getSettlementAutocomplete(selector, placeHolder) {
         data: {
             src: async (query) => {
                 try {
-                    const search = await fetch(`api/Settlements/Search?search=${query}`);
+                    const search = await fetch(`/api/Settlements/Search?search=${query}`);
                     const data = await search.json();
 
                     return data;

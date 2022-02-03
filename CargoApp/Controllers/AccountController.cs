@@ -1,9 +1,11 @@
 ﻿using ApplicationCore.Models;
 using CargoApp.Data;
 using CargoApp.Services;
+using CargoApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CargoApp.Controllers;
 
@@ -11,11 +13,13 @@ public class AccountController : Controller
 {
     private readonly UserManager<User> userManager;
     private readonly SignInManager<User> signInManager;
+    private readonly CargoAppContext db;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, CargoAppContext cargoAppContext)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
+        db = cargoAppContext;
     }
 
     [HttpGet]
@@ -70,6 +74,42 @@ public class AccountController : Controller
     public async Task<IActionResult> Logout()
     {
         await signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> Requests()
+    {
+        var userId = userManager.GetUserId(User);
+        if (userId != null)
+        {
+            var user = await db.Users
+                .Include(s => s.UserInfo.CarRequests)
+                    .ThenInclude(s => s.DeparturePlace)
+                .Include(s => s.UserInfo.CarRequests)
+                    .ThenInclude(s => s.DestinationPlace)
+                .Include(s => s.UserInfo.CargoRequests)
+                    .ThenInclude(s => s.DeparturePlace)
+                .Include(s => s.UserInfo.CargoRequests)
+                    .ThenInclude(s => s.DestinationPlace)
+                .Select(s => new
+                {
+                    s.Id,
+                    s.UserInfo.CarRequests,
+                    s.UserInfo.CargoRequests
+                })
+                .FirstOrDefaultAsync(s => s.Id == userId);
+
+            if (user != null)
+            {
+                var carRequests = user.CarRequests.Select(r => CarRequestModel.FromRequest(r));
+                var cargoRequests = user.CargoRequests.Select(r => CargoRequestModel.FromRequest(r));
+                var model = new RequestsViewModel(carRequests, cargoRequests);
+
+                return View(model);
+            }
+        }
         return RedirectToAction("Index", "Home");
     }
 }

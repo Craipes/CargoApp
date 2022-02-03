@@ -1,79 +1,159 @@
 ﻿using ApplicationCore.Entities;
+using ApplicationCore.Models;
 using CargoApp.Data;
 using CargoApp.Services;
 using CargoApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-namespace CargoApp.Controllers
+namespace CargoApp.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly CargoAppContext db;
+    private readonly UserIdManager userIdManager;
+    private readonly ILogger<HomeController> _logger;
+
+    public HomeController(CargoAppContext context, UserIdManager userIdManager, ILogger<HomeController> logger)
     {
-        private readonly CargoAppContext db;
-        private readonly UserIdManager userIdManager;
-        private readonly ILogger<HomeController> _logger;
+        db = context;
+        this.userIdManager = userIdManager;
+        _logger = logger;
+    }
 
-        public HomeController(CargoAppContext context, UserIdManager userIdManager, ILogger<HomeController> logger)
-        {
-            db = context;
-            this.userIdManager = userIdManager;
-            _logger = logger;
-        }
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        public IActionResult Privacy()
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> AddCarRequest(IndexViewModel model)
+    {
+        if (model.IsCarRequest)
         {
-            return View();
-        }
-
-        public async Task<IActionResult> CarRequest(IndexViewModel model)
-        {
-            if (model.IsCarRequest)
+            RemoveFor(ModelState, nameof(model.CargoRequest));
+            if (ModelState.IsValid)
             {
-                RemoveFor(ModelState, nameof(model.CargoRequest));
-                if (ModelState.IsValid)
+                var requestModel = model.CarRequest;
+
+                var places = await db.SearchPlaces(requestModel.DeparturePlace.ToUpper(), requestModel.DestinationPlace.ToUpper());
+
+                if (places != null)
                 {
-                    var requestModel = model.CarRequest;
+                    (var departurePlace, var destinationPlace) = places.Value;
 
-                    var departurePlace = await db.Settlements
-                        .FirstOrDefaultAsync(s => s.NormalizedSettlement == requestModel.DeparturePlace.ToUpper());
-                    var destinationPlace = await db.Settlements
-                        .FirstOrDefaultAsync(s => s.NormalizedSettlement == requestModel.DestinationPlace.ToUpper());
+                    string userId = userIdManager.GetUserId();
+                    CarRequest request = requestModel.CreateRequest(userId, departurePlace.Id, destinationPlace.Id);
 
-                    if (departurePlace != null && destinationPlace != null)
-                    {
-                        string userId = userIdManager.GetUserId();
-                        CarRequest request = new(userId, requestModel.ContactPhoneNumber, requestModel.ContactName,
-                            departurePlace.Id, destinationPlace.Id, requestModel.Price, requestModel.Details);
-
-                        db.CarRequests.Add(request);
-                        await db.SaveChangesAsync();
-                    }
+                    db.CarRequests.Add(request);
+                    await db.SaveChangesAsync();
                 }
             }
-            return RedirectToAction("Index", "Home");
         }
+        return RedirectToAction("Index", "Home");
+    }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> AddCargoRequest(IndexViewModel model)
+    {
+        if (model.IsCargoRequest)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public static void RemoveFor(ModelStateDictionary modelState, string valueName)
-        {
-            foreach (var ms in modelState.ToArray())
+            RemoveFor(ModelState, nameof(model.CarRequest));
+            if (ModelState.IsValid)
             {
-                if (ms.Key.StartsWith(valueName + ".") || ms.Key == valueName)
+                var requestModel = model.CargoRequest;
+
+                var places = await db.SearchPlaces(requestModel.DeparturePlace.ToUpper(), requestModel.DestinationPlace.ToUpper());
+
+                if (places != null)
                 {
-                    modelState.Remove(ms.Key);
+                    (var departurePlace, var destinationPlace) = places.Value;
+
+                    string userId = userIdManager.GetUserId();
+                    CargoRequest request = requestModel.CreateRequest(userId, departurePlace.Id, destinationPlace.Id);
+
+                    db.CargoRequests.Add(request);
+                    await db.SaveChangesAsync();
                 }
+            }
+        }
+        return RedirectToAction("Index", "Home");
+    }
+
+    [HttpGet]
+    public IActionResult Search()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Search(SearchViewModel model)
+    {
+        Console.WriteLine($"Settlements count: {await db.Settlements.CountAsync()}");
+        if (model.IsCarSearching)
+        {
+            RemoveFor(ModelState, nameof(model.CargoSearch));
+            if (ModelState.IsValid)
+            {
+                var requests = await db.CargoRequests.Search(db, model.CarSearch);
+
+                if (requests != null)
+                {
+                    var requestsArr = await requests.ToArrayAsync();
+
+                    model.CargoRequests = requestsArr
+                        .Select(r => CargoRequestModel.FromRequest(r))
+                        .ToList();
+
+                    return View(model);
+                }
+            }
+        }
+        else if (model.IsCargoSearching)
+        {
+            RemoveFor(ModelState, nameof(model.CarSearch));
+            if (ModelState.IsValid)
+            {
+                var requests = await db.CarRequests.Search(db, model.CargoSearch);
+
+                if (requests != null)
+                {
+                    var requestsArr = await requests.ToArrayAsync();
+
+                    model.CarRequests = requests
+                        .Select(r => CarRequestModel.FromRequest(r))
+                        .ToList();
+
+                    return View(model);
+                }
+            }
+        }
+        return View(model);
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    private static void RemoveFor(ModelStateDictionary modelState, string valueName)
+    {
+        foreach (var ms in modelState.ToArray())
+        {
+            if (ms.Key.StartsWith(valueName + ".") || ms.Key == valueName)
+            {
+                modelState.Remove(ms.Key);
             }
         }
     }

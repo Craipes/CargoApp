@@ -4,6 +4,7 @@ using CargoApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoApp.Migrations
 {
     [DbContext(typeof(CargoAppContext))]
-    partial class CargoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20220131142222_MassFixed")]
+    partial class MassFixed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,8 +49,8 @@ namespace CargoApp.Migrations
                     b.Property<decimal?>("MaxLength")
                         .HasColumnType("decimal(5,2)");
 
-                    b.Property<decimal>("MaxMass")
-                        .HasColumnType("decimal(8,1)");
+                    b.Property<decimal?>("MaxMass")
+                        .HasColumnType("decimal(6,3)");
 
                     b.Property<decimal?>("MaxVolume")
                         .HasColumnType("decimal(9,4)");
