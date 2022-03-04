@@ -1,8 +1,4 @@
-﻿using ApplicationCore.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace CargoApp.Data;
+﻿namespace CargoApp.Data;
 
 public class CargoAppContext : IdentityDbContext<User>
 {
@@ -25,47 +21,54 @@ public class CargoAppContext : IdentityDbContext<User>
         base.OnModelCreating(builder);
 
         //Base options
-        builder.Entity<Review>()
-            .HasOne(r => r.Receiver)
-            .WithMany(r => r.ReviewsReceived)
-            .HasForeignKey(r => r.ReceiverId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.Entity<Review>(review =>
+        {
+            review
+                .HasOne(r => r.Receiver)
+                .WithMany(r => r.ReviewsReceived)
+                .HasForeignKey(r => r.ReceiverId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Entity<Review>()
-            .HasOne(r => r.Sender)
-            .WithMany(r => r.ReviewsSent)
-            .HasForeignKey(r => r.SenderId)
-            .OnDelete(DeleteBehavior.NoAction);
+            review
+                .HasOne(r => r.Sender)
+                .WithMany(r => r.ReviewsSent)
+                .HasForeignKey(r => r.SenderId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
 
-        builder.Entity<CarResponse>()
-            .HasKey(r => new { r.CarRequestId, r.DriverId });
+        builder.Entity<CarResponse>(response =>
+        {
+            response.HasKey(r => new { r.CarRequestId, r.DriverId });
 
-        builder.Entity<CarResponse>()
-            .HasOne(r => r.CarRequest)
-            .WithMany(r => r.Responses)
-            .HasForeignKey(r => r.CarRequestId)
-            .OnDelete(DeleteBehavior.Cascade);
+            response
+                .HasOne(r => r.CarRequest)
+                .WithMany(r => r.Responses)
+                .HasForeignKey(r => r.CarRequestId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Entity<CarResponse>()
-            .HasOne(r => r.Driver)
-            .WithMany(r => r.CarResponses)
-            .HasForeignKey(r => r.DriverId)
-            .OnDelete(DeleteBehavior.NoAction);
+            response
+                .HasOne(r => r.Driver)
+                .WithMany(r => r.CarResponses)
+                .HasForeignKey(r => r.DriverId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
 
-        builder.Entity<CargoResponse>()
-            .HasKey(r => new { r.CargoRequestId, r.SenderId });
+        builder.Entity<CargoResponse>(response =>
+        {
+            response.HasKey(r => new { r.CargoRequestId, r.SenderId });
 
-        builder.Entity<CargoResponse>()
-            .HasOne(r => r.CargoRequest)
-            .WithMany(r => r.Responses)
-            .HasForeignKey(r => r.CargoRequestId)
-            .OnDelete(DeleteBehavior.Cascade);
+            response
+                .HasOne(r => r.CargoRequest)
+                .WithMany(r => r.Responses)
+                .HasForeignKey(r => r.CargoRequestId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Entity<CargoResponse>()
-            .HasOne(r => r.Sender)
-            .WithMany(r => r.CargoResponses)
-            .HasForeignKey(r => r.SenderId)
-            .OnDelete(DeleteBehavior.NoAction);
+            response
+                .HasOne(r => r.Sender)
+                .WithMany(r => r.CargoResponses)
+                .HasForeignKey(r => r.SenderId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
 
         builder.Entity<CarRequest>(request =>
         {

@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace CargoApp.Data;
+﻿namespace CargoApp.Data;
 
 public static class UserManagerExtensions
 {

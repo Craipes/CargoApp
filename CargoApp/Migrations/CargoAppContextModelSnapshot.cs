@@ -68,7 +68,7 @@ namespace CargoApp.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.CargoRequest", b =>
@@ -124,7 +124,7 @@ namespace CargoApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CargoRequests");
+                    b.ToTable("CargoRequests", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.CargoResponse", b =>
@@ -158,7 +158,7 @@ namespace CargoApp.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("CargoResponses");
+                    b.ToTable("CargoResponses", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.CarRequest", b =>
@@ -221,7 +221,7 @@ namespace CargoApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CarRequests");
+                    b.ToTable("CarRequests", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.CarResponse", b =>
@@ -245,7 +245,7 @@ namespace CargoApp.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("CarResponses");
+                    b.ToTable("CarResponses", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Review", b =>
@@ -277,7 +277,7 @@ namespace CargoApp.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Settlement", b =>
@@ -321,7 +321,7 @@ namespace CargoApp.Migrations
 
                     b.HasIndex("Region");
 
-                    b.ToTable("Settlements");
+                    b.ToTable("Settlements", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.UserInfo", b =>

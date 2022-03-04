@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ApplicationCore.Entities;
+﻿namespace ApplicationCore.Entities;
 
 public class CarRequest : Request
 {
@@ -24,7 +21,7 @@ public class CarRequest : Request
 
     public CarRequest(string userId, string contactPhoneNumber, string contactName,
         int departurePlaceId, int destinationPlaceId, decimal? price, string? details,
-        float cargoMass, float cargoVolume, float? cargoLength, float? cargoWidth, float? cargoHeight) 
+        float cargoMass, float cargoVolume, float? cargoLength, float? cargoWidth, float? cargoHeight)
         : base(userId, contactPhoneNumber, contactName, departurePlaceId, destinationPlaceId, price, details)
     {
         CargoMass = cargoMass;

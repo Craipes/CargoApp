@@ -3,7 +3,9 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="main-search-box shadow mx-auto col-10 text-start">
+<h1 class="text-center mb-5">Створення запиту</h1>
+
+<div class="main-search-box box-shadow mx-auto col-10 text-start">
     <div class="d-flex text-center">
         <div class="main-search-box-left w-50 bg-primary position-relative">
             <a class="fs-3 text-white text-decoration-none stretched-link" href="#" id="car-btn">Мені потрібен водій</a>
@@ -34,7 +36,7 @@
                         <input class="form-control w-100 clear-input" id="car-departure" asp-for=CarRequest.DeparturePlace autocomplete="off" spellcheck="false" />
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 clear-btn">Очистити</button>
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
                 <div class="mb-3 row clear-group">
@@ -43,32 +45,32 @@
                         <input class="form-control w-100 clear-input" id="car-destination" asp-for=CarRequest.DestinationPlace autocomplete="off" spellcheck="false" />
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 clear-btn">Очистити</button>
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CarRequest.CargoMass>Маса вантажу</label>
                     <div class="col-10">
-                        <input class="form-control" asp-for=CarRequest.CargoMass />
+                        <input class="form-control" asp-for=CarRequest.CargoMass autocomplete="off" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CarRequest.CargoVolume>Об'єм вантажу</label>
                     <div class="col-10">
-                        <input class="form-control" asp-for=CarRequest.CargoVolume />
+                        <input class="form-control" asp-for=CarRequest.CargoVolume autocomplete="off" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CarRequest.Price>Пропонована ціна</label>
                     <div class="col-10">
-                        <input class="form-control" asp-for=CarRequest.Price />
+                        <input class="form-control" asp-for=CarRequest.Price autocomplete="off" />
                     </div>
                 </div>
                 <div class="mb-3 text-center">
                     <label class="form-label" asp-for=CarRequest.Details>Деталі</label>
                     <textarea class="form-control" asp-for=CarRequest.Details rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Підтвердити</button>
             </form>
         </div>
     </div>
@@ -94,7 +96,7 @@
                         <input class="form-control w-100 clear-input" id="cargo-departure" asp-for=CargoRequest.DeparturePlace autocomplete="off" spellcheck="false" />
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 clear-btn">Очистити</button>
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
                 <div class="mb-3 row clear-group">
@@ -103,7 +105,7 @@
                         <input class="form-control w-100 clear-input" id="cargo-destination" asp-for=CargoRequest.DestinationPlace autocomplete="off" spellcheck="false" />
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 clear-btn">Очистити</button>
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -115,14 +117,14 @@
                 <div class="mb-3 row">
                     <label class="col-form-label col-2" asp-for=CargoRequest.Price>Пропонова ціна</label>
                     <div class="col-10">
-                        <input class="form-control" asp-for=CargoRequest.Price />
+                        <input class="form-control" asp-for=CargoRequest.Price autocomplete="off" />
                     </div>
                 </div>
                 <div class="mb-3 text-center">
                     <label class="form-label" asp-for=CargoRequest.Details>Деталі</label>
                     <textarea class="form-control" asp-for=CargoRequest.Details rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Підтвердити</button>
             </form>
         </div>
     </div>

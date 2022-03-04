@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ApplicationCore.Entities;
+﻿namespace ApplicationCore.Entities;
 
 public abstract class Request : BaseEntity
 {
+    public const double DefaultExpirationTimeInHours = 72;
+
     public string UserId { get; set; }
     public UserInfo? User { get; set; }
 
@@ -21,6 +20,8 @@ public abstract class Request : BaseEntity
     [MaxLength(512)] public string? Details { get; set; }
 
     public DateTime AddTime { get; set; } = DateTime.UtcNow;
+
+    [NotMapped] public bool IsExpired => AddTime.AddHours(DefaultExpirationTimeInHours) < DateTime.UtcNow;
 
     public Request(string userId, string contactPhoneNumber, string contactName,
         int departurePlaceId, int destinationPlaceId, decimal? price, string? details)

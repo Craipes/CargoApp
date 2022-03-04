@@ -3,7 +3,9 @@
     ViewData["Title"] = "Search";
 }
 
-<div class="main-search-box shadow mx-auto col-10 text-start">
+<h1 class="text-center mb-5">Пошук</h1>
+
+<div class="main-search-box box-shadow mx-auto col-10 text-start">
     <div class="d-flex text-center">
         <div class="main-search-box-left w-50 bg-primary position-relative">
             <a class="fs-3 text-white text-decoration-none stretched-link" href="#" id="car-btn">Мені потрібен водій</a>
@@ -22,7 +24,7 @@
                         <input class="form-control w-100 clear-input" id="car-departure" asp-for=CarSearch.DeparturePlace autocomplete="off" spellcheck="false" />
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 clear-btn">Очистити</button>
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
                 <div class="mb-3 row clear-group">
@@ -31,7 +33,7 @@
                         <input class="form-control w-100 clear-input" id="car-destination" asp-for=CarSearch.DestinationPlace autocomplete="off" spellcheck="false" />
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 clear-btn">Очистити</button>
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -40,7 +42,7 @@
                         <select class="form-select" asp-for=CarSearch.SearchRange asp-items=Html.GetEnumSelectList(typeof(SearchRange))></select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Пошук</button>
             </form>
         </div>
     </div>
@@ -54,7 +56,7 @@
                         <input class="form-control w-100 clear-input" id="cargo-departure" asp-for=CargoSearch.DeparturePlace autocomplete="off" spellcheck="false" />
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 clear-btn">Очистити</button>
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
                 <div class="mb-3 row clear-group">
@@ -63,7 +65,7 @@
                         <input class="form-control w-100 clear-input" id="cargo-destination" asp-for=CargoSearch.DestinationPlace autocomplete="off" spellcheck="false" />
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 clear-btn">Очистити</button>
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -72,7 +74,7 @@
                         <select class="form-select" asp-for=CargoSearch.SearchRange asp-items=Html.GetEnumSelectList(typeof(SearchRange))></select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Пошук</button>
             </form>
         </div>
     </div>
@@ -81,7 +83,7 @@
 <div class="mt-5">
     @if (Model != null)
     {
-        <div class="col-6 mx-auto">
+        <div class="col-10 mx-auto">
             @if (Model.CarRequests != null)
             {
                 <h3 class="text-center">Запити на машину</h3>
@@ -114,6 +116,10 @@
                                 <span class="fw-bold col-4">Час подання</span>
                                 <span class="col-8">@request.AddTime</span>
                             </div>
+                            <div class="row">
+                                <span class="fw-bold col-4">Час дії сплинув?</span>
+                                <span class="col-8">@request.IsExpired</span>
+                            </div>
                         </div>
                     }
                 </div>
@@ -124,7 +130,7 @@
                 @for (int i = 0; i < Model.CargoRequests.Count; i++)
                 {
                     var request = Model.CargoRequests[i];
-                    <div class="list-group-item">
+                    @*<div class="list-group-item">
                         <div class="row">
                             <span class="fw-bold col-4">Місце відбуття</span>
                             <span class="col-8">@request.DeparturePlace</span>
@@ -145,6 +151,29 @@
                             <span class="fw-bold col-4">Час подання</span>
                             <span class="col-8">@request.AddTime</span>
                         </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Час дії сплинув?</span>
+                            <span class="col-8">@request.IsExpired</span>
+                        </div>
+                    </div>*@
+                    <div class="list-group-item rounded">
+                        <div class="row text-center">
+                            <span class="col-5 border rounded-pill">@request.DeparturePlace</span>
+                            <span class="col-2">></span>
+                            <span class="col-5 border rounded-pill">@request.DestinationPlace</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Час відбуття</span>
+                            <span class="col-8">@request.DepartureTime.ToLongDateString() @request.DepartureTime.ToShortTimeString()</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Пропонована ціна</span>
+                            <span class="col-8">@request.Price грн</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Час подання</span>
+                            <span class="col-8">@request.AddTime</span>
+                        </div>
                     </div>
                 }
             }
@@ -153,11 +182,11 @@
 </div>
 
 @section Scripts {
-    <script>
-        const carDepartureAutocomplete = getSettlementAutocomplete("#car-departure", "Місце відбуття...");
-        const carDestinationAutocomplete = getSettlementAutocomplete("#car-destination", "Місце прибуття...");
+<script>
+    const carDepartureAutocomplete = getSettlementAutocomplete("#car-departure", "Місце відбуття...");
+    const carDestinationAutocomplete = getSettlementAutocomplete("#car-destination", "Місце прибуття...");
 
-        const cargoDepartureAutocomplete = getSettlementAutocomplete("#cargo-departure", "Місце відбуття...");
-        const cargoDestinationAutocomplete = getSettlementAutocomplete("#cargo-destination", "Місце прибуття...");
-    </script>
+    const cargoDepartureAutocomplete = getSettlementAutocomplete("#cargo-departure", "Місце відбуття...");
+    const cargoDestinationAutocomplete = getSettlementAutocomplete("#cargo-destination", "Місце прибуття...");
+</script>
 }

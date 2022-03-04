@@ -1,6 +1,4 @@
-﻿using ApplicationCore.Models;
-
-namespace CargoApp.ViewModels;
+﻿namespace CargoApp.ViewModels;
 
 public class IndexViewModel
 {

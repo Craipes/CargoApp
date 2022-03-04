@@ -1,7 +1,4 @@
-﻿using ApplicationCore.Entities;
-using Microsoft.AspNetCore.Identity;
-
-namespace CargoApp.Data;
+﻿namespace CargoApp.Data;
 
 public class User : IdentityUser
 {

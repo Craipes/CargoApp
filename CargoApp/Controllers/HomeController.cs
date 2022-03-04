@@ -1,12 +1,6 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Models;
-using CargoApp.Data;
-using CargoApp.Services;
-using CargoApp.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace CargoApp.Controllers;
@@ -24,7 +18,7 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult Create()
     {
         return View();
     }
@@ -59,7 +53,7 @@ public class HomeController : Controller
                 }
             }
         }
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Create", "Home");
     }
 
     [Authorize]
@@ -87,7 +81,7 @@ public class HomeController : Controller
                 }
             }
         }
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Create", "Home");
     }
 
     [HttpGet]
@@ -99,7 +93,6 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> Search(SearchViewModel model)
     {
-        Console.WriteLine($"Settlements count: {await db.Settlements.CountAsync()}");
         if (model.IsCarSearching)
         {
             RemoveFor(ModelState, nameof(model.CargoSearch));

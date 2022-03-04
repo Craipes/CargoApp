@@ -1,7 +1,4 @@
-﻿using ApplicationCore.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace ApplicationCore.Models;
+﻿namespace ApplicationCore.Models;
 
 public class CarRequestModel : RequestModel
 {
@@ -27,8 +24,8 @@ public class CarRequestModel : RequestModel
         {
             ContactName = request.ContactName,
             ContactPhoneNumber = request.ContactPhoneNumber,
-            DeparturePlace = request.DeparturePlace?.GetFull() ?? "",
-            DestinationPlace = request.DestinationPlace?.GetFull() ?? "",
+            DeparturePlace = request.DeparturePlace?.GetFullName() ?? "",
+            DestinationPlace = request.DestinationPlace?.GetFullName() ?? "",
             Price = request.Price,
             Details = request.Details,
             CargoMass = request.CargoMass,
@@ -36,7 +33,8 @@ public class CarRequestModel : RequestModel
             CargoLength = request.CargoLength,
             CargoWidth = request.CargoWidth,
             CargoHeight = request.CargoHeight,
-            AddTime = request.AddTime
+            AddTime = request.AddTime,
+            IsExpired = request.IsExpired
         };
     }
 }

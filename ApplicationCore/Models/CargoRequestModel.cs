@@ -1,6 +1,4 @@
-﻿using ApplicationCore.Entities;
-
-namespace ApplicationCore.Models;
+﻿namespace ApplicationCore.Models;
 
 public class CargoRequestModel : RequestModel
 {
@@ -22,13 +20,14 @@ public class CargoRequestModel : RequestModel
         {
             ContactName = request.ContactName,
             ContactPhoneNumber = request.ContactPhoneNumber,
-            DeparturePlace = request.DeparturePlace?.GetFull() ?? "",
-            DestinationPlace = request.DestinationPlace?.GetFull() ?? "",
+            DeparturePlace = request.DeparturePlace?.GetFullName() ?? "",
+            DestinationPlace = request.DestinationPlace?.GetFullName() ?? "",
             Price = request.Price,
             Details = request.Details,
             Car = request.Car,
             DepartureTime = request.DepartureTime,
-            AddTime = request.AddTime
+            AddTime = request.AddTime,
+            IsExpired = request.IsExpired
         };
     }
 }

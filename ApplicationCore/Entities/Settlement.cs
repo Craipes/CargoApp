@@ -18,13 +18,12 @@ public class Settlement : BaseEntity
         City = city;
         CityRegion = cityRegion;
         IsVisible = isVisible;
-        NormalizedSettlement = GetFull().ToUpperInvariant();
+        NormalizedSettlement = GetFullName().ToUpperInvariant();
     }
 
-    public string GetFull()
+    public string GetFullName()
     {
-        string result = "";
-        if (Region != string.Empty) result += Region;
+        string result = Region;
         if (District != string.Empty) result += " " + District;
         if (City != string.Empty) result += " " + City;
         if (CityRegion != string.Empty) result += " " + CityRegion;

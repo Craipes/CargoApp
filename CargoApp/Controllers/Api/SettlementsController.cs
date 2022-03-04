@@ -1,6 +1,4 @@
-﻿using CargoApp.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace CargoApp.Controllers.Api
 {
@@ -8,13 +6,6 @@ namespace CargoApp.Controllers.Api
     [ApiController]
     public class SettlementsController : ControllerBase
     {
-        //private readonly Func<CargoAppContext, string, IEnumerable<Settlement>> compiledSearch =
-        //    EF.CompileQuery((CargoAppContext db, string search) => db.Settlements
-        //    .AsNoTracking()
-        //    .OrderBy(l => l.City)
-        //    .Where(l => l.IsVisible && l.NormalizedSettlement.Contains(search))
-        //    .Take(10));
-
         private readonly CargoAppContext db;
 
         public SettlementsController(CargoAppContext cargoAppContext)
@@ -32,9 +23,12 @@ namespace CargoApp.Controllers.Api
                     .AsNoTracking()
                     .OrderBy(l => l.City)
                     .Where(l => l.IsVisible && l.NormalizedSettlement.Contains(search))
+                    //.Where(l => l.IsVisible && EF.Functions.Like(l.NormalizedSettlement, $"%{search}%"))
+                    //.Where(l => l.IsVisible && (l.Region.ToUpper().StartsWith(search) || l.District.ToUpper().StartsWith(search) || l.City.ToUpper().StartsWith(search) || l.CityRegion.ToUpper().StartsWith(search)))
+                    //.Where(l => l.IsVisible && (l.Region.StartsWith(search) || l.District.StartsWith(search) || l.City.StartsWith(search) || l.CityRegion.StartsWith(search)))
                     //.Where(l => l.IsVisible && l.City.StartsWith(search))
                     .Take(10)
-                    .Select(l => l.GetFull())
+                    .Select(l => l.GetFullName())
                     .ToArrayAsync();
 
                 //var result = await db.Settlements
@@ -43,12 +37,6 @@ namespace CargoApp.Controllers.Api
                 //    .ToArrayAsync();
 
                 return result;
-
-                //var result = compiledSearch.Invoke(db, search);
-
-                //return result
-                //    .Select(l => l.GetFull())
-                //    .ToArray();
             }
             return null;
         }

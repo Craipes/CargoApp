@@ -1,12 +1,4 @@
-using CargoApp.Data;
-using CargoApp.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-
-//XmlDataExtractor localityExtractor = new("D://UA_DB.xml");
-//localityExtractor.AddDistinct();
-//localityExtractor.RunAndSave("D://UA_DB_EXTRACTOR.xml");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,7 +70,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Search}/{id?}");
 
 //Seeding db
 using (var scope = app.Services.CreateScope())

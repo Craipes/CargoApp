@@ -1,9 +1,4 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Models;
-using CargoApp.Data;
-using Microsoft.EntityFrameworkCore;
-
-namespace CargoApp;
+﻿namespace CargoApp;
 
 public static class SearchQueryHelper
 {
@@ -27,10 +22,11 @@ public static class SearchQueryHelper
     }
 
     public static IQueryable<T> Search<T>(this IQueryable<T> query, Settlement departurePlace,
-    Settlement destinationPlace, SearchRange range, int count = 10) where T : Request
+        Settlement destinationPlace, SearchRange range, int count = 10) where T : Request
     {
         query = query
             .AsNoTracking()
+            .Where(r => r.AddTime.AddHours(Request.DefaultExpirationTimeInHours) > DateTime.UtcNow)
             .Where(r => r.DestinationPlaceId == destinationPlace.Id);
         query = range switch
         {

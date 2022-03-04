@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ApplicationCore.Entities;
+﻿namespace ApplicationCore.Entities;
 
 public class CarResponse
 {

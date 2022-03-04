@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿//const { auto } = require("@popperjs/core");
+
+$(document).ready(function () {
     let carRequestForm = $("#car-request-form");
     let cargoRequestForm = $("#cargo-request-form");
     let carBtn = $("#car-btn");
@@ -6,7 +8,7 @@
     let cargoBtn = $("#cargo-btn");
     let cargoBtnParent = cargoBtn.parent();
 
-    carBtn.click(function () {
+    carBtn.click(function (event) {
         carBtn.removeClass("text-black");
         carBtn.addClass("text-white");
         carBtnParent.addClass("bg-primary");
@@ -17,8 +19,10 @@
 
         cargoRequestForm.hide();
         carRequestForm.show();
+
+        event.preventDefault();
     });
-    cargoBtn.click(function () {
+    cargoBtn.click(function (event) {
         cargoBtn.removeClass("text-black");
         cargoBtn.addClass("text-white");
         cargoBtnParent.addClass("bg-primary");
@@ -29,6 +33,8 @@
 
         carRequestForm.hide();
         cargoRequestForm.show();
+
+        event.preventDefault();
     });
 
     $(".clear-group").each(function () {
@@ -58,6 +64,7 @@ function getSettlementAutocomplete(selector, placeHolder) {
             }
         },
         resultsList: {
+            class: "settlement-list",
             element: (list, data) => {
                 if (!data.results.length) {
                     const message = document.createElement("div");
@@ -70,15 +77,19 @@ function getSettlementAutocomplete(selector, placeHolder) {
             noResults: true,
         },
         resultItem: {
+            class: "settlement-item",
             highlight: true
         },
         threshold: 3,
-        debounce: 0,
+        debounce: 400,
         events: {
             input: {
-                selection: (event) => {
+                selection(event) {
                     const selection = event.detail.selection.value;
                     autocomplete.input.value = selection;
+                },
+                focus() {
+                    if (autocomplete.input.value.length) autocomplete.open();
                 }
             }
         }

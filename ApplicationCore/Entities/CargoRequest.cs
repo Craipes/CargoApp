@@ -10,7 +10,7 @@ public class CargoRequest : Request
 
     public CargoRequest(string userId, string contactPhoneNumber, string contactName,
         int departurePlaceId, int destinationPlaceId, decimal? price, string? details,
-        int? carId, DateTime departureTime) 
+        int? carId, DateTime departureTime)
         : base(userId, contactPhoneNumber, contactName, departurePlaceId, destinationPlaceId, price, details)
     {
         CarId = carId;

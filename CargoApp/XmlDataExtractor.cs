@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Entities;
-using System.Xml;
+﻿using System.Xml;
 
 namespace CargoApp;
 

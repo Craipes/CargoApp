@@ -1,7 +1,4 @@
-﻿using CargoApp.Data;
-using Microsoft.AspNetCore.Identity;
-
-namespace CargoApp.Services;
+﻿namespace CargoApp.Services;
 
 public class UserIdManager
 {

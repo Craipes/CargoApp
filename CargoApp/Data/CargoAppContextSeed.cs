@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
-namespace CargoApp.Data;
+﻿namespace CargoApp.Data;
 
 public static class CargoAppContextSeed
 {

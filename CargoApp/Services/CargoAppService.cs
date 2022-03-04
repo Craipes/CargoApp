@@ -1,6 +1,4 @@
-﻿using CargoApp.Data;
-
-namespace CargoApp.Services;
+﻿namespace CargoApp.Services;
 
 public class CargoAppService
 {

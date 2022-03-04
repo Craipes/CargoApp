@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ApplicationCore.Models;
+﻿namespace ApplicationCore.Models;
 
 public abstract class RequestModel
 {
@@ -14,4 +12,5 @@ public abstract class RequestModel
     [MaxLength(512)] public string? Details { get; set; }
 
     public DateTime? AddTime { get; set; } = null;
+    public bool IsExpired { get; set; }
 }
