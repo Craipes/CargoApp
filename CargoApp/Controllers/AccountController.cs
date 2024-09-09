@@ -56,7 +56,7 @@ public class AccountController : Controller
                 var result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Search", "Home");
                 }
             }
         }

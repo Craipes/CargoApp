@@ -5,23 +5,23 @@
 
 <h1 class="text-center mb-5">Пошук</h1>
 
-<div class="main-search-box box-shadow mx-auto col-10 text-start">
+<div class="panel box-shadow mx-auto col-10 text-start">
     <div class="d-flex text-center">
-        <div class="main-search-box-left w-50 bg-primary position-relative">
+        <div class="panel-top-left bg-primary">
             <a class="fs-3 text-white text-decoration-none stretched-link" href="#" id="car-btn">Мені потрібен водій</a>
         </div>
-        <div class="main-search-box-right w-50 position-relative">
+        <div class="panel-top-right">
             <a class="fs-3 text-black text-decoration-none stretched-link" href="#" id="cargo-btn">Мені потрібен вантаж</a>
         </div>
     </div>
     <div class="p-3" id="car-request-form">
         <div>
-            <form method="post" asp-action="Search" asp-controller="Home">
+            <form method="post" class="search" asp-action="Search" asp-controller="Home">
                 <input asp-for=IsCarSearching checked="checked" hidden="hidden" />
                 <div class="mb-3 row clear-group">
                     <label class="col-form-label col-2" asp-for=CarSearch.DeparturePlace>Місце відбуття</label>
                     <div class="col-8">
-                        <input class="form-control w-100 clear-input" id="car-departure" asp-for=CarSearch.DeparturePlace autocomplete="off" spellcheck="false" />
+                        <input class="form-control w-100 clear-input" id="car-departure" asp-for=CarSearch.DeparturePlace autocomplete="off" spellcheck="false" required />
                     </div>
                     <div class="col-2">
                         <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
@@ -30,7 +30,7 @@
                 <div class="mb-3 row clear-group">
                     <label class="col-form-label col-2" asp-for=CarSearch.DestinationPlace>Місце прибуття</label>
                     <div class="col-8">
-                        <input class="form-control w-100 clear-input" id="car-destination" asp-for=CarSearch.DestinationPlace autocomplete="off" spellcheck="false" />
+                        <input class="form-control w-100 clear-input" id="car-destination" asp-for=CarSearch.DestinationPlace autocomplete="off" spellcheck="false" required />
                     </div>
                     <div class="col-2">
                         <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
@@ -42,18 +42,18 @@
                         <select class="form-select" asp-for=CarSearch.SearchRange asp-items=Html.GetEnumSelectList(typeof(SearchRange))></select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Пошук</button>
+                <button type="submit" class="btn btn-primary btn-search">Пошук</button>
             </form>
         </div>
     </div>
     <div class="p-3" id="cargo-request-form" style="display: none;">
         <div>
-            <form method="post" asp-action="Search" asp-controller="Home">
+            <form method="post" class="search" asp-action="Search" asp-controller="Home">
                 <input asp-for=IsCargoSearching checked="checked" hidden="hidden" />
                 <div class="mb-3 row clear-group">
                     <label class="col-form-label col-2" asp-for=CargoSearch.DeparturePlace>Місце відбуття</label>
                     <div class="col-8">
-                        <input class="form-control w-100 clear-input" id="cargo-departure" asp-for=CargoSearch.DeparturePlace autocomplete="off" spellcheck="false" />
+                        <input class="form-control w-100 clear-input" id="cargo-departure" asp-for=CargoSearch.DeparturePlace autocomplete="off" spellcheck="false" required />
                     </div>
                     <div class="col-2">
                         <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
@@ -62,7 +62,7 @@
                 <div class="mb-3 row clear-group">
                     <label class="col-form-label col-2" asp-for=CargoSearch.DestinationPlace>Місце прибуття</label>
                     <div class="col-8">
-                        <input class="form-control w-100 clear-input" id="cargo-destination" asp-for=CargoSearch.DestinationPlace autocomplete="off" spellcheck="false" />
+                        <input class="form-control w-100 clear-input" id="cargo-destination" asp-for=CargoSearch.DestinationPlace autocomplete="off" spellcheck="false" required />
                     </div>
                     <div class="col-2">
                         <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
@@ -80,106 +80,7 @@
     </div>
 </div>
 
-<div class="mt-5">
-    @if (Model != null)
-    {
-        <div class="col-10 mx-auto">
-            @if (Model.CarRequests != null)
-            {
-                <h3 class="text-center">Запити на машину</h3>
-                <div class="list-group">
-                    @for (int i = 0; i < Model.CarRequests.Count; i++)
-                    {
-                        var request = Model.CarRequests[i];
-                        <div class="list-group-item">
-                            <div class="row">
-                                <span class="fw-bold col-4">Місце відбуття</span>
-                                <span class="col-8">@request.DeparturePlace</span>
-                            </div>
-                            <div class="row">
-                                <span class="fw-bold col-4">Місце прибуття</span>
-                                <span class="col-8">@request.DestinationPlace</span>
-                            </div>
-                            <div class="row">
-                                <span class="fw-bold col-4">Маса вантажу</span>
-                                <span class="col-8">@request.CargoMass кг</span>
-                            </div>
-                            <div class="row">
-                                <span class="fw-bold col-4">Об'єм вантажу</span>
-                                <span class="col-8">@request.CargoVolume м³</span>
-                            </div>
-                            <div class="row">
-                                <span class="fw-bold col-4">Пропонована ціна</span>
-                                <span class="col-8">@request.Price грн</span>
-                            </div>
-                            <div class="row">
-                                <span class="fw-bold col-4">Час подання</span>
-                                <span class="col-8">@request.AddTime</span>
-                            </div>
-                            <div class="row">
-                                <span class="fw-bold col-4">Час дії сплинув?</span>
-                                <span class="col-8">@request.IsExpired</span>
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
-            else if (Model.CargoRequests != null)
-            {
-                <h3>Запити на вантаж</h3>
-                @for (int i = 0; i < Model.CargoRequests.Count; i++)
-                {
-                    var request = Model.CargoRequests[i];
-                    @*<div class="list-group-item">
-                        <div class="row">
-                            <span class="fw-bold col-4">Місце відбуття</span>
-                            <span class="col-8">@request.DeparturePlace</span>
-                        </div>
-                        <div class="row">
-                            <span class="fw-bold col-4">Місце прибуття</span>
-                            <span class="col-8">@request.DestinationPlace</span>
-                        </div>
-                        <div class="row">
-                            <span class="fw-bold col-4">Час відбуття</span>
-                            <span class="col-8">@request.DepartureTime</span>
-                        </div>
-                        <div class="row">
-                            <span class="fw-bold col-4">Пропонована ціна</span>
-                            <span class="col-8">@request.Price грн</span>
-                        </div>
-                        <div class="row">
-                            <span class="fw-bold col-4">Час подання</span>
-                            <span class="col-8">@request.AddTime</span>
-                        </div>
-                        <div class="row">
-                            <span class="fw-bold col-4">Час дії сплинув?</span>
-                            <span class="col-8">@request.IsExpired</span>
-                        </div>
-                    </div>*@
-                    <div class="list-group-item rounded">
-                        <div class="row text-center">
-                            <span class="col-5 border rounded-pill">@request.DeparturePlace</span>
-                            <span class="col-2">></span>
-                            <span class="col-5 border rounded-pill">@request.DestinationPlace</span>
-                        </div>
-                        <div class="row">
-                            <span class="fw-bold col-4">Час відбуття</span>
-                            <span class="col-8">@request.DepartureTime.ToLongDateString() @request.DepartureTime.ToShortTimeString()</span>
-                        </div>
-                        <div class="row">
-                            <span class="fw-bold col-4">Пропонована ціна</span>
-                            <span class="col-8">@request.Price грн</span>
-                        </div>
-                        <div class="row">
-                            <span class="fw-bold col-4">Час подання</span>
-                            <span class="col-8">@request.AddTime</span>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-    }
-</div>
+<div id="search-results"></div>
 
 @section Scripts {
 <script>

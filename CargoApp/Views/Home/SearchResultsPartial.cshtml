@@ -1,0 +1,88 @@
+﻿@model SearchViewModel
+
+<div class="mt-5">
+    @if (Model != null)
+    {
+        <div class="col-10 mx-auto">
+            @if (Model.CarRequests != null && Model.CarRequests.Count != 0)
+            {
+                <h3 class="text-center">Запити на машину</h3>
+                <div class="list-group">
+                    @for (int i = 0; i < Model.CarRequests.Count; i++)
+                    {
+                        var request = Model.CarRequests[i];
+                        <div class="list-group-item">
+                            <div class="row">
+                                <span class="fw-bold col-4">Місце відбуття</span>
+                                <span class="col-8">@request.DeparturePlace</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-4">Місце прибуття</span>
+                                <span class="col-8">@request.DestinationPlace</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-4">Маса вантажу</span>
+                                <span class="col-8">@request.CargoMass кг</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-4">Об'єм вантажу</span>
+                                <span class="col-8">@request.CargoVolume м³</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-4">Пропонована ціна</span>
+                                <span class="col-8">@request.Price грн</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-4">Час подання</span>
+                                <span class="col-8">@request.AddTime</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-4">Час дії сплинув?</span>
+                                <span class="col-8">@request.IsExpired</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else if (Model.CargoRequests != null && Model.CargoRequests.Count != 0)
+            {
+                <h3>Запити на вантаж</h3>
+                @for (int i = 0; i < Model.CargoRequests.Count; i++)
+                {
+                    var request = Model.CargoRequests[i];
+                    <div class="list-group-item rounded">
+                        <div class="row text-center">
+                            <span class="col-5 border rounded-pill">@request.DeparturePlace</span>
+                            <span class="col-2">></span>
+                            <span class="col-5 border rounded-pill">@request.DestinationPlace</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Час відбуття</span>
+                            <span class="col-8">@request.DepartureTime.ToLongDateString() @request.DepartureTime.ToShortTimeString()</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Пропонована ціна</span>
+                            <span class="col-8">@request.Price грн</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Час подання</span>
+                            <span class="col-8">@request.AddTime</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Контактне ім'я</span>
+                            <span class="col-8">@request.ContactName</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-4">Контактний номер</span>
+                            <span class="col-8">@request.ContactPhoneNumber</span>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <h3>Результатів не знайдено. Спробуйте змінити режим пошуку або створити власний запит на пошук.</h3>
+            }
+        </div>
+    }
+</div>

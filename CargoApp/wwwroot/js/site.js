@@ -44,6 +44,25 @@ $(document).ready(function () {
             input.val("");
         });
     });
+
+    let searchResults = $("#search-results");
+    if (searchResults != null) {
+        $(".search").submit(async function (e) {
+            e.preventDefault();
+
+            const form = $(this);
+            const url = form.prop("action");
+            const data = form.serialize();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                success: function (response) {
+                    searchResults.html(response);
+                }
+            })
+        });
+    }
 });
 
 function getSettlementAutocomplete(selector, placeHolder) {

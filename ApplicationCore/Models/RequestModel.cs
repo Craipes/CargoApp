@@ -3,7 +3,7 @@
 public abstract class RequestModel
 {
     [Phone] public string ContactPhoneNumber { get; set; } = null!;
-    [MaxLength(64)] public string ContactName { get; set; } = null!;
+    [Required] [MaxLength(64)] public string ContactName { get; set; } = null!;
     [Required] public string DeparturePlace { get; set; } = null!;
     [Required] public string DestinationPlace { get; set; } = null!;
 

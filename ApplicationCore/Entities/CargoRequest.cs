@@ -4,7 +4,7 @@ public class CargoRequest : Request
 {
     public int? CarId { get; set; }
     public Car? Car { get; set; }
-    public DateTime DepartureTime { get; set; }
+    [CorrectDepartureTime] public DateTime DepartureTime { get; set; }
 
     public List<CargoResponse> Responses { get; set; } = new();
 

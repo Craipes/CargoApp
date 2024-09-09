@@ -32,15 +32,21 @@ input, select, button {
     box-shadow: 0 0.25rem 1rem 0 rgb(0 0 0 / 15%);
 }
 
-.main-search-box {
+.panel {
     border-radius: 15px;
 }
 
-.main-search-box-left {
+.panel-top-left,
+.panel-top-right {
+    width: 50%;
+    position: relative;
+}
+
+.panel-top-left {
     border-top-left-radius: 15px;
 }
 
-.main-search-box-right {
+.panel-top-right {
     border-top-right-radius: 15px;
 }
 

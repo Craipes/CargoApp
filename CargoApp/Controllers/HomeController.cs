@@ -53,7 +53,7 @@ public class HomeController : Controller
                 }
             }
         }
-        return RedirectToAction("Create", "Home");
+        return View("Create");
     }
 
     [Authorize]
@@ -81,7 +81,7 @@ public class HomeController : Controller
                 }
             }
         }
-        return RedirectToAction("Create", "Home");
+        return View("Create");
     }
 
     [HttpGet]
@@ -90,8 +90,9 @@ public class HomeController : Controller
         return View();
     }
 
+    [AjaxOnly]
     [HttpPost]
-    public async Task<IActionResult> Search(SearchViewModel model)
+    public async Task<PartialViewResult> Search(SearchViewModel model)
     {
         if (model.IsCarSearching)
         {
@@ -108,7 +109,7 @@ public class HomeController : Controller
                         .Select(r => CargoRequestModel.FromRequest(r))
                         .ToList();
 
-                    return View(model);
+                    return PartialView("SearchResultsPartial", model);
                 }
             }
         }
@@ -127,11 +128,11 @@ public class HomeController : Controller
                         .Select(r => CarRequestModel.FromRequest(r))
                         .ToList();
 
-                    return View(model);
+                    return PartialView("SearchResultsPartial", model);
                 }
             }
         }
-        return View(model);
+        return PartialView("SearchResultsPartial", model);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

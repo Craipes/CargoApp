@@ -4,8 +4,8 @@ public class UserInfo
 {
     public string Id { get; set; } = null!;
     [MaxLength(64)] public string Name { get; set; } = null!;
-    /*[RegularExpression("")]*/ public string PhoneNumber { get; set; } = null!;
-    /*[RegularExpression("")]*/ [Phone] public string? DefaultPhoneNumber { get; set; }
+    [CorrectPhone] public string PhoneNumber { get; set; } = null!;
+    [CorrectPhone] public string? DefaultPhoneNumber { get; set; }
 
     [Column(TypeName = "decimal(3, 2)")]
     [Range(1.00f, 5.00f)] public float Rating { get; set; }
