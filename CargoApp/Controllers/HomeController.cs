@@ -8,80 +8,17 @@ namespace CargoApp.Controllers;
 public class HomeController : Controller
 {
     private readonly CargoAppContext db;
-    private readonly UserIdManager userIdManager;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(CargoAppContext context, UserIdManager userIdManager, ILogger<HomeController> logger)
+    public HomeController(CargoAppContext context, ILogger<HomeController> logger)
     {
         db = context;
-        this.userIdManager = userIdManager;
         _logger = logger;
     }
 
-    public IActionResult Create()
+    public IActionResult About()
     {
         return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [Authorize]
-    [HttpPost]
-    public async Task<IActionResult> AddCarRequest(IndexViewModel model)
-    {
-        if (model.IsCarRequest)
-        {
-            RemoveFor(ModelState, nameof(model.CargoRequest));
-            if (ModelState.IsValid)
-            {
-                var requestModel = model.CarRequest;
-
-                var places = await db.SearchPlaces(requestModel.DeparturePlace.ToUpper(), requestModel.DestinationPlace.ToUpper());
-
-                if (places != null)
-                {
-                    (var departurePlace, var destinationPlace) = places.Value;
-
-                    string userId = userIdManager.GetUserId();
-                    CarRequest request = requestModel.CreateRequest(userId, departurePlace.Id, destinationPlace.Id);
-
-                    db.CarRequests.Add(request);
-                    await db.SaveChangesAsync();
-                }
-            }
-        }
-        return View("Create");
-    }
-
-    [Authorize]
-    [HttpPost]
-    public async Task<IActionResult> AddCargoRequest(IndexViewModel model)
-    {
-        if (model.IsCargoRequest)
-        {
-            RemoveFor(ModelState, nameof(model.CarRequest));
-            if (ModelState.IsValid)
-            {
-                var requestModel = model.CargoRequest;
-
-                var places = await db.SearchPlaces(requestModel.DeparturePlace.ToUpper(), requestModel.DestinationPlace.ToUpper());
-
-                if (places != null)
-                {
-                    (var departurePlace, var destinationPlace) = places.Value;
-
-                    string userId = userIdManager.GetUserId();
-                    CargoRequest request = requestModel.CreateRequest(userId, departurePlace.Id, destinationPlace.Id);
-
-                    db.CargoRequests.Add(request);
-                    await db.SaveChangesAsync();
-                }
-            }
-        }
-        return View("Create");
     }
 
     [HttpGet]

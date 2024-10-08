@@ -43,8 +43,6 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<UserIdManager>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

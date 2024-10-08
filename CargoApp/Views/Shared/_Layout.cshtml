@@ -24,10 +24,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">Пошук</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Create">Створити запит</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Про проєкт</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Конфіденційність</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="Create">Створити запит</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="/swagger">Swagger</a>
@@ -37,7 +37,7 @@
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-action="Requests" asp-controller="Account">Запити</a>
+                                <a class="nav-link text-dark" asp-action="Requests" asp-controller="Requests">Запити</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="#">@User.Identity.Name</a>
@@ -70,7 +70,20 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - CargoApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Конфіденційність</a>
+            <div class="row">
+                <div class="col">
+                    2024 - CargoApp
+                </div>
+                <div class="col text-center">
+                    Юрчук Роман ІПЗ-22-1
+                </div>
+                <div class="col text-center">
+                    Хмельницький національний університет
+                </div>
+                <div class="col text-end">
+                    Вебресурс для доставки вантажів
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
