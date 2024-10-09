@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore.Models;
+﻿namespace CargoApp.ViewModels;
 
 public enum SearchRange
 {

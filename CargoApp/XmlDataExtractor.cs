@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using CargoApp.Models;
+using System.Xml;
 
 namespace CargoApp;
 

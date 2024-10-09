@@ -1,9 +1,9 @@
-﻿namespace ApplicationCore.Models;
+﻿namespace CargoApp.ViewModels;
 
-public abstract class RequestModel
+public abstract class RequestViewModel
 {
     [Phone] public string ContactPhoneNumber { get; set; } = null!;
-    [Required] [MaxLength(64)] public string ContactName { get; set; } = null!;
+    [Required][MaxLength(64)] public string ContactName { get; set; } = null!;
     [Required] public string DeparturePlace { get; set; } = null!;
     [Required] public string DestinationPlace { get; set; } = null!;
 

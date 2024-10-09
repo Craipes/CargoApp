@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CargoApp", "CargoApp\CargoApp.csproj", "{F0113C0C-C9B6-43E5-B1E1-A0603ABB467C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{A2EC55FC-98D1-4EEB-9750-19A440C78098}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{F0113C0C-C9B6-43E5-B1E1-A0603ABB467C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0113C0C-C9B6-43E5-B1E1-A0603ABB467C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0113C0C-C9B6-43E5-B1E1-A0603ABB467C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2EC55FC-98D1-4EEB-9750-19A440C78098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2EC55FC-98D1-4EEB-9750-19A440C78098}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2EC55FC-98D1-4EEB-9750-19A440C78098}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2EC55FC-98D1-4EEB-9750-19A440C78098}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

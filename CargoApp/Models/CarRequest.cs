@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore.Entities;
+﻿namespace CargoApp.Models;
 
 public class CarRequest : Request
 {

@@ -1,4 +1,4 @@
-﻿namespace ApplicationCore.Attributes;
+﻿namespace CargoApp.Attributes;
 
 public class CorrectDepartureTimeAttribute : ValidationAttribute
 {

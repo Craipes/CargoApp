@@ -1,6 +1,8 @@
-﻿namespace ApplicationCore.Models;
+﻿using CargoApp.Models;
 
-public class CargoRequestModel : RequestModel
+namespace CargoApp.ViewModels;
+
+public class CargoRequestViewModel : RequestViewModel
 {
     public Car? Car { get; set; }
     public DateTime DepartureTime { get; set; }
@@ -14,9 +16,9 @@ public class CargoRequestModel : RequestModel
         };
     }
 
-    public static CargoRequestModel FromRequest(CargoRequest request)
+    public static CargoRequestViewModel FromRequest(CargoRequest request)
     {
-        return new CargoRequestModel()
+        return new CargoRequestViewModel()
         {
             ContactName = request.ContactName,
             ContactPhoneNumber = request.ContactPhoneNumber,

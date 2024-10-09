@@ -1,6 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
-namespace ApplicationCore.Attributes;
+namespace CargoApp.Attributes;
 
 public class CorrectPhone : ValidationAttribute
 {

@@ -1,4 +1,4 @@
-﻿namespace CargoApp.Data;
+﻿namespace CargoApp.Models;
 
 public class User : IdentityUser
 {

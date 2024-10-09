@@ -1,4 +1,5 @@
-﻿using CargoApp.Services;
+﻿using CargoApp.Models;
+using CargoApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,8 +44,8 @@ public class RequestsController : Controller
 
             if (user != null)
             {
-                var carRequests = user.CarRequests.Select(r => CarRequestModel.FromRequest(r)).OrderByDescending(r => r.AddTime).ThenBy(r => r.IsExpired);
-                var cargoRequests = user.CargoRequests.Select(r => CargoRequestModel.FromRequest(r)).OrderByDescending(r => r.AddTime).ThenBy(r => r.IsExpired);
+                var carRequests = user.CarRequests.Select(r => CarRequestViewModel.FromRequest(r)).OrderByDescending(r => r.AddTime).ThenBy(r => r.IsExpired);
+                var cargoRequests = user.CargoRequests.Select(r => CargoRequestViewModel.FromRequest(r)).OrderByDescending(r => r.AddTime).ThenBy(r => r.IsExpired);
                 var model = new RequestsViewModel(carRequests, cargoRequests);
 
                 return View(model);

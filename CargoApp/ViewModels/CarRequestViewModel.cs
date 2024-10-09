@@ -1,6 +1,8 @@
-﻿namespace ApplicationCore.Models;
+﻿using CargoApp.Models;
 
-public class CarRequestModel : RequestModel
+namespace CargoApp.ViewModels;
+
+public class CarRequestViewModel : RequestViewModel
 {
     [Range(0.5f, 1000000f)] public float CargoMass { get; set; }
 
@@ -18,9 +20,9 @@ public class CarRequestModel : RequestModel
             Price, Details, CargoMass, CargoVolume, CargoLength, CargoWidth, CargoHeight);
     }
 
-    public static CarRequestModel FromRequest(CarRequest request)
+    public static CarRequestViewModel FromRequest(CarRequest request)
     {
-        return new CarRequestModel()
+        return new CarRequestViewModel()
         {
             ContactName = request.ContactName,
             ContactPhoneNumber = request.ContactPhoneNumber,

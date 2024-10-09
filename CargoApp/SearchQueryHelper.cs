@@ -1,9 +1,11 @@
-﻿namespace CargoApp;
+﻿using CargoApp.Models;
+
+namespace CargoApp;
 
 public static class SearchQueryHelper
 {
     public static async Task<IQueryable<T>?> Search<T>(this IQueryable<T> query, CargoAppContext db,
-        SearchModel model, int count = 10) where T : Request
+        SearchRequestViewModel model, int count = 10) where T : Request
     {
         return await query.Search(db, model.DeparturePlace.ToUpper(),
             model.DestinationPlace.ToUpper(), model.SearchRange, count);

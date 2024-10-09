@@ -1,6 +1,6 @@
-﻿namespace ApplicationCore.Models;
+﻿namespace CargoApp.ViewModels;
 
-public class SearchModel
+public class SearchRequestViewModel
 {
     public string DeparturePlace { get; set; } = null!;
     public string DestinationPlace { get; set; } = null!;

@@ -1,10 +1,10 @@
-﻿namespace ApplicationCore.Entities;
+﻿namespace CargoApp.Models;
 
 public class UserInfo
 {
     public string Id { get; set; } = null!;
     [MaxLength(64)] public string Name { get; set; } = null!;
-    [CorrectPhone] public string PhoneNumber { get; set; } = null!;
+    [CorrectPhone] public string? PhoneNumber { get; set; }
     [CorrectPhone] public string? DefaultPhoneNumber { get; set; }
 
     [Column(TypeName = "decimal(3, 2)")]

@@ -1,4 +1,6 @@
-﻿namespace CargoApp.Data;
+﻿using CargoApp.Models;
+
+namespace CargoApp.Data;
 
 public class CargoAppContext : IdentityDbContext<User>
 {

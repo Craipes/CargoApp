@@ -1,6 +1,6 @@
-﻿namespace ApplicationCore.Models;
+﻿namespace CargoApp.ViewModels;
 
-public class RegisterModel
+public class RegisterViewModel
 {
     [Phone]
     public string PhoneNumber { get; set; } = null!;
@@ -16,9 +16,9 @@ public class RegisterModel
     [Compare("Password")]
     public string ConfirmPassword { get; set; } = null!;
 
-    public RegisterModel() { }
+    public RegisterViewModel() { }
 
-    public RegisterModel(string phoneNumber, string userName, string password, string confirmPassword)
+    public RegisterViewModel(string phoneNumber, string userName, string password, string confirmPassword)
     {
         PhoneNumber = phoneNumber;
         Name = userName;

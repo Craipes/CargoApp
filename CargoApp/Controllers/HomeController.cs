@@ -43,7 +43,7 @@ public class HomeController : Controller
                     var requestsArr = await requests.ToArrayAsync();
 
                     model.CargoRequests = requestsArr
-                        .Select(r => CargoRequestModel.FromRequest(r))
+                        .Select(r => CargoRequestViewModel.FromRequest(r))
                         .ToList();
 
                     return PartialView("SearchResultsPartial", model);
@@ -62,7 +62,7 @@ public class HomeController : Controller
                     var requestsArr = await requests.ToArrayAsync();
 
                     model.CarRequests = requests
-                        .Select(r => CarRequestModel.FromRequest(r))
+                        .Select(r => CarRequestViewModel.FromRequest(r))
                         .ToList();
 
                     return PartialView("SearchResultsPartial", model);

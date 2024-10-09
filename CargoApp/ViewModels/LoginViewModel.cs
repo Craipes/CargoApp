@@ -1,6 +1,6 @@
-﻿namespace ApplicationCore.Models;
+﻿namespace CargoApp.ViewModels;
 
-public class LoginModel
+public class LoginViewModel
 {
     [Phone]
     public string PhoneNumber { get; set; } = null!;
@@ -11,9 +11,9 @@ public class LoginModel
 
     public bool RememberMe { get; set; }
 
-    public LoginModel() { }
+    public LoginViewModel() { }
 
-    public LoginModel(string phoneNumber, string password)
+    public LoginViewModel(string phoneNumber, string password)
     {
         PhoneNumber = phoneNumber;
         Password = password;
