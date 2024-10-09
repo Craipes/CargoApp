@@ -26,19 +26,19 @@ public class RequestsController : Controller
         if (userId != null)
         {
             var user = await db.Users
-                .Include(s => s.UserInfo.CarRequests)
+                .Include(s => s.CarRequests)
                     .ThenInclude(s => s.DeparturePlace)
-                .Include(s => s.UserInfo.CarRequests)
+                .Include(s => s.CarRequests)
                     .ThenInclude(s => s.DestinationPlace)
-                .Include(s => s.UserInfo.CargoRequests)
+                .Include(s => s.CargoRequests)
                     .ThenInclude(s => s.DeparturePlace)
-                .Include(s => s.UserInfo.CargoRequests)
+                .Include(s => s.CargoRequests)
                     .ThenInclude(s => s.DestinationPlace)
                 .Select(s => new
                 {
                     s.Id,
-                    s.UserInfo.CarRequests,
-                    s.UserInfo.CargoRequests
+                    s.CarRequests,
+                    s.CargoRequests
                 })
                 .FirstOrDefaultAsync(s => s.Id == userId);
 
@@ -75,7 +75,12 @@ public class RequestsController : Controller
                 {
                     (var departurePlace, var destinationPlace) = places.Value;
 
-                    string userId = userManager.GetUserId(User);
+                    string? userId = userManager.GetUserId(User);
+                    if (userId == null)
+                    {
+                        ModelState.AddModelError("", "User not found");
+                        return View(nameof(Create));
+                    }
                     CarRequest request = requestModel.CreateRequest(userId, departurePlace.Id, destinationPlace.Id);
 
                     db.CarRequests.Add(request);
@@ -102,7 +107,12 @@ public class RequestsController : Controller
                 {
                     (var departurePlace, var destinationPlace) = places.Value;
 
-                    string userId = userManager.GetUserId(User);
+                    string? userId = userManager.GetUserId(User);
+                    if (userId == null)
+                    {
+                        ModelState.AddModelError("", "User not found");
+                        return View(nameof(Create));
+                    }
                     CargoRequest request = requestModel.CreateRequest(userId, departurePlace.Id, destinationPlace.Id);
 
                     db.CargoRequests.Add(request);

@@ -7,7 +7,7 @@ public class CargoResponse
 
     //Check
     public string SenderId { get; set; }
-    public UserInfo? Sender { get; set; }
+    public User? Sender { get; set; }
 
     [Column(TypeName = "decimal(6, 3)")]
     [Range(0.050f, 100f)] public float? CargoMass { get; set; }

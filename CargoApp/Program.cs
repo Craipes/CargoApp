@@ -78,8 +78,9 @@ using (var scope = app.Services.CreateScope())
     try
     {
         UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
+        RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         CargoAppContext context = services.GetRequiredService<CargoAppContext>();
-        await CargoAppContextSeed.SeedUsersAsync(userManager);
+        await CargoAppContextSeed.SeedUsersAsync(userManager, roleManager);
         //await CargoAppContextSeed.RecreateSettlements(context, "D://WEIRD_CHECK_DB.xml");
     }
     catch (Exception ex)

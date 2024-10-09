@@ -3,7 +3,7 @@
 public class Car : BaseEntity
 {
     public string? DriverId { get; set; }
-    public UserInfo? Driver { get; set; }
+    public User? Driver { get; set; }
 
     [MaxLength(24)] public string? NumberPlate { get; set; }
     [MaxLength(32)] public string? Brand { get; set; }

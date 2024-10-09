@@ -104,18 +104,7 @@ public class CargoAppContext : IdentityDbContext<User>
 
         builder.Entity<User>(user =>
         {
-            user.HasOne(u => u.UserInfo).WithOne().HasForeignKey<UserInfo>(u => u.Id);
-            user.Property(u => u.PhoneNumber).IsRequired().HasColumnName("PhoneNumber");
             user.HasIndex(u => u.PhoneNumber).IsUnique();
-
-            user.ToTable("Users");
-        });
-
-        builder.Entity<UserInfo>(user =>
-        {
-            user.Property(u => u.PhoneNumber).IsRequired().HasColumnName("PhoneNumber");
-            user.HasIndex(u => u.PhoneNumber).IsUnique();
-
             user.ToTable("Users");
         });
 

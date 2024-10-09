@@ -7,7 +7,7 @@ public class CarResponse
 
     //Check
     public string DriverId { get; set; }
-    public UserInfo? Driver { get; set; }
+    public User? Driver { get; set; }
     public Car? Car { get; set; }
 
     [MaxLength(512)] public string? Comment { get; set; }

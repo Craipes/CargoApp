@@ -27,7 +27,6 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             User user = new() { PhoneNumber = model.PhoneNumber, UserName = model.Name };
-            user.SetInfo(model.Name);
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -68,5 +67,11 @@ public class AccountController : Controller
     {
         await signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
+    }
+
+    [HttpGet]
+    public IActionResult Profile()
+    {
+        return View();
     }
 }

@@ -2,5 +2,5 @@
 
 public static class CargoAppConstants
 {
-    public const string AnonymousIdCookie = "AnonymousId";
+    public const string AdminRole = "Admin";
 }

@@ -5,7 +5,7 @@ public abstract class Request : BaseEntity
     public const double DefaultExpirationTimeInHours = 72;
 
     public string UserId { get; set; }
-    public UserInfo? User { get; set; }
+    public User? User { get; set; }
 
     [Phone] public string ContactPhoneNumber { get; set; }
     [MaxLength(64)] public string ContactName { get; set; }
