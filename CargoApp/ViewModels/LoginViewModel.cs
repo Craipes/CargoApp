@@ -2,20 +2,14 @@
 
 public class LoginViewModel
 {
-    [Phone]
-    public string PhoneNumber { get; set; } = null!;
+    [EmailAddress]
+    public required string Email { get; set; }
 
     [DataType(DataType.Password)]
     [MinLength(6)]
-    public string Password { get; set; } = null!;
+    public required string Password { get; set; }
 
-    public bool RememberMe { get; set; }
+    public required bool RememberMe { get; set; }
 
     public LoginViewModel() { }
-
-    public LoginViewModel(string phoneNumber, string password)
-    {
-        PhoneNumber = phoneNumber;
-        Password = password;
-    }
 }

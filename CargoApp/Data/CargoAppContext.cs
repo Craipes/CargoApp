@@ -102,12 +102,6 @@ public class CargoAppContext : IdentityDbContext<User>
                 .OnDelete(DeleteBehavior.NoAction);
         });
 
-        builder.Entity<User>(user =>
-        {
-            user.HasIndex(u => u.PhoneNumber).IsUnique();
-            user.ToTable("Users");
-        });
-
         builder.Entity<Settlement>(settlement =>
         {
             settlement.HasIndex(l => l.Region);

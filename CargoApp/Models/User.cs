@@ -2,7 +2,7 @@
 
 public class User : IdentityUser
 {
-    [MaxLength(64)] public string Name { get; set; } = null!;
+    [MaxLength(64)] public required string Name { get; set; }
     [CorrectPhone] public string? DefaultPhoneNumber { get; set; }
 
     [Column(TypeName = "decimal(3, 2)")]

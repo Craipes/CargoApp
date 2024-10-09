@@ -1,15 +1,24 @@
-﻿using CargoApp.Models;
-
-namespace CargoApp.Data;
+﻿namespace CargoApp.Data;
 
 public static class CargoAppContextSeed
 {
-    public static async Task SeedUsersAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+    public static async Task SeedAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
     {
-        var user = await userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == "+380989973045");
+        // Seeding User
+        const string userEmail = "user@gmail.com";
+        var user = await userManager.FindByEmailAsync(userEmail);
         if (user == null)
         {
-            var defaultUser = new User() { PhoneNumber = "+380989973045", UserName = "Default user" };
+            var defaultUser = new User() { Email = userEmail, UserName = userEmail, Name = "User" };
+            await userManager.CreateAsync(defaultUser, "password");
+        }
+
+        // Seeding Admin
+        const string adminEmail = "admin@gmail.com";
+        user = await userManager.FindByEmailAsync(adminEmail);
+        if (user == null)
+        {
+            var defaultUser = new User() { Email = adminEmail, UserName = adminEmail, Name = "Admin" };
             await userManager.CreateAsync(defaultUser, "password");
             user = defaultUser;
         }

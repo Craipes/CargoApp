@@ -26,12 +26,12 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            User user = new() { PhoneNumber = model.PhoneNumber, UserName = model.Name };
+            User user = new() { Email = model.Email, UserName = model.Email, Name = model.Name };
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 await signInManager.PasswordSignInAsync(user, model.Password, true, false);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Search", "Home");
             }
         }
         return View(model);
@@ -48,7 +48,7 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = await userManager.FindByPhoneAsync(model.PhoneNumber);
+            var user = await userManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
                 var result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
@@ -66,7 +66,7 @@ public class AccountController : Controller
     public async Task<IActionResult> Logout()
     {
         await signInManager.SignOutAsync();
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Search", "Home");
     }
 
     [HttpGet]

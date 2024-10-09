@@ -3,7 +3,14 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+}
+else
+{
+    builder.Services.AddControllersWithViews();
+}
 
 builder.Services.AddDbContext<CargoAppContext>(options =>
 {
@@ -14,6 +21,7 @@ builder.Services.AddDbContext<CargoAppContext>(options =>
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.User.AllowedUserNameCharacters = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+àáâã´äåºæçè³¿éêëìíîïğñòóôõö÷øùüşÿ¸ıúûÀÁÂÃ¥ÄÅªÆÇÈ²¯ÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÜŞß¨İÚÛ";
+    options.User.RequireUniqueEmail = true;
 
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
@@ -80,7 +88,7 @@ using (var scope = app.Services.CreateScope())
         UserManager<User> userManager = services.GetRequiredService<UserManager<User>>();
         RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         CargoAppContext context = services.GetRequiredService<CargoAppContext>();
-        await CargoAppContextSeed.SeedUsersAsync(userManager, roleManager);
+        await CargoAppContextSeed.SeedAsync(userManager, roleManager);
         //await CargoAppContextSeed.RecreateSettlements(context, "D://WEIRD_CHECK_DB.xml");
     }
     catch (Exception ex)
