@@ -2,10 +2,10 @@
 
 public class RequestsViewModel
 {
-    public List<CarRequestViewModel> CarRequests { get; set; }
-    public List<CargoRequestViewModel> CargoRequests { get; set; }
+    public List<CarRequest> CarRequests { get; set; }
+    public List<CargoRequest> CargoRequests { get; set; }
 
-    public RequestsViewModel(IEnumerable<CarRequestViewModel> carRequests, IEnumerable<CargoRequestViewModel> cargoRequests)
+    public RequestsViewModel(IEnumerable<CarRequest> carRequests, IEnumerable<CargoRequest> cargoRequests)
     {
         CarRequests = new(carRequests);
         CargoRequests = new(cargoRequests);

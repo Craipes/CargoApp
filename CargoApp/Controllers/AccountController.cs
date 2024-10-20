@@ -22,7 +22,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterViewModel model)
+    public async Task<IActionResult> Register(RegisterViewModel model, string? returnUrl = null)
     {
         if (ModelState.IsValid)
         {
@@ -31,6 +31,10 @@ public class AccountController : Controller
             if (result.Succeeded)
             {
                 await signInManager.PasswordSignInAsync(user, model.Password, true, false);
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Search", "Home");
             }
         }
@@ -44,7 +48,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginViewModel model)
+    public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
     {
         if (ModelState.IsValid)
         {
@@ -54,6 +58,10 @@ public class AccountController : Controller
                 var result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
                     return RedirectToAction("Search", "Home");
                 }
             }

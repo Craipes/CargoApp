@@ -6,6 +6,6 @@ public class SearchViewModel
     public bool IsCargoSearching { get; set; } = false;
     public SearchRequestViewModel CarSearch { get; set; } = new();
     public SearchRequestViewModel CargoSearch { get; set; } = new();
-    public List<CargoRequestViewModel>? CargoRequests { get; set; }
-    public List<CarRequestViewModel>? CarRequests { get; set; }
+    public List<CargoRequest>? CargoRequests { get; set; }
+    public List<CarRequest>? CarRequests { get; set; }
 }

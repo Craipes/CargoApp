@@ -4,6 +4,7 @@ using CargoApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoApp.Migrations
 {
     [DbContext(typeof(CargoAppContext))]
-    partial class CargoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20241020080616_SeriousStructureChanges")]
+    partial class SeriousStructureChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,7 +191,7 @@ namespace CargoApp.Migrations
                         .IsUnique()
                         .HasFilter("[CargoResponseCargoId] IS NOT NULL");
 
-                    b.ToTable("Cargoes");
+                    b.ToTable("Cargo");
                 });
 
             modelBuilder.Entity("CargoApp.Models.CargoRequest", b =>
@@ -294,6 +297,50 @@ namespace CargoApp.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("CargoApp.Models.Settlement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CityRegion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("District")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NormalizedSettlement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("City");
+
+                    b.HasIndex("CityRegion");
+
+                    b.HasIndex("District");
+
+                    b.HasIndex("Region");
+
+                    b.ToTable("Settlements");
                 });
 
             modelBuilder.Entity("CargoApp.Models.User", b =>

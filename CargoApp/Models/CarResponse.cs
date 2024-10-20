@@ -1,20 +1,10 @@
 ﻿namespace CargoApp.Models;
 
-public class CarResponse
+public class CarResponse : BaseResponse
 {
     public int CarRequestId { get; set; }
-    public CarRequest? CarRequest { get; set; }
+    public CarRequest CarRequest { get; set; } = null!;
 
-    //Check
-    public string DriverId { get; set; }
-    public User? Driver { get; set; }
-    public Car? Car { get; set; }
-
-    [MaxLength(512)] public string? Comment { get; set; }
-
-    public CarResponse(int carRequestId, string driverId)
-    {
-        CarRequestId = carRequestId;
-        DriverId = driverId;
-    }
+    public int CarId { get; set; }
+    public Car Car { get; set; } = null!;
 }

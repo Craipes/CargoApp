@@ -31,15 +31,4 @@ public static class CargoAppContextSeed
             await userManager.AddToRoleAsync(user, CargoAppConstants.AdminRole);
         }
     }
-
-    public static async Task RecreateSettlements(CargoAppContext context, string localitiesPath)
-    {
-        XmlDataExtractor extractor = new(localitiesPath);
-        context.Database.ExecuteSqlRaw("TRUNCATE TABLE SETTLEMENTS");
-        context.Settlements.RemoveRange(context.Settlements);
-        context.Settlements.AddRange(extractor.RunAndGet());
-        //extractor.RunAndSave("D://UA_DB_SETTLEMENTS.xml");
-        await context.SaveChangesAsync();
-        Console.WriteLine($"Settlements count: {context.Settlements.Count()}");
-    }
 }

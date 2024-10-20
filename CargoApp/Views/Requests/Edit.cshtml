@@ -16,7 +16,7 @@
     </div>
     <div class="p-3" id="car-request-form">
         <div>
-            <form method="post" asp-action="AddCarRequest" asp-controller="Home">
+            <form method="post" asp-action="AddCarRequest" asp-controller="Requests">
                 <div asp-validation-summary="All"></div>
                 <input asp-for=IsCarRequest checked="checked" hidden="hidden" />
                 <div class="mb-3 row">
@@ -50,15 +50,15 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label class="col-form-label col-2" asp-for=CarRequest.CargoMass>Маса вантажу</label>
+                    <label class="col-form-label col-2" asp-for=CarRequest.Cargo.Mass>Маса вантажу</label>
                     <div class="col-10">
-                        <input class="form-control" asp-for=CarRequest.CargoMass autocomplete="off" />
+                        <input class="form-control" asp-for=CarRequest.Cargo.Mass autocomplete="off" />
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label class="col-form-label col-2" asp-for=CarRequest.CargoVolume>Об'єм вантажу</label>
+                    <label class="col-form-label col-2" asp-for=CarRequest.Cargo.Volume>Об'єм вантажу</label>
                     <div class="col-10">
-                        <input class="form-control" asp-for=CarRequest.CargoVolume autocomplete="off" />
+                        <input class="form-control" asp-for=CarRequest.Cargo.Volume autocomplete="off" />
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -77,7 +77,7 @@
     </div>
     <div class="p-3" id="cargo-request-form" style="display: none;">
         <div>
-            <form method="post" asp-action="AddCargoRequest" asp-controller="Home">
+            <form method="post" asp-action="AddCargoRequest" asp-controller="Requests">
                 <div asp-validation-summary="All"></div>
                 <input asp-for=IsCargoRequest checked="checked" hidden="hidden" />
                 <div class="mb-3 row">

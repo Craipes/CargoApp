@@ -1,19 +1,12 @@
-﻿namespace CargoApp.Models;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-public class CargoRequest : Request
+namespace CargoApp.Models;
+
+public class CargoRequest : BaseRequest
 {
-    public int? CarId { get; set; }
-    public Car? Car { get; set; }
-    [CorrectDepartureTime] public DateTime DepartureTime { get; set; }
+    [BindNever] public int CarId { get; set; }
+    public Car Car { get; set; } = null!;
+    [CorrectDepartureTime] public required DateTime DepartureTime { get; set; }
 
-    public List<CargoResponse> Responses { get; set; } = new();
-
-    public CargoRequest(string userId, string contactPhoneNumber, string contactName,
-        int departurePlaceId, int destinationPlaceId, decimal? price, string? details,
-        int? carId, DateTime departureTime)
-        : base(userId, contactPhoneNumber, contactName, departurePlaceId, destinationPlaceId, price, details)
-    {
-        CarId = carId;
-        DepartureTime = departureTime;
-    }
+    public List<CargoResponse> Responses { get; set; } = [];
 }
