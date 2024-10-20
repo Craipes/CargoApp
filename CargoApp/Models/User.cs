@@ -10,7 +10,6 @@ public class User : IdentityUser
     public int ReviewsCount { get; set; }
     public List<Review> ReviewsReceived { get; set; } = [];
     public List<Review> ReviewsSent { get; set; } = [];
-    public List<Car> DefaultCars { get; set; } = [];
 
     public List<CarRequest> CarRequests { get; set; } = [];
     public List<CargoRequest> CargoRequests { get; set; } = [];

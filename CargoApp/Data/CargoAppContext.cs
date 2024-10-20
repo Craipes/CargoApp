@@ -4,7 +4,6 @@ namespace CargoApp.Data;
 
 public class CargoAppContext : IdentityDbContext<User>
 {
-    public DbSet<Car> Cars { get; set; } = null!;
     public DbSet<Review> Reviews { get; set; } = null!;
     public DbSet<CarRequest> CarRequests { get; set; } = null!;
     public DbSet<CarResponse> CarResponses { get; set; } = null!;
@@ -68,8 +67,8 @@ public class CargoAppContext : IdentityDbContext<User>
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<CargoRequest>().HasOne(r => r.Car).WithOne().OnDelete(DeleteBehavior.NoAction);
-        builder.Entity<CarResponse>().HasOne(r => r.Car).WithMany().OnDelete(DeleteBehavior.NoAction);
+        builder.Entity<CargoRequest>().ComplexProperty(r => r.Car);
+        builder.Entity<CarResponse>().ComplexProperty(r => r.Car);
 
         builder.Entity<CarRequest>().ComplexProperty(r => r.Cargo);
         builder.Entity<CargoResponse>().ComplexProperty(r => r.Cargo);

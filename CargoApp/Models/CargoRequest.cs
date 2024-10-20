@@ -5,7 +5,6 @@ namespace CargoApp.Models;
 
 public class CargoRequest : BaseRequest
 {
-    [BindNever] public int CarId { get; set; }
     [ValidateObjectMembers] public Car Car { get; set; } = null!;
     [CorrectDepartureTime] public required DateTime DepartureTime { get; set; }
 

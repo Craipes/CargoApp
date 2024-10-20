@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace CargoApp.Models;
+﻿namespace CargoApp.Models;
 
 public class Car : BaseEntity
 {
-    [BindNever] public string? DriverId { get; set; }
-    [BindNever] public User? Driver { get; set; }
-
     public CarType Type { get; set; }
     public TrailerType TrailerType { get; set; }
 
