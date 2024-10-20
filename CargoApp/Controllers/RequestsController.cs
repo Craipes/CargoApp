@@ -24,13 +24,9 @@ public class RequestsController : Controller
         {
             var user = await db.Users
                 .Include(s => s.CarRequests)
-                    .ThenInclude(s => s.DeparturePlace)
-                .Include(s => s.CarRequests)
-                    .ThenInclude(s => s.DestinationPlace)
+                    .ThenInclude(r => r.Cargo)
                 .Include(s => s.CargoRequests)
-                    .ThenInclude(s => s.DeparturePlace)
-                .Include(s => s.CargoRequests)
-                    .ThenInclude(s => s.DestinationPlace)
+                    .ThenInclude(r => r.Car)
                 .Select(s => new
                 {
                     s.Id,
@@ -79,6 +75,7 @@ public class RequestsController : Controller
                 }
                 requestModel.UserId = userId;
 
+                db.Cargoes.Add(requestModel.Cargo);
                 db.CarRequests.Add(requestModel);
                 await db.SaveChangesAsync();
             }

@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Options;
 
 namespace CargoApp.Models;
 
 public class CarRequest : BaseRequest
 {
     [BindNever] public int CargoId { get; set; }
-    public Cargo Cargo { get; set; } = null!;
+    [ValidateObjectMembers] public Cargo Cargo { get; set; } = null!;
 
     [CorrectDepartureTime] public DateTime EarlyDepartureDate { get; set; }
     [CorrectDepartureTime] public DateTime LateDepartureDate { get; set; }

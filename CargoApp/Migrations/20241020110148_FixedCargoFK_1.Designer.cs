@@ -4,6 +4,7 @@ using CargoApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoApp.Migrations
 {
     [DbContext(typeof(CargoAppContext))]
-    partial class CargoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20241020110148_FixedCargoFK_1")]
+    partial class FixedCargoFK_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,9 +77,6 @@ namespace CargoApp.Migrations
 
                     b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("CargoId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ContactEmail")
                         .HasColumnType("nvarchar(max)");
@@ -152,55 +152,6 @@ namespace CargoApp.Migrations
                     b.ToTable("CarResponses");
                 });
 
-            modelBuilder.Entity("CargoApp.Models.Cargo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CarRequestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CarResponseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<decimal?>("Height")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<decimal?>("Length")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<decimal>("Mass")
-                        .HasColumnType("decimal(8, 3)");
-
-                    b.Property<int>("TrailerType")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("Volume")
-                        .HasColumnType("decimal(9, 4)");
-
-                    b.Property<decimal?>("Width")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarRequestId")
-                        .IsUnique()
-                        .HasFilter("[CarRequestId] IS NOT NULL");
-
-                    b.HasIndex("CarResponseId")
-                        .IsUnique()
-                        .HasFilter("[CarResponseId] IS NOT NULL");
-
-                    b.ToTable("Cargoes");
-                });
-
             modelBuilder.Entity("CargoApp.Models.CargoRequest", b =>
                 {
                     b.Property<int>("Id")
@@ -269,9 +220,6 @@ namespace CargoApp.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CargoId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Comment")
                         .HasMaxLength(512)
@@ -565,21 +513,6 @@ namespace CargoApp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CargoApp.Models.Cargo", b =>
-                {
-                    b.HasOne("CargoApp.Models.CarRequest", null)
-                        .WithOne("Cargo")
-                        .HasForeignKey("CargoApp.Models.Cargo", "CarRequestId")
-                        .HasPrincipalKey("CargoApp.Models.CarRequest", "CargoId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("CargoApp.Models.CargoResponse", null)
-                        .WithOne("Cargo")
-                        .HasForeignKey("CargoApp.Models.Cargo", "CarResponseId")
-                        .HasPrincipalKey("CargoApp.Models.CargoResponse", "CargoId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-                });
-
             modelBuilder.Entity("CargoApp.Models.CargoRequest", b =>
                 {
                     b.HasOne("CargoApp.Models.Car", "Car")
@@ -690,21 +623,12 @@ namespace CargoApp.Migrations
 
             modelBuilder.Entity("CargoApp.Models.CarRequest", b =>
                 {
-                    b.Navigation("Cargo")
-                        .IsRequired();
-
                     b.Navigation("Responses");
                 });
 
             modelBuilder.Entity("CargoApp.Models.CargoRequest", b =>
                 {
                     b.Navigation("Responses");
-                });
-
-            modelBuilder.Entity("CargoApp.Models.CargoResponse", b =>
-                {
-                    b.Navigation("Cargo")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CargoApp.Models.User", b =>

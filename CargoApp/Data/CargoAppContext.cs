@@ -77,12 +77,14 @@ public class CargoAppContext : IdentityDbContext<User>
             cargo
                 .HasOne<CarRequest>()
                 .WithOne(r => r.Cargo)
+                .HasForeignKey<Cargo>(c => c.CarRequestId)
                 .HasPrincipalKey<CarRequest>(r => r.CargoId)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
             cargo
                 .HasOne<CargoResponse>()
                 .WithOne(r => r.Cargo)
+                .HasForeignKey<Cargo>(c => c.CarResponseId)
                 .HasPrincipalKey<CargoResponse>(r => r.CargoId)
                 .OnDelete(DeleteBehavior.ClientCascade);
         });

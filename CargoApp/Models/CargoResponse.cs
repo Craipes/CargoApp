@@ -1,4 +1,6 @@
-﻿namespace CargoApp.Models;
+﻿using Microsoft.Extensions.Options;
+
+namespace CargoApp.Models;
 
 public class CargoResponse : BaseResponse
 {
@@ -6,5 +8,5 @@ public class CargoResponse : BaseResponse
     public CargoRequest CargoRequest { get; set; } = null!;
 
     public int CargoId { get; set; }
-    public Cargo Cargo { get; set; } = null!;
+    [ValidateObjectMembers] public Cargo Cargo { get; set; } = null!;
 }

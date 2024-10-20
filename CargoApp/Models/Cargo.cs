@@ -2,6 +2,9 @@
 
 public class Cargo : BaseEntity
 {
+    public int? CarRequestId { get; set; }
+    public int? CarResponseId { get; set; }
+
     public TrailerType TrailerType { get; set; }
 
     [Column(TypeName = "decimal(8, 3)")][Range(0.001f, 100000f, MaximumIsExclusive = true)] public float Mass { get; set; }
