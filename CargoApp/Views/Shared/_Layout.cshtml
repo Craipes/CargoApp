@@ -27,7 +27,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Про проєкт</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="Create">Створити запит</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="CreateCarRequest">Створити пошук перевізника</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="CreateCargoRequest">Створити пошук вантажу</a>
                         </li>
                         @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {

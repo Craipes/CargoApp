@@ -50,6 +50,11 @@ input, select, button {
     border-top-right-radius: 15px;
 }
 
+.panel-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
 .autoComplete_wrapper {
     width: 100%;
 }

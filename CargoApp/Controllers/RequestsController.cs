@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CargoApp.Controllers;
 
@@ -25,7 +24,6 @@ public class RequestsController : Controller
             var user = await db.Users
                 .Include(s => s.CarRequests)
                 .Include(s => s.CargoRequests)
-                    .ThenInclude(r => r.Car)
                 .Select(s => new
                 {
                     s.Id,
@@ -46,79 +44,49 @@ public class RequestsController : Controller
         return RedirectToAction("Search", "Home");
     }
 
-    public IActionResult Create()
+    public IActionResult CreateCarRequest()
+    {
+        return View();
+    }
+
+    public IActionResult CreateCargoRequest()
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddCarRequest(IndexViewModel model)
+    public async Task<IActionResult> CreateCarRequest(CarRequest request)
     {
-        if (model.IsCarRequest)
+        if (!ModelState.IsValid) return View();
+
+        string? userId = userManager.GetUserId(User);
+        if (userId == null)
         {
-            RemoveFor(ModelState, nameof(model.CargoRequest));
-            if (ModelState.IsValid)
-            {
-                var requestModel = model.CarRequest;
-
-                //var places = await db.SearchPlaces(requestModel.DeparturePlace.ToUpper(), requestModel.DestinationPlace.ToUpper());
-
-                //if (places == null) return View(nameof(Create));
-                (var departurePlace, var destinationPlace) = (requestModel.DeparturePlace, requestModel.DestinationPlace);
-
-                string? userId = userManager.GetUserId(User);
-                if (userId == null)
-                {
-                    ModelState.AddModelError("", "User not found");
-                    return View(nameof(Create));
-                }
-                requestModel.UserId = userId;
-
-                db.CarRequests.Add(requestModel);
-                await db.SaveChangesAsync();
-            }
+            ModelState.AddModelError("", "User not found");
+            return View();
         }
-        return View(nameof(Create));
+        request.UserId = userId;
+
+        db.CarRequests.Add(request);
+        await db.SaveChangesAsync();
+        return RedirectToAction("Search", "Home");
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddCargoRequest(IndexViewModel model)
+    public async Task<IActionResult> CreateCargoRequest(CargoRequest request)
     {
-        if (model.IsCargoRequest)
+        if (!ModelState.IsValid) return View();
+
+        string? userId = userManager.GetUserId(User);
+        if (userId == null)
         {
-            RemoveFor(ModelState, nameof(model.CarRequest));
-            if (ModelState.IsValid)
-            {
-                var requestModel = model.CargoRequest;
-
-                //var places = await db.SearchPlaces(requestModel.DeparturePlace.ToUpper(), requestModel.DestinationPlace.ToUpper());
-
-                //if (places == null) return View(nameof(Create));
-                (var departurePlace, var destinationPlace) = (requestModel.DeparturePlace, requestModel.DestinationPlace);
-
-                string? userId = userManager.GetUserId(User);
-                if (userId == null)
-                {
-                    ModelState.AddModelError("", "User not found");
-                    return View(nameof(Create));
-                }
-                requestModel.UserId = userId;
-
-                db.CargoRequests.Add(requestModel);
-                await db.SaveChangesAsync();
-            }
+            ModelState.AddModelError("", "User not found");
+            return View();
         }
-        return View(nameof(Create));
-    }
+        request.UserId = userId;
 
-    private static void RemoveFor(ModelStateDictionary modelState, string valueName)
-    {
-        foreach (var ms in modelState.ToArray())
-        {
-            if (ms.Key.StartsWith(valueName + ".") || ms.Key == valueName)
-            {
-                modelState.Remove(ms.Key);
-            }
-        }
+        db.CargoRequests.Add(request);
+        await db.SaveChangesAsync();
+        return RedirectToAction("Search", "Home");
     }
 }
