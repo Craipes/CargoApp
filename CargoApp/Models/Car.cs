@@ -11,5 +11,5 @@ public class Car : BaseEntity
     [Column(TypeName = "decimal(5, 2)")][Range(0.10f, 100f)] public float? MaxHeight { get; set; }
     [Column(TypeName = "decimal(9, 4)")][Range(0.0010f, 50000f)] public float? MaxVolume { get; set; }
 
-    public bool? AvailableGPS { get; set; }
+    public bool AvailableGPS { get; set; }
 }

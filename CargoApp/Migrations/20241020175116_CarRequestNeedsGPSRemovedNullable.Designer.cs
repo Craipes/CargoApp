@@ -5,6 +5,7 @@ using CargoApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,9 +13,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoApp.Migrations
 {
     [DbContext(typeof(CargoAppContext))]
-    partial class CargoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20241020175116_CarRequestNeedsGPSRemovedNullable")]
+    partial class CarRequestNeedsGPSRemovedNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,7 +130,7 @@ namespace CargoApp.Migrations
                         {
                             b1.IsRequired();
 
-                            b1.Property<bool>("AvailableGPS")
+                            b1.Property<bool?>("AvailableGPS")
                                 .HasColumnType("bit");
 
                             b1.Property<int>("Id")
@@ -214,7 +217,7 @@ namespace CargoApp.Migrations
                         {
                             b1.IsRequired();
 
-                            b1.Property<bool>("AvailableGPS")
+                            b1.Property<bool?>("AvailableGPS")
                                 .HasColumnType("bit");
 
                             b1.Property<int>("Id")

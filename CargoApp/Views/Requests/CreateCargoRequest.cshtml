@@ -1,4 +1,4 @@
-﻿@model CargoRequest
+﻿@model CargoApp.Models.CargoRequest
 @{
     ViewData["Title"] = "Create Cargo Request";
 }
@@ -7,56 +7,100 @@
 
 <div class="panel box-shadow mx-auto col-10 text-start">
     <div class="text-center bg-primary panel-top">
-        <span class="fs-3 text-white">Мені потрібен вантаж</span>
+        <span class="fs-3 text-white">Пошук вантажу</span>
     </div>
-    <div class="p-3" id="cargo-request-form">
-        <form method="post" asp-action="CreateCargoRequest" asp-controller="Requests">
-            <div asp-validation-summary="All"></div>
-            <div class="mb-3 row">
-                <label class="col-form-label col-2" asp-for=ContactPhoneNumber>Контактний номер</label>
-                <div class="col-10">
-                    <input class="form-control" asp-for=ContactPhoneNumber pattern="\+380\d{9}" placeholder="+380*********" required />
+    <div id="cargo-request-form">
+        <form method="post" asp-action="CreateCargoRequest" asp-controller="Requests" class="row p-3 g-3">
+            <div class="m-0" asp-validation-summary="All"></div>
+            <div class="col-12">
+                <label class="form-label" asp-for="ContactName">Контактне ім'я</label>
+                <input class="form-control" asp-for="ContactName" required />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="ContactPhoneNumber">Контактний номер</label>
+                <input class="form-control" asp-for="ContactPhoneNumber" placeholder="+380 ** *** ****" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="ContactEmail">Контактна пошта</label>
+                <input class="form-control" asp-for="ContactEmail" placeholder="placeholder@gmial.com" />
+                <div class="form-text">Введення пошти не є обов'язковим</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="DeparturePlace">Місце відбуття</label>
+                <input class="form-control" id="cargo-departure" asp-for="DeparturePlace" autocomplete="off" spellcheck="false" required />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="DestinationPlace">Місце прибуття</label>
+                <input class="form-control" id="cargo-destination" asp-for="DestinationPlace" autocomplete="off" spellcheck="false" required />
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for="DepartureTime">Час відбуття</label>
+                <input class="form-control" type="datetime-local" asp-for="DepartureTime" autocomplete="off" required />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="Car.Type">Тип автомобіля</label>
+                <select class="form-select" asp-for="Car.Type" asp-items="Html.GetEnumSelectList<CarType>()" required>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for="Car.TrailerType">Тип причепа</label>
+                <select class="form-select" asp-for="Car.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()" required>
+                </select>
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for="Car.MaxMass">Вантажопідйомність</label>
+                <div class="input-group">
+                    <input class="form-control" asp-for="Car.MaxMass" autocomplete="off" required />
+                    <span class="input-group-text">t</span>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label class="col-form-label col-2" asp-for=ContactName>Контактне ім'я</label>
-                <div class="col-10">
-                    <input class="form-control" asp-for=ContactName required />
+            <div class="col-lg-6">
+                <label class="form-label" asp-for="Car.MaxVolume">Допустимий об'єм</label>
+                <div class="input-group">
+                    <input class="form-control" asp-for="Car.MaxVolume" autocomplete="off" />
+                    <span class="input-group-text">m<sup>3</sup></span>
                 </div>
             </div>
-            <div class="mb-3 row clear-group">
-                <label class="col-form-label col-2" asp-for=DeparturePlace>Місце відбуття</label>
-                <div class="col-8">
-                    <input class="form-control w-100 clear-input" id="cargo-departure" asp-for=DeparturePlace autocomplete="off" spellcheck="false" required />
-                </div>
-                <div class="col-2">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
+            <div class="col-4 col-lg-2">
+                <label class="form-label" asp-for="Car.MaxLength">Довжина</label>
+                <div class="input-group">
+                    <input class="form-control" asp-for="Car.MaxLength" autocomplete="off" />
+                    <span class="input-group-text">m</span>
                 </div>
             </div>
-            <div class="mb-3 row clear-group">
-                <label class="col-form-label col-2" asp-for=DestinationPlace>Місце прибуття</label>
-                <div class="col-8">
-                    <input class="form-control w-100 clear-input" id="cargo-destination" asp-for=DestinationPlace autocomplete="off" spellcheck="false" required />
-                </div>
-                <div class="col-2">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
+            <div class="col-4 col-lg-2">
+                <label class="form-label" asp-for="Car.MaxWidth">Ширина</label>
+                <div class="input-group">
+                    <input class="form-control" asp-for="Car.MaxWidth" autocomplete="off" />
+                    <span class="input-group-text">m</span>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label class="col-form-label col-2" asp-for=DepartureTime>Час відбуття</label>
-                <div class="col-10">
-                    <input class="form-control" asp-for=DepartureTime required />
+            <div class="col-4 col-lg-2">
+                <label class="form-label" asp-for="Car.MaxHeight">Висота</label>
+                <div class="input-group">
+                    <input class="form-control" asp-for="Car.MaxHeight" autocomplete="off" />
+                    <span class="input-group-text">m</span>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label class="col-form-label col-2" asp-for=Price>Пропонова ціна</label>
-                <div class="col-10">
-                    <input class="form-control" asp-for=Price autocomplete="off" required />
+            <div class="col-12 form-text">Можна вказати вільний об'єм або виміри, обидва варіанти не обов'язкові</div>
+            <div class="col-12">
+                <label class="form-label" asp-for="Price">Пропонована ціна</label>
+                <div class="input-group">
+                    <span class="input-group-text">₴</span>
+                    <input class="form-control" asp-for="Price" autocomplete="off" required />
+                    <select class="form-select" asp-for="PriceType" asp-items="Html.GetEnumSelectList<PriceType>()" required>
+                    </select>
                 </div>
             </div>
-            <div class="mb-3 text-center">
-                <label class="form-label" asp-for=Details>Деталі</label>
-                <textarea class="form-control" asp-for=Details rows="3"></textarea>
+            <div class="col-12 text-center">
+                <label class="form-label" asp-for="Details">Деталі</label>
+                <textarea class="form-control" asp-for="Details" rows="3"></textarea>
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="Car.AvailableGPS" value="true">
+                    <label class="form-check-label" asp-for="Car.AvailableGPS">Наявний GPS?</label>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Підтвердити</button>
         </form>

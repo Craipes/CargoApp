@@ -23,6 +23,4 @@ public abstract class BaseRequest : BaseEntity
     [MaxLength(512)] public string? Details { get; set; }
 
     [BindNever] public DateTime AddTime { get; set; } = DateTime.UtcNow;
-
-    [NotMapped] public bool IsExpired => AddTime.AddHours(MinResponseTimeInHours) > DateTime.UtcNow;
 }

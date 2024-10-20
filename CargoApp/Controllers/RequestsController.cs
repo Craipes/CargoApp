@@ -34,8 +34,8 @@ public class RequestsController : Controller
 
             if (user != null)
             {
-                var carRequests = user.CarRequests.OrderByDescending(r => r.AddTime).ThenBy(r => r.IsExpired);
-                var cargoRequests = user.CargoRequests.OrderByDescending(r => r.AddTime).ThenBy(r => r.IsExpired);
+                var carRequests = user.CarRequests.OrderByDescending(r => r.AddTime);
+                var cargoRequests = user.CargoRequests.OrderByDescending(r => r.AddTime);
                 var model = new RequestsViewModel(carRequests, cargoRequests);
 
                 return View(model);
@@ -57,6 +57,10 @@ public class RequestsController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateCarRequest(CarRequest request)
     {
+        if (request.Cargo.Volume == null && (request.Cargo.Length == null || request.Cargo.Width == null || request.Cargo.Height == null))
+        {
+            ModelState.AddModelError("", "Volume or dimensions must be specified");
+        }
         if (!ModelState.IsValid) return View();
 
         string? userId = userManager.GetUserId(User);
@@ -75,6 +79,10 @@ public class RequestsController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateCargoRequest(CargoRequest request)
     {
+        if (request.Car.MaxVolume == null && (request.Car.MaxLength == null || request.Car.MaxWidth == null || request.Car.MaxHeight == null))
+        {
+            ModelState.AddModelError("", "Volume or dimensions must be specified");
+        }
         if (!ModelState.IsValid) return View();
 
         string? userId = userManager.GetUserId(User);
