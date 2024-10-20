@@ -10,7 +10,6 @@ public class CargoAppContext : IdentityDbContext<User>
     public DbSet<CarResponse> CarResponses { get; set; } = null!;
     public DbSet<CargoRequest> CargoRequests { get; set; } = null!;
     public DbSet<CargoResponse> CargoResponses { get; set; } = null!;
-    public DbSet<Cargo> Cargoes { get; set; } = null!;
 
     public CargoAppContext(DbContextOptions<CargoAppContext> options) : base(options) { }
 
@@ -72,21 +71,7 @@ public class CargoAppContext : IdentityDbContext<User>
         builder.Entity<CargoRequest>().HasOne(r => r.Car).WithOne().OnDelete(DeleteBehavior.NoAction);
         builder.Entity<CarResponse>().HasOne(r => r.Car).WithMany().OnDelete(DeleteBehavior.NoAction);
 
-        builder.Entity<Cargo>(cargo =>
-        {
-            cargo
-                .HasOne<CarRequest>()
-                .WithOne(r => r.Cargo)
-                .HasForeignKey<Cargo>(c => c.CarRequestId)
-                .HasPrincipalKey<CarRequest>(r => r.CargoId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-
-            cargo
-                .HasOne<CargoResponse>()
-                .WithOne(r => r.Cargo)
-                .HasForeignKey<Cargo>(c => c.CarResponseId)
-                .HasPrincipalKey<CargoResponse>(r => r.CargoId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-        });
+        builder.Entity<CarRequest>().ComplexProperty(r => r.Cargo);
+        builder.Entity<CargoResponse>().ComplexProperty(r => r.Cargo);
     }
 }
