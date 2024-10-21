@@ -16,30 +16,66 @@
     </div>
     <div class="p-3" id="car-request-form">
         <div>
-            <form method="post" class="search" asp-action="Search" asp-controller="Home">
+            <form method="post" class="search row g-3 pt-3" asp-action="Search" asp-controller="Home">
                 <input asp-for=IsCarSearching checked="checked" hidden="hidden" />
-                <div class="mb-3 row clear-group">
-                    <label class="col-form-label col-2" asp-for=CarSearch.DeparturePlace>Місце відбуття</label>
-                    <div class="col-8">
-                        <input class="form-control w-100 clear-input" id="car-departure" asp-for=CarSearch.DeparturePlace autocomplete="off" spellcheck="false" required />
-                    </div>
-                    <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
-                    </div>
-                </div>
-                <div class="mb-3 row clear-group">
-                    <label class="col-form-label col-2" asp-for=CarSearch.DestinationPlace>Місце прибуття</label>
-                    <div class="col-8">
-                        <input class="form-control w-100 clear-input" id="car-destination" asp-for=CarSearch.DestinationPlace autocomplete="off" spellcheck="false" required />
-                    </div>
-                    <div class="col-2">
-                        <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
+                <div class="col-lg-6 mt-0 mb-3">
+                    <label class="form-label" asp-for=CarSearch.DeparturePlace>Місце відбуття <span class="text-danger">*</span></label>
+                    <input class="form-control mb-3 w-100" id="car-departure" asp-for=CarSearch.DeparturePlace autocomplete="off" spellcheck="false" required />
+                    <label class="form-label" asp-for=CarSearch.DestinationPlace>Місце прибуття <span class="text-danger">*</span></label>
+                    <input class="form-control mb-3 w-100" id="car-destination" asp-for=CarSearch.DestinationPlace autocomplete="off" spellcheck="false" required />
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label" asp-for="CarSearch.DepartureTime">Ранній час відбуття</label>
+                            <input class="form-control" asp-for="CarSearch.DepartureTime" />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" asp-for="CarSearch.LateDepartureTime">Пізній час відбуття</label>
+                            <input class="form-control" asp-for="CarSearch.LateDepartureTime" />
+                        </div>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-form-label col-2" asp-for=CarSearch.SearchRange>Режим пошуку</label>
-                    <div class="col-10">
-                        <select class="form-select" asp-for=CarSearch.SearchRange asp-items=Html.GetEnumSelectList(typeof(SearchRange))></select>
+                <div class="col-lg-6 m-0">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="form-label" asp-for="CarSearch.TrailerType">Тип транспорту</label>
+                            <select class="form-select" asp-for="CarSearch.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()"></select>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" asp-for="CarSearch.Mass">Вага</label>
+                            <div class="input-group">
+                                <input class="form-control" asp-for="CarSearch.Mass" autocomplete="off" />
+                                <span class="input-group-text">t</span>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" asp-for="CarSearch.Volume">Об'єм</label>
+                            <div class="input-group">
+                                <input class="form-control" asp-for="CarSearch.Mass" autocomplete="off" />
+                                <span class="input-group-text">m<sup>3</sup></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label" asp-for="CarSearch.Length">Довжина</label>
+                            <div class="input-group">
+                                <input class="form-control" asp-for="CarSearch.Length" autocomplete="off" />
+                                <span class="input-group-text">m</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label" asp-for="CarSearch.Width">Ширина</label>
+                            <div class="input-group">
+                                <input class="form-control" asp-for="CarSearch.Width" autocomplete="off" />
+                                <span class="input-group-text">m</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label" asp-for="CarSearch.Height">Висота</label>
+                            <div class="input-group">
+                                <input class="form-control" asp-for="CarSearch.Height" autocomplete="off" />
+                                <span class="input-group-text">m</span>
+                            </div>
+                        </div>
+                        <div class="col-12 form-text">Вага, об'єм та виміри вантажу, необов'язково до заповнення</div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-search">Пошук</button>
@@ -68,12 +104,6 @@
                         <button type="button" class="btn btn-outline-primary w-100 h-100 clear-btn">Очистити</button>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-form-label col-2" asp-for=CargoSearch.SearchRange>Режим пошуку</label>
-                    <div class="col-10">
-                        <select class="form-select" asp-for=CargoSearch.SearchRange asp-items=Html.GetEnumSelectList(typeof(SearchRange))></select>
-                    </div>
-                </div>
                 <button type="submit" class="btn btn-primary">Пошук</button>
             </form>
         </div>
@@ -83,11 +113,11 @@
 <div id="search-results"></div>
 
 @section Scripts {
-<script>
-    const carDepartureAutocomplete = getSettlementAutocomplete("#car-departure", "Місце відбуття...");
-    const carDestinationAutocomplete = getSettlementAutocomplete("#car-destination", "Місце прибуття...");
+    <script>
+        const carDepartureAutocomplete = getSettlementAutocomplete("#car-departure", "Місце відбуття...");
+        const carDestinationAutocomplete = getSettlementAutocomplete("#car-destination", "Місце прибуття...");
 
-    const cargoDepartureAutocomplete = getSettlementAutocomplete("#cargo-departure", "Місце відбуття...");
-    const cargoDestinationAutocomplete = getSettlementAutocomplete("#cargo-destination", "Місце прибуття...");
-</script>
+        const cargoDepartureAutocomplete = getSettlementAutocomplete("#cargo-departure", "Місце відбуття...");
+        const cargoDestinationAutocomplete = getSettlementAutocomplete("#cargo-destination", "Місце прибуття...");
+    </script>
 }
