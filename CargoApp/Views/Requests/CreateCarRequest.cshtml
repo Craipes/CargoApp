@@ -42,6 +42,11 @@
                 <input class="form-control" type="date" asp-for=LateDepartureDate autocomplete="off" required />
             </div>
             <div class="col-12">
+                <label class="form-label" asp-for="Cargo.TrailerType">Тип причепа</label>
+                <select class="form-select" asp-for="Cargo.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()" required>
+                </select>
+            </div>
+            <div class="col-12">
                 <label class="form-label" asp-for=Cargo.Mass>Маса вантажу</label>
                 <div class="input-group">
                     <input class="form-control" asp-for=Cargo.Mass autocomplete="off" required />

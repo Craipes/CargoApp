@@ -49,9 +49,71 @@ public class RequestsController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult CarRequestFromSearch(SearchViewModel? model)
+    {
+        if (model != null)
+        {
+            CarRequest request = new()
+            {
+                UserId = null!,
+                ContactName = null!,
+                ContactPhoneNumber = null!,
+                DeparturePlace = model.CarSearch.DeparturePlace,
+                DestinationPlace = model.CarSearch.DestinationPlace,
+                EarlyDepartureDate = model.CarSearch.DepartureTime ?? DateTime.UtcNow,
+                LateDepartureDate = model.CarSearch.LateDepartureTime ?? DateTime.UtcNow,
+                NeedsGPS = model.CarSearch.GPS,
+                Cargo = new()
+                {
+                    Volume = model.CarSearch.Volume,
+                    Length = model.CarSearch.Length,
+                    Width = model.CarSearch.Width,
+                    Height = model.CarSearch.Height,
+                    Mass = model.CarSearch.Mass ?? 0,
+                    TrailerType = model.CarSearch.TrailerType
+                }
+            };
+            ModelState.Clear();
+            return View(nameof(CreateCarRequest), request);
+        }
+        return View(nameof(CreateCarRequest));
+    }
+
     public IActionResult CreateCargoRequest()
     {
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult CargoRequestFromSearch(SearchViewModel? model)
+    {
+        if (model != null)
+        {
+            CargoRequest request = new()
+            {
+                UserId = null!,
+                ContactName = null!,
+                ContactPhoneNumber = null!,
+                DeparturePlace = model.CargoSearch.DeparturePlace,
+                DestinationPlace = model.CargoSearch.DestinationPlace,
+                DepartureTime = model.CargoSearch.DepartureTime ?? DateTime.UtcNow,
+                Car = new()
+                {
+                    MaxVolume = model.CargoSearch.Volume,
+                    MaxLength = model.CargoSearch.Length,
+                    MaxWidth = model.CargoSearch.Width,
+                    MaxHeight = model.CargoSearch.Height,
+                    MaxMass = model.CargoSearch.Mass ?? 0,
+                    TrailerType = model.CargoSearch.TrailerType,
+                    Type = model.CargoSearch.CarType,
+                    AvailableGPS = model.CargoSearch.GPS
+                }
+            };
+            ModelState.Clear();
+            return View(nameof(CreateCargoRequest), request);
+        }
+        return View(nameof(CreateCargoRequest));
     }
 
     [HttpPost]

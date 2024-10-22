@@ -16,8 +16,8 @@
     </div>
     <div class="p-3" id="car-request-form">
         <div>
-            <form method="post" class="search row g-3 pt-3" asp-action="Search" asp-controller="Home">
-                <input asp-for=IsCarSearching checked="checked" hidden="hidden" />
+            <form method="post" class="row g-3 pt-3">
+                <input asp-for=IsCarSearching checked="checked" hidden="hidden"/>
                 <div class="col-lg-6 mt-0 mb-3">
                     <label class="form-label" asp-for=CarSearch.DeparturePlace>Місце відбуття <span class="text-danger">*</span></label>
                     <input class="form-control mb-3 w-100" id="car-departure" asp-for=CarSearch.DeparturePlace placeholder="Місце відбуття..." autocomplete="off" spellcheck="false" required />
@@ -50,7 +50,7 @@
                         <div class="col-6 mb-3">
                             <label class="form-label" asp-for="CarSearch.Volume">Об'єм</label>
                             <div class="input-group">
-                                <input class="form-control" asp-for="CarSearch.Mass" autocomplete="off" />
+                                <input class="form-control" asp-for="CarSearch.Volume" autocomplete="off" />
                                 <span class="input-group-text">m<sup>3</sup></span>
                             </div>
                         </div>
@@ -78,13 +78,21 @@
                         <div class="col-12 form-text">Вага, об'єм та виміри вантажу, необов'язково до заповнення</div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-search">Пошук</button>
+                <div class="col-12 m-0">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="CarSearch.GPS" value="true">
+                        <label class="form-check-label" asp-for="CarSearch.GPS">Потрібен GPS?</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">Пошук</button>
+                    <div class="col-4"></div>
+                <button type="submit" class="btn btn-primary btn-search col-4" formaction="/Requests/CarRequestFromSearch">Створити оголошення</button>
             </form>
         </div>
     </div>
     <div class="p-3" id="cargo-request-form" style="display: none;">
         <div>
-            <form method="post" class="search row g-3 pt-3" asp-action="Search" asp-controller="Home">
+            <form method="post" class="row g-3 pt-3">
                 <input asp-for=IsCargoSearching checked="checked" hidden="hidden" />
                 <div class="col-lg-6 mt-0 mb-3">
                     <label class="form-label" asp-for=CargoSearch.DeparturePlace>Місце відбуття <span class="text-danger">*</span></label>
@@ -116,7 +124,7 @@
                         <div class="col-6 mb-3">
                             <label class="form-label" asp-for="CargoSearch.Volume">Об'єм</label>
                             <div class="input-group">
-                                <input class="form-control" asp-for="CargoSearch.Mass" autocomplete="off" />
+                                <input class="form-control" asp-for="CargoSearch.Volume" autocomplete="off" />
                                 <span class="input-group-text">m<sup>3</sup></span>
                             </div>
                         </div>
@@ -144,7 +152,15 @@
                         <div class="col-12 form-text">Вага, об'єм та виміри вантажу, необов'язково до заповнення</div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-search">Пошук</button>
+                <div class="col-12 m-0">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="CargoSearch.GPS" value="true">
+                        <label class="form-check-label" asp-for="CargoSearch.GPS">Присутній GPS?</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">Пошук</button>
+                <div class="col-4"></div>
+                <button type="submit" class="btn btn-primary btn-search col-4" formaction="/Requests/CargoRequestFromSearch">Створити оголошення</button>
             </form>
         </div>
     </div>

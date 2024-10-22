@@ -47,11 +47,11 @@ $(document).ready(function () {
 
     let searchResults = $("#search-results");
     if (searchResults != null) {
-        $(".search").submit(async function (e) {
+        $(".search-button").click(async function (e) {
             e.preventDefault();
 
-            const form = $(this);
-            const url = form.prop("action");
+            const url = $(this).prop("formaction");
+            const form = $(this).closest("form");
             const data = form.serialize();
             $.ajax({
                 type: "POST",

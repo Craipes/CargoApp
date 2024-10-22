@@ -11,4 +11,5 @@ public class BaseSearchRequestViewModel
     [Column(TypeName = "decimal(5, 2)")][Range(0.10f, 1000f, MaximumIsExclusive = true)] public float? Width { get; set; }
     [Column(TypeName = "decimal(5, 2)")][Range(0.10f, 1000f, MaximumIsExclusive = true)] public float? Height { get; set; }
     [Column(TypeName = "decimal(9, 4)")][Range(0.0010f, 100000f, MaximumIsExclusive = true)] public float? Volume { get; set; }
+    public bool GPS { get; set; }
 }
