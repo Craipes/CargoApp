@@ -16,8 +16,8 @@
     </div>
     <div class="p-3" id="car-request-form">
         <div>
-            <form method="post" class="row g-3 pt-3">
-                <input asp-for=IsCarSearching checked="checked" hidden="hidden"/>
+            <form method="post" class="row g-3 pt-3" asp-controller="Requests" asp-action="CarRequestFromSearch">
+                <input asp-for=IsCarSearching checked="checked" hidden="hidden" />
                 <div class="col-lg-6 mt-0 mb-3">
                     <label class="form-label" asp-for=CarSearch.DeparturePlace>Місце відбуття <span class="text-danger">*</span></label>
                     <input class="form-control mb-3 w-100" id="car-departure" asp-for=CarSearch.DeparturePlace placeholder="Місце відбуття..." autocomplete="off" spellcheck="false" required />
@@ -86,13 +86,13 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">Пошук</button>
                     <div class="col-4"></div>
-                <button type="submit" class="btn btn-primary btn-search col-4" formaction="/Requests/CarRequestFromSearch">Створити оголошення</button>
+                <button type="submit" class="btn btn-primary btn-search col-4 skip-form-validation" formaction="/Requests/CarRequestFromSearch">Створити оголошення</button>
             </form>
         </div>
     </div>
     <div class="p-3" id="cargo-request-form" style="display: none;">
         <div>
-            <form method="post" class="row g-3 pt-3">
+            <form method="post" class="row g-3 pt-3" asp-controller="Requests" asp-action="CargoRequestFromSearch">
                 <input asp-for=IsCargoSearching checked="checked" hidden="hidden" />
                 <div class="col-lg-6 mt-0 mb-3">
                     <label class="form-label" asp-for=CargoSearch.DeparturePlace>Місце відбуття <span class="text-danger">*</span></label>
@@ -160,7 +160,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">Пошук</button>
                 <div class="col-4"></div>
-                <button type="submit" class="btn btn-primary btn-search col-4" formaction="/Requests/CargoRequestFromSearch">Створити оголошення</button>
+                <button type="submit" class="btn btn-primary btn-search col-4 skip-form-validation" formaction="/Requests/CargoRequestFromSearch">Створити оголошення</button>
             </form>
         </div>
     </div>

@@ -52,6 +52,7 @@ $(document).ready(function () {
 
             const url = $(this).prop("formaction");
             const form = $(this).closest("form");
+            if (!form.get(0).reportValidity()) return;
             const data = form.serialize();
             $.ajax({
                 type: "POST",
@@ -63,6 +64,11 @@ $(document).ready(function () {
             })
         });
     }
+
+    $(".skip-form-validation").click(function (e) {
+        e.preventDefault();
+        let form = $(this).closest("form").submit();
+    })
 });
 
 function getSettlementAutocomplete(selector, placeHolder) {
