@@ -27,11 +27,11 @@
                         </div>
                         <div class="row">
                             <span class="fw-bold col-4">Маса вантажу</span>
-                            <span class="col-8">@request.Cargo.Mass кг</span>
+                            <span class="col-8">@request.Cargo.Mass т</span>
                         </div>
                         <div class="row">
                             <span class="fw-bold col-4">Об'єм вантажу</span>
-                            <span class="col-8">@request.Cargo.Volume м³</span>
+                            <span class="col-8">@request.Cargo.Volume м³  (@(request.Cargo.Length == null ? "-" : (request.Cargo.Length.Value.ToString("F2")) + " м") x @(request.Cargo.Width == null ? "-" : (request.Cargo.Width.Value.ToString("F2")) + " м") x @(request.Cargo.Height == null ? "-" : (request.Cargo.Height.Value.ToString("F2") + " м")))</span>
                         </div>
                         <div class="row">
                             <span class="fw-bold col-4">Пропонована ціна</span>
@@ -41,6 +41,7 @@
                             <span class="fw-bold col-4">Час подання</span>
                             <span class="col-8">@request.AddTime</span>
                         </div>
+                        <a class="btn btn-primary mt-2" asp-action="EditCarRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
                     </div>
                 }
             </div>
@@ -65,7 +66,7 @@
                     </div>
                     <div class="row">
                         <span class="fw-bold col-4">Час відбуття</span>
-                        <span class="col-8">@request.DepartureTime</span>
+                        <span class="col-8">@request.DepartureTime.ToString("g")</span>
                     </div>
                     <div class="row">
                         <span class="fw-bold col-4">Пропонована ціна</span>
@@ -75,6 +76,7 @@
                         <span class="fw-bold col-4">Час подання</span>
                         <span class="col-8">@request.AddTime</span>
                     </div>
+                    <a class="btn btn-primary mt-2" asp-action="EditCargoRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
                 </div>
             }
         </div>

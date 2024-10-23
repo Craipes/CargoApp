@@ -46,7 +46,7 @@ public class RequestsController : Controller
 
     public IActionResult CreateCarRequest()
     {
-        return View();
+        return View("CarRequest");
     }
 
     [HttpPost]
@@ -61,8 +61,8 @@ public class RequestsController : Controller
                 ContactPhoneNumber = null!,
                 DeparturePlace = model.CarSearch.DeparturePlace,
                 DestinationPlace = model.CarSearch.DestinationPlace,
-                EarlyDepartureDate = model.CarSearch.DepartureTime ?? DateTime.UtcNow,
-                LateDepartureDate = model.CarSearch.LateDepartureTime ?? DateTime.UtcNow,
+                EarlyDepartureDate = RoundToDays(model.CarSearch.DepartureTime ?? DateTime.UtcNow),
+                LateDepartureDate = RoundToDays(model.CarSearch.LateDepartureTime ?? DateTime.UtcNow),
                 NeedsGPS = model.CarSearch.GPS,
                 Cargo = new()
                 {
@@ -75,14 +75,14 @@ public class RequestsController : Controller
                 }
             };
             ModelState.Clear();
-            return View(nameof(CreateCarRequest), request);
+            return View("CarRequest", request);
         }
-        return View(nameof(CreateCarRequest));
+        return View("CarRequest");
     }
 
     public IActionResult CreateCargoRequest()
     {
-        return View();
+        return View("CargoRequest");
     }
 
     [HttpPost]
@@ -97,7 +97,7 @@ public class RequestsController : Controller
                 ContactPhoneNumber = null!,
                 DeparturePlace = model.CargoSearch.DeparturePlace,
                 DestinationPlace = model.CargoSearch.DestinationPlace,
-                DepartureTime = model.CargoSearch.DepartureTime ?? DateTime.UtcNow,
+                DepartureTime = RoundToMinutes(model.CargoSearch.DepartureTime ?? DateTime.UtcNow),
                 Car = new()
                 {
                     MaxVolume = model.CargoSearch.Volume,
@@ -111,9 +111,9 @@ public class RequestsController : Controller
                 }
             };
             ModelState.Clear();
-            return View(nameof(CreateCargoRequest), request);
+            return View("CargoRequest", request);
         }
-        return View(nameof(CreateCargoRequest));
+        return View("CargoRequest");
     }
 
     [HttpPost]
@@ -123,15 +123,17 @@ public class RequestsController : Controller
         {
             ModelState.AddModelError("", "Volume or dimensions must be specified");
         }
-        if (!ModelState.IsValid) return View();
+        if (!ModelState.IsValid) return View("CarRequest");
 
         string? userId = userManager.GetUserId(User);
         if (userId == null)
         {
             ModelState.AddModelError("", "User not found");
-            return View();
+            return View("CarRequest");
         }
         request.UserId = userId;
+        request.EarlyDepartureDate = RoundToDays(request.EarlyDepartureDate);
+        request.LateDepartureDate = RoundToDays(request.LateDepartureDate);
 
         db.CarRequests.Add(request);
         await db.SaveChangesAsync();
@@ -145,18 +147,104 @@ public class RequestsController : Controller
         {
             ModelState.AddModelError("", "Volume or dimensions must be specified");
         }
-        if (!ModelState.IsValid) return View();
+        if (!ModelState.IsValid) return View("CargoRequest");
 
         string? userId = userManager.GetUserId(User);
         if (userId == null)
         {
             ModelState.AddModelError("", "User not found");
-            return View();
+            return View("CargoRequest");
         }
         request.UserId = userId;
+        request.DepartureTime = RoundToMinutes(request.DepartureTime);
 
         db.CargoRequests.Add(request);
         await db.SaveChangesAsync();
         return RedirectToAction("Search", "Home");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditCarRequest(int id)
+    {
+        var request = await db.CarRequests.FindAsync(id);
+        if (request == null)
+        {
+            return NotFound();
+        }
+        return View("CarRequest", request);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditCargoRequest(int id)
+    {
+        var request = await db.CargoRequests.FindAsync(id);
+        if (request == null)
+        {
+            return NotFound();
+        }
+        return View("CargoRequest", request);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditCarRequest(CarRequest request)
+    {
+        if (request.Cargo.Volume == null && (request.Cargo.Length == null || request.Cargo.Width == null || request.Cargo.Height == null))
+        {
+            ModelState.AddModelError("", "Volume or dimensions must be specified");
+        }
+        if (!ModelState.IsValid) return View("CarRequest");
+
+        var dbRequest = await db.CarRequests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == request.Id);
+        if (dbRequest == null)
+        {
+            return NotFound();
+        }
+        if (dbRequest.UserId != userManager.GetUserId(User) && !User.IsInRole(CargoAppConstants.AdminRole))
+        {
+            return Forbid();
+        }
+        request.UserId = dbRequest.UserId;
+        request.EarlyDepartureDate = RoundToDays(request.EarlyDepartureDate);
+        request.LateDepartureDate = RoundToDays(request.LateDepartureDate);
+
+        db.CarRequests.Update(request);
+        await db.SaveChangesAsync();
+        return RedirectToAction("Requests");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditCargoRequest(CargoRequest request)
+    {
+        if (request.Car.MaxVolume == null && (request.Car.MaxLength == null || request.Car.MaxWidth == null || request.Car.MaxHeight == null))
+        {
+            ModelState.AddModelError("", "Volume or dimensions must be specified");
+        }
+        if (!ModelState.IsValid) return View("CargoRequest");
+
+        var dbRequest = await db.CargoRequests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == request.Id);
+        if (dbRequest == null)
+        {
+            return NotFound();
+        }
+        if (dbRequest.UserId != userManager.GetUserId(User) && !User.IsInRole(CargoAppConstants.AdminRole))
+        {
+            return Forbid();
+        }
+        request.UserId = dbRequest.UserId;
+        request.DepartureTime = RoundToMinutes(request.DepartureTime);
+
+        db.CargoRequests.Update(request);
+        await db.SaveChangesAsync();
+        return RedirectToAction("Requests");
+    }
+
+    private static DateTime RoundToMinutes(DateTime datetime)
+    {
+        return datetime.AddTicks(-(datetime.Ticks % TimeSpan.TicksPerMinute));
+    }
+
+    private static DateTime RoundToDays(DateTime datetime)
+    {
+        return datetime.AddTicks(-(datetime.Ticks % TimeSpan.TicksPerDay));
     }
 }

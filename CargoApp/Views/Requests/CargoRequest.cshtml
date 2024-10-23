@@ -1,16 +1,24 @@
 ﻿@model CargoApp.Models.CargoRequest
 @{
-    ViewData["Title"] = "Create Cargo Request";
+    bool isCreating = Model?.Id == 0;
+    ViewData["Title"] = isCreating ? "Create Cargo Request" : "Edit Cargo Request";
 }
 
-<h1 class="text-center mb-5">Створення запиту</h1>
+@if (isCreating)
+{
+    <h1 class="text-center mb-5">Створення запиту</h1>
+}
+else
+{
+    <h1 class="text-center mb-5">Редагування запиту</h1>
+}
 
 <div class="panel box-shadow mx-auto col-10 text-start">
     <div class="text-center bg-primary panel-top">
         <span class="fs-3 text-white">Пошук вантажу</span>
     </div>
     <div id="cargo-request-form">
-        <form method="post" asp-action="CreateCargoRequest" asp-controller="Requests" class="row p-3 g-3">
+        <form method="post" asp-action="@(isCreating ? "CreateCargoRequest" : "EditCargoRequest")" asp-controller="Requests" class="row p-3 g-3">
             <div class="m-0" asp-validation-summary="All"></div>
             <div class="col-12">
                 <label class="form-label" asp-for="ContactName">Контактне ім'я</label>
@@ -102,6 +110,7 @@
                     <label class="form-check-label" asp-for="Car.AvailableGPS">Наявний GPS?</label>
                 </div>
             </div>
+            <input type="hidden" asp-for="Id" />
             <button type="submit" class="btn btn-primary">Підтвердити</button>
         </form>
     </div>
