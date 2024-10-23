@@ -16,9 +16,27 @@ public class AdminController : Controller
         db = context;
     }
 
-    public IActionResult Requests()
+    public async Task<IActionResult> Requests()
     {
-        return View();
+        var carRequests = await db.CarRequests
+            .Include(s => s.User)
+            .OrderBy(s => s.EarlyDepartureDate)
+            .ThenBy(s => s.AddTime)
+            .Select(s => new AdminCarRequestViewModel(s, s.User!.Name))
+            .ToListAsync();
+        var cargoRequests = await db.CargoRequests
+            .Include(s => s.User)
+            .OrderBy(s => s.DepartureTime)
+            .Select(s => new AdminCargoRequestViewModel(s, s.User!.Name))
+            .ToListAsync();
+
+        var viewModel = new AdminRequestsViewModel
+        {
+            CarRequests = carRequests,
+            CargoRequests = cargoRequests
+        };
+
+        return View(viewModel);
     }
 
     public async Task<IActionResult> Users()
