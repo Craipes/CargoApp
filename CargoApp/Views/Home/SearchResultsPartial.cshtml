@@ -36,6 +36,9 @@
                                 <span class="fw-bold col-6">Час подання</span>
                                 <span class="col-6">@request.AddTime</span>
                             </div>
+                            <div class="row justify-content-center mt-4">
+                                <a class="btn btn-primary col-4" asp-controller="Requests" asp-action="CarRequestDetails" asp-route-id="@request.Id">Переглянути детально</a>
+                            </div>
                         </div>
                     }
                 </div>
@@ -71,6 +74,9 @@
                         <div class="row">
                             <span class="fw-bold col-6">Контактний номер</span>
                             <span class="col-6">@request.ContactPhoneNumber</span>
+                        </div>
+                        <div class="row justify-content-center mt-4">
+                            <a class="btn btn-primary col-4" asp-controller="Requests" asp-action="CargoRequestDetails" asp-route-id="@request.Id">Переглянути детально</a>
                         </div>
                     </div>
                 }

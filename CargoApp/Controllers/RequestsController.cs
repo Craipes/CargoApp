@@ -47,6 +47,48 @@ public class RequestsController : Controller
         return RedirectToAction("Search", "Home");
     }
 
+    [AllowAnonymous]
+    public IActionResult CarRequestDetails(int id)
+    {
+        var carRequest = db.CarRequests.Include(cr => cr.User).FirstOrDefault(cr => cr.Id == id);
+        var responses = db.CarResponses.Where(cr => cr.CarRequestId == id).ToList();
+
+        if (carRequest == null)
+        {
+            return NotFound();
+        }
+
+        var viewModel = new CarRequestViewModel
+        {
+            CarRequest = carRequest,
+            UserName = carRequest.User?.Name ?? "",
+            Responses = responses
+        };
+
+        return View(viewModel);
+    }
+
+    [AllowAnonymous]
+    public IActionResult CargoRequestDetails(int id)
+    {
+        var cargoRequest = db.CargoRequests.Include(cr => cr.User).FirstOrDefault(cr => cr.Id == id);
+        var responses = db.CargoResponses.Where(cr => cr.CargoRequestId == id).ToList();
+
+        if (cargoRequest == null)
+        {
+            return NotFound();
+        }
+
+        var viewModel = new CargoRequestViewModel
+        {
+            CargoRequest = cargoRequest,
+            UserName = cargoRequest.User?.Name ?? "",
+            Responses = responses
+        };
+
+        return View(viewModel);
+    }
+
     public IActionResult CreateCarRequest()
     {
         return View("CarRequest");

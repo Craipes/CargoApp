@@ -1,0 +1,122 @@
+﻿@model CargoRequestViewModel
+
+@{
+    ViewData["Title"] = "Car Request Details";
+}
+
+<h1 class="text-center mb-5">Оголошення на пошук вантажу</h1>
+
+<div class="panel box-shadow mx-auto col-10 text-start">
+    <div class="text-center bg-primary panel-top">
+        <span class="fs-3 text-white">Деталі запиту</span>
+    </div>
+    <div id="car-request-details" class="p-3">
+        <div class="row">
+            <label class="form-label col-6">Ім'я користувача:</label>
+            <p class="col-6"><a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.CargoRequest.UserId">@Model.UserName</a></p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Контактне ім'я:</label>
+            <p class="col-6">@Model.CargoRequest.ContactName</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Контактний номер:</label>
+            <p class="col-6">@Model.CargoRequest.ContactPhoneNumber</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Контактна пошта:</label>
+            <p class="col-6">@(Model.CargoRequest.ContactEmail ?? "Не вказано")</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Місце відбуття:</label>
+            <p class="col-6">@Model.CargoRequest.DeparturePlace</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Місце прибуття:</label>
+            <p class="col-6">@Model.CargoRequest.DestinationPlace</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Час відбуття:</label>
+            <p class="col-6">@Model.CargoRequest.DepartureTime.ToString("g")</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Тип причіпу:</label>
+            <p class="col-6">@Model.CargoRequest.Car.Type</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Тип транспорту:</label>
+            <p class="col-6">@Model.CargoRequest.Car.TrailerType</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Вантажопідйомність:</label>
+            <p class="col-6">@Model.CargoRequest.Car.MaxMass т</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Об'єм:</label>
+            <p class="col-6">@Model.CargoRequest.Car.MaxVolume м³    (@(Model.CargoRequest.Car.MaxLength == null ? "-" : (Model.CargoRequest.Car.MaxLength.Value.ToString("F2")) + " м") x @(Model.CargoRequest.Car.MaxWidth == null ? "-" : (Model.CargoRequest.Car.MaxWidth.Value.ToString("F2")) + " м") x @(Model.CargoRequest.Car.MaxHeight == null ? "-" : (Model.CargoRequest.Car.MaxHeight.Value.ToString("F2") + " м")))</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6">Пропонована ціна:</label>
+            <p class="col-6">@Model.CargoRequest.Price грн (@Model.CargoRequest.PriceType)</p>
+        </div>
+        <div class="row">
+            <label class="form-label col-6 m-0">Час додавання:</label>
+            <p class="col-6 m-0">@Model.CargoRequest.AddTime</p>
+        </div>
+    </div>
+</div>
+
+<div class="panel box-shadow mx-auto col-10 text-start mt-5">
+    <div class="text-center bg-primary panel-top">
+        <span class="fs-3 text-white">Відповіді</span>
+    </div>
+    <div id="car-responses" class="p-3">
+        <div class="list-group">
+            @foreach (var response in Model.Responses)
+            {
+                @* <div class="list-group-item mb-3">
+            <div class="row mb-2">
+            <div class="col-6">
+            <label class="form-label">Контактне ім'я:</label>
+            <p>@response.ContactName</p>
+            </div>
+            <div class="col-6">
+            <label class="form-label">Контактний номер:</label>
+            <p>@response.ContactPhoneNumber</p>
+            </div>
+            </div>
+            <div class="row mb-2">
+            <div class="col-6">
+            <label class="form-label">Місце відбуття:</label>
+            <p>@response.DeparturePlace</p>
+            </div>
+            <div class="col-6">
+            <label class="form-label">Місце прибуття:</label>
+            <p>@response.DestinationPlace</p>
+            </div>
+            </div>
+            <div class="row mb-2">
+            <div class="col-6">
+            <label class="form-label">Час відбуття:</label>
+            <p>@response.DepartureTime.ToString("g")</p>
+            </div>
+            <div class="col-6">
+            <label class="form-label">Тип автомобіля:</label>
+            <p>@response.Car.Type</p>
+            </div>
+            </div>
+            <div class="row mb-2">
+            <div class="col-6">
+            <label class="form-label">Ціна:</label>
+            <p>@response.Price грн (@response.PriceType)</p>
+            </div>
+            <div class="col-6">
+            <label class="form-label">Час додавання:</label>
+            <p>@response.AddTime</p>
+            </div>
+            </div>
+            </div> *@
+            }
+        </div>
+    </div>
+</div>

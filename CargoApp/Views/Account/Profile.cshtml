@@ -24,7 +24,10 @@
                         <div>Відповіді на пошук вантажу: @Model.CargoResponsesCount</div>
                     </div>
                 </div>
-                <a asp-controller="Requests" asp-action="Requests" asp-route-id="@Model.Id" class="btn btn-primary mt-3 w-100">Переглянути</a>
+                @if (Model.AllowEditing)
+                {
+                    <a asp-controller="Requests" asp-action="Requests" asp-route-id="@Model.Id" class="btn btn-primary mt-3 w-100">Переглянути</a>
+                }
             </div>
             <div class="col-lg-6 mt-4 text-center">
                 <h2 class="mb-4">Рейтинг: @Model.Rating.ToString("F2")</h2>

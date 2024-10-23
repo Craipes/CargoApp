@@ -58,7 +58,10 @@
                             <span class="fw-bold col-6">Час подання</span>
                             <span class="col-6">@request.AddTime</span>
                         </div>
-                        <a class="btn btn-primary mt-2" asp-action="EditCarRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+                        <div class="row justify-content-between">
+                            <a class="btn btn-primary mt-2 col-4" asp-action="CarRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">Переглянути</a>
+                            <a class="btn btn-warning mt-2 col-4" asp-action="EditCarRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+                        </div>
                     </div>
                 }
             </div>
@@ -113,7 +116,10 @@
                         <span class="fw-bold col-6">Час подання</span>
                         <span class="col-6">@request.AddTime</span>
                     </div>
-                    <a class="btn btn-primary mt-2" asp-action="EditCargoRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+                    <div class="row justify-content-between">
+                        <a class="btn btn-primary mt-2 col-4" asp-action="CargoRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">Переглянути</a>
+                        <a class="btn btn-warning mt-2 col-4" asp-action="EditCargoRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+                    </div>
                 </div>
             }
         </div>
