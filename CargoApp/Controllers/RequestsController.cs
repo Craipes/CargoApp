@@ -16,31 +16,34 @@ public class RequestsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Requests()
+    public async Task<IActionResult> Requests(string? id)
     {
-        var userId = userManager.GetUserId(User);
-        if (userId != null)
-        {
-            var user = await db.Users
-                .Include(s => s.CarRequests)
-                .Include(s => s.CargoRequests)
-                .Select(s => new
-                {
-                    s.Id,
-                    s.CarRequests,
-                    s.CargoRequests
-                })
-                .FirstOrDefaultAsync(s => s.Id == userId);
+        id ??= userManager.GetUserId(User);
+        var currentId = userManager.GetUserId(User);
+        if (id == null) return NotFound();
+        if (id != currentId && !User.IsInRole(CargoAppConstants.AdminRole)) return Forbid();
 
-            if (user != null)
+        var user = await db.Users
+            .Include(s => s.CarRequests)
+            .Include(s => s.CargoRequests)
+            .Select(s => new
             {
-                var carRequests = user.CarRequests.OrderByDescending(r => r.AddTime);
-                var cargoRequests = user.CargoRequests.OrderByDescending(r => r.AddTime);
-                var model = new RequestsViewModel(carRequests, cargoRequests);
+                s.Id,
+                s.Name,
+                s.CarRequests,
+                s.CargoRequests
+            })
+            .FirstOrDefaultAsync(s => s.Id == id);
 
-                return View(model);
-            }
+        if (user != null)
+        {
+            var carRequests = user.CarRequests.OrderByDescending(r => r.AddTime);
+            var cargoRequests = user.CargoRequests.OrderByDescending(r => r.AddTime);
+            var model = new RequestsViewModel(user.Name, carRequests, cargoRequests);
+
+            return View(model);
         }
+
         return RedirectToAction("Search", "Home");
     }
 
@@ -209,7 +212,7 @@ public class RequestsController : Controller
 
         db.CarRequests.Update(request);
         await db.SaveChangesAsync();
-        return RedirectToAction("Requests");
+        return RedirectToAction("Requests", new { id = request.UserId });
     }
 
     [HttpPost]
@@ -235,7 +238,7 @@ public class RequestsController : Controller
 
         db.CargoRequests.Update(request);
         await db.SaveChangesAsync();
-        return RedirectToAction("Requests");
+        return RedirectToAction("Requests", new { id = request.UserId });
     }
 
     private static DateTime RoundToMinutes(DateTime datetime)

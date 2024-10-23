@@ -1,6 +1,6 @@
 ﻿@model CargoApp.Models.CargoRequest
 @{
-    bool isCreating = Model?.Id == 0;
+    bool isCreating = Model == null || Model?.Id == 0;
     ViewData["Title"] = isCreating ? "Create Cargo Request" : "Edit Cargo Request";
 }
 

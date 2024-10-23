@@ -84,39 +84,39 @@ public class AccountController : Controller
     {
         id ??= userManager.GetUserId(User);
         var currentId = userManager.GetUserId(User);
+        if (id == null) return NotFound();
+
         var user = await db.Users
+            .Include(s => s.CarRequests)
+            .Include(s => s.CargoRequests)
+            .Include(s => s.CarResponses)
+            .Include(s => s.CargoResponses)
             .Include(s => s.ReviewsReceived)
                 .ThenInclude(s => s.Sender)
             .Include(s => s.ReviewsSent)
-            .Select(s => new
+            .Select(s => new UserProfileViewModel()
             {
-                s.Id,
-                s.Name,
-                s.Email,
-                s.PhoneNumber,
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.Email!,
+                Phone = s.PhoneNumber,
                 Rating = s.ReviewsReceived.Count == 0 ? 0 : s.ReviewsReceived.Average(r => r.Points),
-                ReceivedCount = s.ReviewsReceived.Count,
-                SentCount = s.ReviewsSent.Count,
-                Received = s.ReviewsReceived.Select(r => new ReviewViewModel(r.Sender.Name, r.SenderId, r.Points, r.Content))
+                ReviewsReceivedCount = s.ReviewsReceived.Count,
+                ReviewsSentCount = s.ReviewsSent.Count,
+                ReviewsReceived = s.ReviewsReceived.Select(r => new ReviewViewModel(r.Sender.Name, r.SenderId, r.Points, r.Content)),
+                CarRequestsCount = s.CarRequests.Count,
+                CargoRequestsCount = s.CargoRequests.Count,
+                CarResponsesCount = s.CarResponses.Count,
+                CargoResponsesCount = s.CargoResponses.Count,
+                AllowEditing = id == currentId || User.IsInRole(CargoAppConstants.AdminRole)
             })
             .FirstOrDefaultAsync(s => s.Id == id);
 
         if (user != null)
         {
-            return View(new UserProfileViewModel()
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email ?? string.Empty,
-                Phone = user.PhoneNumber,
-                Rating = user.Rating,
-                ReviewsReceivedCount = user.ReceivedCount,
-                ReviewsSentCount = user.SentCount,
-                ReviewsReceived = user.Received,
-                AllowEditing = id == currentId || User.IsInRole(CargoAppConstants.AdminRole)
-            });
+            return View(user);
         }
-        return RedirectToAction("Home", "Search");
+        return RedirectToAction("Search", "Home");
     }
 
     [HttpPost]

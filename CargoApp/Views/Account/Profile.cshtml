@@ -7,12 +7,27 @@
 
 <div class="profile-container">
     <div class="profile-update-form">
-        <div class="row justify-content-center">
-            <div class="col-md-8 mt-3 text-center">
+        <div class="row">
+            <div class="col-lg-6 mt-4">
+                <h2 class="mb-4">Профіль користувача @Model.Name</h2>
                 <div class="row">
-                    <h2 class="mb-4 col-md-6 text-center">Профіль користувача @Model.Name</h2>
-                    <h2 class="mb-4 col-md-6 text-center">Рейтинг: @Model.Rating.ToString("F2")</h2>
+                    <div class="col-6">
+                        <div>Оголошення пошуку транспорту: @Model.CarRequestsCount</div>
+                    </div>
+                    <div class="col-6">
+                        <div>Оголошення пошуку вантажу: @Model.CargoRequestsCount</div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div>Відподі на пошук транспорту: @Model.CarResponsesCount</div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div>Відповіді на пошук вантажу: @Model.CargoResponsesCount</div>
+                    </div>
                 </div>
+                <a asp-controller="Requests" asp-action="Requests" asp-route-id="@Model.Id" class="btn btn-primary mt-3 w-100">Переглянути</a>
+            </div>
+            <div class="col-lg-6 mt-4 text-center">
+                <h2 class="mb-4">Рейтинг: @Model.Rating.ToString("F2")</h2>
                 <div class="row">
                     <div class="col-6">
                         <div>Отриманих відгуків: @Model.ReviewsReceivedCount</div>
@@ -21,6 +36,10 @@
                         <div>Надісланих відгуків: @Model.ReviewsSentCount</div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8 mt-3 text-center">
                 @if (Model.AllowEditing)
                 {
                     <form asp-action="UpdateProfile" method="post" class="mt-3 text-start">
