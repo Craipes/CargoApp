@@ -151,7 +151,6 @@ public class RequestsController : Controller
                     MaxHeight = model.CargoSearch.Height,
                     MaxMass = model.CargoSearch.Mass ?? 0,
                     TrailerType = model.CargoSearch.TrailerType,
-                    Type = model.CargoSearch.CarType,
                     AvailableGPS = model.CargoSearch.GPS
                 }
             };
