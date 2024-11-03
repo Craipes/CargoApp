@@ -35,20 +35,54 @@ public class HomeController : Controller
             RemoveFor(ModelState, nameof(model.CargoSearch));
             if (ModelState.IsValid)
             {
-                //var requests = await db.CargoRequests.Search(db, model.CarSearch);
+                var search = model.CarSearch;
+                var requests = db.CargoRequests
+                    .AsNoTracking()
+                    .Where(r => r.DeparturePlace.ToUpper().Contains(search.DeparturePlace.ToUpper()) && r.DestinationPlace.ToUpper().Contains(search.DestinationPlace.ToUpper()));
 
-                //if (requests != null)
-                //{
-                //    var requestsArr = await requests.ToArrayAsync();
+                if (search.Mass.HasValue)
+                {
+                    requests = requests.Where(r => r.Car.MaxMass >= search.Mass);
+                }
+                if (search.Volume.HasValue)
+                {
+                    requests = requests.Where(r => r.Car.MaxVolume >= search.Volume);
+                }
+                if (search.Length.HasValue)
+                {
+                    requests = requests.Where(r => r.Car.MaxLength >= search.Length);
+                }
+                if (search.Width.HasValue)
+                {
+                    requests = requests.Where(r => r.Car.MaxWidth >= search.Width);
+                }
+                if (search.Height.HasValue)
+                {
+                    requests = requests.Where(r => r.Car.MaxHeight >= search.Height);
+                }
+                if (search.GPS)
+                {
+                    requests = requests.Where(r => r.Car.AvailableGPS);
+                }
+                if (search.TrailerType != TrailerType.Any)
+                {
+                    requests = requests.Where(r => r.Car.TrailerType == search.TrailerType);
+                }
+                if (search.DepartureTime.HasValue)
+                {
+                    requests = requests.Where(r => r.DepartureTime.Date >= search.DepartureTime.Value.Date);
+                }
+                else
+                {
+                    requests = requests.Where(r => r.DepartureTime >= DateTime.UtcNow);
+                }
+                if (search.LateDepartureTime.HasValue)
+                {
+                    requests = requests.Where(r => r.DepartureTime.Date <= search.LateDepartureTime.Value);
+                }
 
-                //    model.CargoRequests = requestsArr
-                //        .Select(r => CargoRequestViewModel.FromRequest(r))
-                //        .ToList();
-
-                //    return PartialView("SearchResultsPartial", model);
-                //}
-
-                model.CargoRequests = await db.CargoRequests.ToListAsync();
+                requests = requests.OrderBy(r => r.DepartureTime);
+                model.CargoRequests = await requests.ToListAsync();
 
                 return PartialView("SearchResultsPartial", model);
             }
@@ -58,20 +92,55 @@ public class HomeController : Controller
             RemoveFor(ModelState, nameof(model.CarSearch));
             if (ModelState.IsValid)
             {
-                //var requests = await db.CarRequests.Search(db, model.CargoSearch);
+                var search = model.CargoSearch;
+                var requests = db.CarRequests
+                    .AsNoTracking()
+                    .Where(r => r.DeparturePlace.ToUpper().Contains(search.DeparturePlace.ToUpper()) && r.DestinationPlace.ToUpper().Contains(search.DestinationPlace.ToUpper()));
 
-                //if (requests != null)
-                //{
-                //    var requestsArr = await requests.ToArrayAsync();
+                if (search.Mass.HasValue)
+                {
+                    requests = requests.Where(r => r.Cargo.Mass <= search.Mass);
+                }
+                if (search.Volume.HasValue)
+                {
+                    requests = requests.Where(r => r.Cargo.Volume <= search.Volume);
+                }
+                if (search.Length.HasValue)
+                {
+                    requests = requests.Where(r => r.Cargo.Length <= search.Length);
+                }
+                if (search.Width.HasValue)
+                {
+                    requests = requests.Where(r => r.Cargo.Width <= search.Width);
+                }
+                if (search.Height.HasValue)
+                {
+                    requests = requests.Where(r => r.Cargo.Height <= search.Height);
+                }
+                if (!search.GPS)
+                {
+                    requests = requests.Where(r => !r.NeedsGPS);
+                }
+                if (search.TrailerType != TrailerType.Any)
+                {
+                    requests = requests.Where(r => r.Cargo.TrailerType == search.TrailerType || r.Cargo.TrailerType == TrailerType.Any);
+                }
+                else
+                {
+                    requests = requests.Where(r => r.Cargo.TrailerType == TrailerType.Any);
+                }
+                if (search.DepartureTime.HasValue)
+                {
+                    var shift = search.DepartureTime.Value.Date.AddHours(-6);
+                    requests = requests.Where(r => r.LateDepartureDate >= shift);
+                }
+                else
+                {
+                    requests = requests.Where(r => r.LateDepartureDate >= DateTime.UtcNow);
+                }
 
-                //    model.CarRequests = requests
-                //        .Select(r => CarRequestViewModel.FromRequest(r))
-                //        .ToList();
-
-                //    return PartialView("SearchResultsPartial", model);
-                //}
-
-                model.CarRequests = await db.CarRequests.ToListAsync();
+                requests = requests.OrderBy(r => r.EarlyDepartureDate);
+                model.CarRequests = await requests.ToListAsync();
                 return PartialView("SearchResultsPartial", model);
             }
         }
