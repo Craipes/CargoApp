@@ -12,4 +12,6 @@ public class CarRequest : BaseRequest
     public bool NeedsGPS { get; set; }
 
     public List<CarResponse> Responses { get; set; } = [];
+
+    public override bool CanBeResponded => LateDepartureDate >= DateTime.UtcNow.Date.AddHours(MinResponseTimeInHours);
 }

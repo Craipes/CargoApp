@@ -37,8 +37,8 @@ public class RequestsController : Controller
 
         if (user != null)
         {
-            var carRequests = user.CarRequests.OrderByDescending(r => r.AddTime);
-            var cargoRequests = user.CargoRequests.OrderByDescending(r => r.AddTime);
+            var carRequests = user.CarRequests.OrderByDescending(r => r.CanBeResponded).ThenBy(r => r.EarlyDepartureDate).ThenBy(r => r.LateDepartureDate);
+            var cargoRequests = user.CargoRequests.OrderByDescending(r => r.CanBeResponded).ThenBy(r => r.DepartureTime);
             var model = new RequestsViewModel(user.Name, carRequests, cargoRequests);
 
             return View(model);
@@ -236,7 +236,7 @@ public class RequestsController : Controller
         {
             ModelState.AddModelError("", "Volume or dimensions must be specified");
         }
-        if (!ModelState.IsValid) return View("CarRequest");
+        if (!ModelState.IsValid) return View("CarRequest", request);
 
         var dbRequest = await db.CarRequests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == request.Id);
         if (dbRequest == null)
@@ -263,7 +263,7 @@ public class RequestsController : Controller
         {
             ModelState.AddModelError("", "Volume or dimensions must be specified");
         }
-        if (!ModelState.IsValid) return View("CargoRequest");
+        if (!ModelState.IsValid) return View("CargoRequest", request);
 
         var dbRequest = await db.CargoRequests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == request.Id);
         if (dbRequest == null)

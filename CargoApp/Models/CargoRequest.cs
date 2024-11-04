@@ -9,4 +9,6 @@ public class CargoRequest : BaseRequest
     [CorrectDepartureTime] public required DateTime DepartureTime { get; set; }
 
     public List<CargoResponse> Responses { get; set; } = [];
+
+    public override bool CanBeResponded => DepartureTime >= DateTime.UtcNow.AddHours(MinResponseTimeInHours);
 }

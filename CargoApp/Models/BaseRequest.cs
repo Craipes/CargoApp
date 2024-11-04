@@ -24,4 +24,6 @@ public abstract class BaseRequest : BaseEntity
     [MaxLength(512)] public string? Details { get; set; }
 
     [BindNever] public DateTime AddTime { get; set; } = DateTime.UtcNow;
+
+    [BindNever] [ValidateNever] [NotMapped] public abstract bool CanBeResponded { get; }
 }
