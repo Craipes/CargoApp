@@ -33,6 +33,9 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     .AddEntityFrameworkStores<CargoAppContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddScoped<RequestsService>();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "CargoApp", Version = "v1" });
