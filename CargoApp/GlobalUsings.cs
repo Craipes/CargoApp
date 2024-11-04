@@ -5,6 +5,7 @@ global using CargoApp.Attributes;
 global using CargoApp.Data;
 global using CargoApp.Models;
 global using CargoApp.ViewModels;
+global using CargoApp.ViewModels.Requests;
 
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

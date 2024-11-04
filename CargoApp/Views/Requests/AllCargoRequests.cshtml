@@ -1,0 +1,111 @@
+﻿@model AllCargoRequestsViewModel
+@{
+    ViewData["Title"] = "Car Requests";
+}
+
+<h2 class="mb-4">Оголошення пошуку вантажу користувача <a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.Id">@Model.Name</a></h2>
+@if (Model != null)
+{
+    @for (int i = 0; i < Model.Requests.Count; i++)
+    {
+        var request = Model.Requests[i];
+        <div class="list-group-item @(request.CanBeResponded ? "" : "list-group-item-dark")">
+            @if (request.CanBeResponded)
+            {
+                <span class="badge bg-success">Активне</span>
+            }
+            else
+            {
+                <span class="badge bg-danger">Час оголошення вичерпано</span>
+            }
+            <div class="row">
+                <span class="fw-bold col-6">Контактне ім'я</span>
+                <span class="col-6">@request.ContactName</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Контактний номер</span>
+                <span class="col-6">@request.ContactPhoneNumber</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Місце відбуття</span>
+                <span class="col-6">@request.DeparturePlace</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Місце прибуття</span>
+                <span class="col-6">@request.DestinationPlace</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Час відбуття</span>
+                <span class="col-6">@request.DepartureTime.ToString("g")</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Тип причіпу</span>
+                <span class="col-6">@request.Car.Type</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Тип транспорту</span>
+                <span class="col-6">@request.Car.TrailerType</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Вантажопідйоність</span>
+                <span class="col-6">@request.Car.MaxMass т</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Об'єм</span>
+                <span class="col-6">@request.Car.MaxVolume м³  (@(request.Car.MaxLength == null ? "-" : (request.Car.MaxLength.Value.ToString("F2")) + " м") x @(request.Car.MaxWidth == null ? "-" : (request.Car.MaxWidth.Value.ToString("F2")) + " м") x @(request.Car.MaxHeight == null ? "-" : (request.Car.MaxHeight.Value.ToString("F2") + " м")))</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Пропонована ціна</span>
+                <span class="col-6">@request.Price грн (@request.PriceType)</span>
+            </div>
+            <div class="row">
+                <span class="fw-bold col-6">Час подання</span>
+                <span class="col-6">@request.AddTime</span>
+            </div>
+            <div class="row justify-content-between">
+                <a class="btn btn-primary mt-2 col-4" asp-action="CargoRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">Переглянути</a>
+                <a class="btn btn-warning mt-2 col-4" asp-action="EditCargoRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+            </div>
+        </div>
+    }
+
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.Page > 1 ? "" : "disabled")">
+                <a class="page-link" asp-route-page="@(Model.Page - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            @{
+                int min = Math.Max(1, Model.Page - 2);
+                int max = Math.Min(Model.MaxPages, Model.Page + 2);
+            }
+            @for (int i = min; i <= max; i++)
+            {
+                if (Model.Page == i)
+                {
+                    <li class="page-item active">
+                        <a class="page-link">@i</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-route-page="@i">@i</a>
+                    </li>
+                }
+            }
+
+            <li class="page-item  @(Model.Page < Model.MaxPages ? "" : "disabled")">
+                <a class="page-link" asp-route-page="@(Model.Page + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+else
+{
+    <h3>Whoops, something went wrong :(</h3>
+}

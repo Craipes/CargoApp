@@ -6,6 +6,9 @@ namespace CargoApp.Controllers;
 [Authorize]
 public class RequestsController : Controller
 {
+    private const int RequestsPerPage = 8;
+    private const int RequestsPageMaxCount = 3;
+
     private readonly UserManager<User> userManager;
     private readonly CargoAppContext db;
 
@@ -24,27 +27,93 @@ public class RequestsController : Controller
         if (id != currentId && !User.IsInRole(CargoAppConstants.AdminRole)) return Forbid();
 
         var user = await db.Users
-            .Include(s => s.CarRequests)
-            .Include(s => s.CargoRequests)
             .Select(s => new
             {
                 s.Id,
                 s.Name,
-                s.CarRequests,
-                s.CargoRequests
             })
             .FirstOrDefaultAsync(s => s.Id == id);
 
         if (user != null)
         {
-            var carRequests = user.CarRequests.OrderByDescending(r => r.CanBeResponded).ThenBy(r => r.EarlyDepartureDate).ThenBy(r => r.LateDepartureDate);
-            var cargoRequests = user.CargoRequests.OrderByDescending(r => r.CanBeResponded).ThenBy(r => r.DepartureTime);
-            var model = new RequestsViewModel(user.Name, carRequests, cargoRequests);
+            var carRequestsMinDateTime = DateTime.UtcNow.Date.AddHours(BaseRequest.MinResponseTimeInHours);
+            var carRequests = await db.CarRequests
+                .Where(r => r.UserId == id)
+                .OrderByDescending(r => r.LateDepartureDate >= carRequestsMinDateTime)
+                .ThenBy(r => r.EarlyDepartureDate)
+                .ThenBy(r => r.LateDepartureDate)
+                .Take(RequestsPageMaxCount)
+                .ToListAsync();
+
+            var cargoRequestsMinDateTime = DateTime.UtcNow.AddHours(BaseRequest.MinResponseTimeInHours);
+            var cargoRequests = await db.CargoRequests
+                .Where(r => r.UserId == id)
+                .OrderByDescending(r => r.DepartureTime >= cargoRequestsMinDateTime)
+                .ThenBy(r => r.DepartureTime)
+                .Take(RequestsPageMaxCount)
+                .ToListAsync();
+
+            var model = new RequestsViewModel(user.Id, user.Name, carRequests, cargoRequests);
 
             return View(model);
         }
 
         return RedirectToAction("Search", "Home");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> AllCarRequests(string? id, int page = 1)
+    {
+        id ??= userManager.GetUserId(User);
+        var username = await db.Users.Select(u => new { u.Id, u.Name }).FirstOrDefaultAsync(u => u.Id == id);
+        if (username == null)
+        {
+            return NotFound();
+        }
+
+        int requestsCount = await db.CarRequests.Where(r => r.UserId == id).CountAsync();
+        int pages = (requestsCount - 1) / RequestsPerPage + 1;
+        page = Math.Clamp(page, 1, pages);
+
+        var minDateTime = DateTime.UtcNow.Date.AddHours(BaseRequest.MinResponseTimeInHours);
+        var requests = await db.CarRequests
+            .Where(r => r.UserId == id)
+            .OrderByDescending(r => r.LateDepartureDate >= minDateTime)
+            .ThenBy(r => r.EarlyDepartureDate)
+            .ThenBy(r => r.LateDepartureDate)
+            .Skip((page - 1) * RequestsPerPage)
+            .Take(RequestsPerPage)
+            .ToListAsync();
+
+        AllCarRequestsViewModel model = new(username.Id, username.Name, page, pages, requests);
+        return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> AllCargoRequests(string? id, int page = 1)
+    {
+        id ??= userManager.GetUserId(User);
+        var username = await db.Users.Select(u => new { u.Id, u.Name }).FirstOrDefaultAsync(u => u.Id == id);
+        if (username == null)
+        {
+            return NotFound();
+        }
+
+        int requestsCount = await db.CarRequests.Where(r => r.UserId == id).CountAsync();
+        int pages = (requestsCount - 1) / RequestsPerPage + 1;
+        page = Math.Clamp(page, 1, pages);
+
+        var minDateTime = DateTime.UtcNow.AddHours(BaseRequest.MinResponseTimeInHours);
+        var requests = await db.CargoRequests
+            .Where(r => r.UserId == id)
+            .OrderByDescending(r => r.DepartureTime >= minDateTime)
+            .ThenBy(r => r.DepartureTime)
+            .Skip((page - 1) * RequestsPerPage)
+            .Take(RequestsPerPage)
+            .ToListAsync();
+
+        AllCargoRequestsViewModel model = new(username.Id, username.Name, page, pages, requests);
+        return View(model);
     }
 
     [AllowAnonymous]
