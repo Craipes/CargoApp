@@ -13,5 +13,5 @@ public class CarRequest : BaseRequest
 
     public List<CarResponse> Responses { get; set; } = [];
 
-    public override bool CanBeResponded => LateDepartureDate >= DateTime.UtcNow.Date.AddHours(MinResponseTimeInHours);
+    public override bool CanBeResponded => LateDepartureDate >= DateTime.UtcNow.Date.AddHours(CargoAppConstants.MinResponseTimeInHours);
 }

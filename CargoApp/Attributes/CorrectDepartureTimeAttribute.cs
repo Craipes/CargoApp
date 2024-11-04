@@ -7,7 +7,7 @@ public class CorrectDepartureTimeAttribute : ValidationAttribute
         if (value == null) return ValidationResult.Success;
         if (value is DateTime time)
         {
-            return time > DateTime.Now.AddHours(BaseRequest.MinRequestTimeInHours) && time < DateTime.Now.AddHours(BaseRequest.MaxRequestTimeInHours) ?
+            return time > DateTime.Now.AddHours(CargoAppConstants.MinRequestTimeInHours) && time < DateTime.Now.AddHours(CargoAppConstants.MaxRequestTimeInHours) ?
                 ValidationResult.Success :
                 new ValidationResult("Departure time is not correct");
         }

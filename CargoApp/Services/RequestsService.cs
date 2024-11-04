@@ -150,7 +150,7 @@ public class RequestsService
 
     private IQueryable<CarRequest> GetCarRequestsNoTrackingQuery(string userId)
     {
-        var minDateTime = DateTime.UtcNow.Date.AddHours(BaseRequest.MinResponseTimeInHours);
+        var minDateTime = DateTime.UtcNow.Date.AddHours(CargoAppConstants.MinResponseTimeInHours);
         return _context.CarRequests
             .AsNoTracking()
             .Where(r => r.UserId == userId)
@@ -161,7 +161,7 @@ public class RequestsService
 
     private IQueryable<CargoRequest> GetCargoRequestsNoTrackingQuery(string userId)
     {
-        var minDateTime = DateTime.UtcNow.AddHours(BaseRequest.MinResponseTimeInHours);
+        var minDateTime = DateTime.UtcNow.AddHours(CargoAppConstants.MinResponseTimeInHours);
         return _context.CargoRequests
             .AsNoTracking()
             .Where(r => r.UserId == userId)

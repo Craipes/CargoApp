@@ -10,5 +10,5 @@ public class CargoRequest : BaseRequest
 
     public List<CargoResponse> Responses { get; set; } = [];
 
-    public override bool CanBeResponded => DepartureTime >= DateTime.UtcNow.AddHours(MinResponseTimeInHours);
+    public override bool CanBeResponded => DepartureTime >= DateTime.UtcNow.AddHours(CargoAppConstants.MinResponseTimeInHours);
 }

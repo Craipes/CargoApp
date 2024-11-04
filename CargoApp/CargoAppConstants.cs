@@ -6,4 +6,8 @@ public static class CargoAppConstants
 
     public const int RequestsPerPage = 8;
     public const int LatestRequestsMaxCount = 3;
+
+    public const double MaxRequestTimeInHours = 24 * 14;
+    public const double MinRequestTimeInHours = 3;
+    public const double MinResponseTimeInHours = 0.5;
 }

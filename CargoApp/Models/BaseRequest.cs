@@ -6,10 +6,6 @@ namespace CargoApp.Models;
 
 public abstract class BaseRequest : BaseEntity
 {
-    public const double MaxRequestTimeInHours = 24 * 14;
-    public const double MinRequestTimeInHours = 3;
-    public const double MinResponseTimeInHours = 0.5;
-
     [BindNever] [ValidateNever] public required string UserId { get; set; }
     [BindNever] public User? User { get; set; }
 
