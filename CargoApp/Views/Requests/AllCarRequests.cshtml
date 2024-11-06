@@ -3,7 +3,14 @@
     ViewData["Title"] = "Car Requests";
 }
 
-<h2 class="mb-4">Оголошення пошуку транспорту користувача <a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.Id">@Model.Name</a></h2>
+@if (Model.Id == null)
+{
+    <h2 class="mb-4">Усі оголошення пошуку транспорту</h2>
+}
+else
+{
+    <h2 class="mb-4">Оголошення пошуку транспорту користувача <a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.Id">@Model.Name</a></h2>
+}
 @if (Model != null)
 {
     @for (int i = 0; i < Model.Requests.Count; i++)

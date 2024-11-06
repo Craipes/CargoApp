@@ -35,7 +35,10 @@
                         @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Requests">Усі запити</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="AllCarRequestsAdmin">Усі оголошення транспорту</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="AllCargoRequestsAdmin">Усі оголошення вантажу</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Усі користувачі</a>

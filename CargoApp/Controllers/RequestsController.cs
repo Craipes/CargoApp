@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CargoApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CargoApp.Controllers;
@@ -16,6 +17,32 @@ public class RequestsController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = CargoAppConstants.AdminRole)]
+    public async Task<IActionResult> AllCarRequestsAdmin(int page = 1)
+    {
+        int requestsCount = await requestsService.CarRequestsCountAsync();
+        int pages = (requestsCount - 1) / CargoAppConstants.RequestsPerPage + 1;
+        page = Math.Clamp(page, 1, pages);
+
+        var requests = await requestsService.PaginatedCarRequestsAsync(page);
+        AllCarRequestsViewModel model = new(null, null, page, pages, requests);
+        return View(nameof(AllCarRequests), model);
+    }
+
+    [HttpGet]
+    [Authorize(Roles = CargoAppConstants.AdminRole)]
+    public async Task<IActionResult> AllCargoRequestsAdmin(int page = 1)
+    {
+        int requestsCount = await requestsService.CargoRequestsCountAsync();
+        int pages = (requestsCount - 1) / CargoAppConstants.RequestsPerPage + 1;
+        page = Math.Clamp(page, 1, pages);
+
+        var requests = await requestsService.PaginatedCargoRequestsAsync(page);
+        AllCargoRequestsViewModel model = new(null, null, page, pages, requests);
+        return View(nameof(AllCargoRequests), model);
+    }
+
+    [HttpGet]
     public async Task<IActionResult> AllCarRequests(string? id, int page = 1)
     {
         id ??= userManager.GetUserId(User);
@@ -27,7 +54,7 @@ public class RequestsController : Controller
         int pages = (requestsCount - 1) / CargoAppConstants.RequestsPerPage + 1;
         page = Math.Clamp(page, 1, pages);
 
-        var requests = await requestsService.PaginatedCarRequestsAsync(id, page);
+        var requests = await requestsService.PaginatedCarRequestsAsync(page, id);
 
         AllCarRequestsViewModel model = new(user.Id, user.Name, page, pages, requests);
         return View(model);
@@ -45,7 +72,7 @@ public class RequestsController : Controller
         int pages = (requestsCount - 1) / CargoAppConstants.RequestsPerPage + 1;
         page = Math.Clamp(page, 1, pages);
 
-        var requests = await requestsService.PaginatedCargoRequestsAsync(id, page);
+        var requests = await requestsService.PaginatedCargoRequestsAsync(page, id);
 
         AllCargoRequestsViewModel model = new(user.Id, user.Name, page, pages, requests);
         return View(model);

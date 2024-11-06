@@ -85,17 +85,19 @@ public class RequestsService
         return await _context.CargoRequests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id);
     }
 
-    public async Task<int> CarRequestsCountAsync(string userId)
+    public async Task<int> CarRequestsCountAsync(string? userId = null)
     {
+        if (userId == null) return await _context.CarRequests.CountAsync();
         return await _context.CarRequests.Where(r => r.UserId == userId).CountAsync();
     }
 
-    public async Task<int> CargoRequestsCountAsync(string userId)
+    public async Task<int> CargoRequestsCountAsync(string? userId = null)
     {
+        if (userId == null) return await _context.CargoRequests.CountAsync();
         return await _context.CargoRequests.Where(r => r.UserId == userId).CountAsync();
     }
 
-    public async Task<List<CarRequest>> PaginatedCarRequestsAsync(string userId, int page)
+    public async Task<List<CarRequest>> PaginatedCarRequestsAsync(int page, string? userId = null)
     {
         return await GetCarRequestsNoTrackingQuery(userId)
             .Skip((page - 1) * CargoAppConstants.RequestsPerPage)
@@ -103,7 +105,7 @@ public class RequestsService
             .ToListAsync();
     }
 
-    public async Task<List<CargoRequest>> PaginatedCargoRequestsAsync(string userId, int page)
+    public async Task<List<CargoRequest>> PaginatedCargoRequestsAsync(int page, string? userId = null)
     {
         return await GetCargoRequestsNoTrackingQuery(userId)
             .Skip((page - 1) * CargoAppConstants.RequestsPerPage)
@@ -111,14 +113,14 @@ public class RequestsService
             .ToListAsync();
     }
 
-    public async Task<List<CarRequest>> LatestCarRequestsAsync(string userId)
+    public async Task<List<CarRequest>> LatestCarRequestsAsync(string? userId = null)
     {
         return await GetCarRequestsNoTrackingQuery(userId)
             .Take(CargoAppConstants.LatestRequestsMaxCount)
             .ToListAsync();
     }
 
-    public async Task<List<CargoRequest>> LatestCargoRequestsAsync(string userId)
+    public async Task<List<CargoRequest>> LatestCargoRequestsAsync(string? userId = null)
     {
         return await GetCargoRequestsNoTrackingQuery(userId)
             .Take(CargoAppConstants.LatestRequestsMaxCount)
@@ -148,25 +150,27 @@ public class RequestsService
         }
     }
 
-    private IQueryable<CarRequest> GetCarRequestsNoTrackingQuery(string userId)
+    private IQueryable<CarRequest> GetCarRequestsNoTrackingQuery(string? userId)
     {
         var minDateTime = DateTime.UtcNow.Date.AddHours(CargoAppConstants.MinResponseTimeInHours);
-        return _context.CarRequests
+        IQueryable<CarRequest> query = _context.CarRequests
             .AsNoTracking()
-            .Where(r => r.UserId == userId)
             .OrderByDescending(r => r.LateDepartureDate >= minDateTime)
             .ThenBy(r => r.EarlyDepartureDate)
             .ThenBy(r => r.LateDepartureDate);
+        if (userId != null) query = query.Where(r => r.UserId == userId);
+        return query;
     }
 
-    private IQueryable<CargoRequest> GetCargoRequestsNoTrackingQuery(string userId)
+    private IQueryable<CargoRequest> GetCargoRequestsNoTrackingQuery(string? userId)
     {
         var minDateTime = DateTime.UtcNow.AddHours(CargoAppConstants.MinResponseTimeInHours);
-        return _context.CargoRequests
+        IQueryable<CargoRequest> query = _context.CargoRequests
             .AsNoTracking()
-            .Where(r => r.UserId == userId)
             .OrderByDescending(r => r.DepartureTime >= minDateTime)
             .ThenBy(r => r.DepartureTime);
+        if (userId != null) query = query.Where(r => r.UserId == userId);
+        return query;
     }
 
     private bool TryGetUserId(out string? userId)
