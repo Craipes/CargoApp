@@ -8,12 +8,14 @@ public class AccountController : Controller
 {
     private readonly UserManager<User> userManager;
     private readonly SignInManager<User> signInManager;
+    private readonly RequestsService requestsService;
     private readonly CargoAppContext db;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, CargoAppContext db)
+    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RequestsService requestsService, CargoAppContext db)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
+        this.requestsService = requestsService;
         this.db = db;
     }
 
@@ -107,13 +109,17 @@ public class AccountController : Controller
                 CarRequestsCount = s.CarRequests.Count,
                 CargoRequestsCount = s.CargoRequests.Count,
                 CarResponsesCount = s.CarResponses.Count,
-                CargoResponsesCount = s.CargoResponses.Count,
-                AllowEditing = id == currentId || User.IsInRole(CargoAppConstants.AdminRole)
+                CargoResponsesCount = s.CargoResponses.Count
             })
             .FirstOrDefaultAsync(s => s.Id == id);
 
         if (user != null)
         {
+            var carRequests = await requestsService.LatestCarRequestsAsync(id);
+            var cargoRequests = await requestsService.LatestCargoRequestsAsync(id);
+            user.CarRequests = carRequests;
+            user.CargoRequests = cargoRequests;
+            user.AllowEditing = id == currentId || User.IsInRole(CargoAppConstants.AdminRole);       
             return View(user);
         }
         return RedirectToAction("Search", "Home");
@@ -137,7 +143,7 @@ public class AccountController : Controller
 
             updateUser.Name = model.Name;
             updateUser.PhoneNumber = model.Phone;
-            await db.SaveChangesAsync();
+            await userManager.UpdateAsync(updateUser);
             return RedirectToAction("Profile", new { id = model.Id });
         }
         model.AllowEditing = true;

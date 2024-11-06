@@ -7,27 +7,36 @@
 
 <div class="profile-container">
     <div class="profile-update-form">
-        <div class="row">
+        <div class="row mt-5 shadow p-3 pb-5 panel">
             <div class="col-lg-6 mt-4">
                 <h2 class="mb-4">Профіль користувача @Model.Name</h2>
-                <div class="row">
-                    <div class="col-6">
-                        <div>Оголошення пошуку транспорту: @Model.CarRequestsCount</div>
+                <div class="row align-middle">
+                    <div class="col-5">
+                        <div>Оголошення пошуку транспорту:</div>
                     </div>
-                    <div class="col-6">
-                        <div>Оголошення пошуку вантажу: @Model.CargoRequestsCount</div>
+                    <div class="col-1 text-end">
+                        @Model.CarRequestsCount
                     </div>
-                    <div class="col-6 mt-3">
-                        <div>Відподі на пошук транспорту: @Model.CarResponsesCount</div>
+                    <div class="col-5">
+                        <div>Оголошення пошуку вантажу:</div>
                     </div>
-                    <div class="col-6 mt-3">
-                        <div>Відповіді на пошук вантажу: @Model.CargoResponsesCount</div>
+                    <div class="col-1 text-end">
+                        @Model.CargoRequestsCount
+                    </div>
+                    <div class="mt-3"></div>
+                    <div class="col-5">
+                        <div>Відподі на пошук транспорту:</div>
+                    </div>
+                    <div class="col-1 text-end">
+                        @Model.CarResponsesCount
+                    </div>
+                    <div class="col-5">
+                        <div>Відповіді на пошук вантажу:</div>
+                    </div>
+                    <div class="col-1 text-end">
+                        @Model.CargoResponsesCount
                     </div>
                 </div>
-                @if (Model.AllowEditing)
-                {
-                    <a asp-controller="Requests" asp-action="Requests" asp-route-id="@Model.Id" class="btn btn-primary mt-3 w-100">Переглянути</a>
-                }
             </div>
             <div class="col-lg-6 mt-4 text-center">
                 <h2 class="mb-4">Рейтинг: @Model.Rating.ToString("F2")</h2>
@@ -68,7 +77,7 @@
                 <div asp-validation-summary="All"></div>
             </div>
         </div>
-        <div>
+        @* <div>
             @if (Model.ReviewsReceivedCount == 0)
             {
                 <h2 class="text-center mt-5">Жодного відгука про користувача не було надано</h2>
@@ -87,6 +96,159 @@
                     </div>
                 }
             }
+        </div> *@
+        <div>
+            <h2 class="text-center mt-5">Останні оголошення користувача</h2>
+            <div class="row">
+                <div class="col-lg-6 mt-5">
+                    <h3>Оголошення пошуку транспорту</h3>
+                    <div class="list-group">
+                        @for (int i = 0; i < Model.CarRequests.Count; i++)
+                        {
+                            var request = Model.CarRequests[i];
+                            <div class="list-group-item @(request.CanBeResponded ? "" : "list-group-item-dark")">
+                                @if (request.CanBeResponded)
+                                {
+                                    <span class="badge bg-success">Активне</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Час оголошення вичерпано</span>
+                                }
+                                <div class="row">
+                                    <span class="fw-bold col-6">Контактне ім'я</span>
+                                    <span class="col-6">@request.ContactName</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Контактний номер</span>
+                                    <span class="col-6">@request.ContactPhoneNumber</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Місце відбуття</span>
+                                    <span class="col-6">@request.DeparturePlace</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Місце прибуття</span>
+                                    <span class="col-6">@request.DestinationPlace</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Ранній час відправлення</span>
+                                    <span class="col-6">@request.EarlyDepartureDate.ToString("d")</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Пізній час відправлення</span>
+                                    <span class="col-6">@request.LateDepartureDate.ToString("d")</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Тип транспорту</span>
+                                    <span class="col-6">@request.Cargo.TrailerType</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Маса вантажу</span>
+                                    <span class="col-6">@request.Cargo.Mass т</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Об'єм вантажу</span>
+                                    <span class="col-6">@request.Cargo.Volume м³  (@(request.Cargo.Length == null ? "-" : (request.Cargo.Length.Value.ToString("F2")) + " м") x @(request.Cargo.Width == null ? "-" : (request.Cargo.Width.Value.ToString("F2")) + " м") x @(request.Cargo.Height == null ? "-" : (request.Cargo.Height.Value.ToString("F2") + " м")))</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Пропонована ціна</span>
+                                    <span class="col-6">@request.Price грн (@request.PriceType)</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Час подання</span>
+                                    <span class="col-6">@request.AddTime</span>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <a class="btn btn-primary mt-2 col-4" asp-action="CarRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">Переглянути</a>
+                                    @if (Model.AllowEditing)
+                                    {
+                                        <a class="btn btn-warning mt-2 col-4" asp-action="EditCarRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @if (Model.AllowEditing)
+                    {
+                        <a class="link-primary" asp-controller="Requests" asp-action="AllCarRequests" asp-route-id="@Model.Id">Переглянути усі</a>
+                    }
+                </div>
+                <div class="col-lg-6 mt-5">
+                    <h3>Оголошення пошуку вантажу</h3>
+                    <div action="list-group">
+                        @for (int i = 0; i < Model.CargoRequests.Count; i++)
+                        {
+                            var request = Model.CargoRequests[i];
+                            <div class="list-group-item @(request.CanBeResponded ? "" : "list-group-item-dark")">
+                                @if (request.CanBeResponded)
+                                {
+                                    <span class="badge bg-success">Активне</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Час оголошення вичерпано</span>
+                                }
+                                <div class="row">
+                                    <span class="fw-bold col-6">Контактне ім'я</span>
+                                    <span class="col-6">@request.ContactName</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Контактний номер</span>
+                                    <span class="col-6">@request.ContactPhoneNumber</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Місце відбуття</span>
+                                    <span class="col-6">@request.DeparturePlace</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Місце прибуття</span>
+                                    <span class="col-6">@request.DestinationPlace</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Час відбуття</span>
+                                    <span class="col-6">@request.DepartureTime.ToString("g")</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Тип причіпу</span>
+                                    <span class="col-6">@request.Car.Type</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Тип транспорту</span>
+                                    <span class="col-6">@request.Car.TrailerType</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Вантажопідйоність</span>
+                                    <span class="col-6">@request.Car.MaxMass т</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Об'єм</span>
+                                    <span class="col-6">@request.Car.MaxVolume м³  (@(request.Car.MaxLength == null ? "-" : (request.Car.MaxLength.Value.ToString("F2")) + " м") x @(request.Car.MaxWidth == null ? "-" : (request.Car.MaxWidth.Value.ToString("F2")) + " м") x @(request.Car.MaxHeight == null ? "-" : (request.Car.MaxHeight.Value.ToString("F2") + " м")))</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Пропонована ціна</span>
+                                    <span class="col-6">@request.Price грн (@request.PriceType)</span>
+                                </div>
+                                <div class="row">
+                                    <span class="fw-bold col-6">Час подання</span>
+                                    <span class="col-6">@request.AddTime</span>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <a class="btn btn-primary mt-2 col-4" asp-action="CargoRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">Переглянути</a>
+                                    @if (Model.AllowEditing)
+                                    {
+                                        <a class="btn btn-warning mt-2 col-4" asp-action="EditCargoRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @if (Model.AllowEditing)
+                    {
+                        <a class="link-primary" asp-controller="Requests" asp-action="AllCargoRequests" asp-route-id="@Model.Id">Переглянути усі</a>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>

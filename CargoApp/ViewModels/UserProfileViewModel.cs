@@ -20,4 +20,7 @@ public class UserProfileViewModel
 
     public bool AllowEditing { get; set; }
     public IEnumerable<ReviewViewModel> ReviewsReceived { get; set; } = [];
+
+    public List<CarRequest> CarRequests { get; set; } = [];
+    public List<CargoRequest> CargoRequests { get; set; } = [];
 }

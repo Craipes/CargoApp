@@ -16,28 +16,6 @@ public class RequestsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Requests(string? id)
-    {
-        id ??= userManager.GetUserId(User);
-        if (id == null) return NotFound();
-        var currentId = userManager.GetUserId(User);
-        if (id != currentId && !User.IsInRole(CargoAppConstants.AdminRole)) return Forbid();
-
-        var user = await userManager.FindByIdAsync(id);
-
-        if (user != null)
-        {
-            var carRequests = await requestsService.LatestCarRequestsAsync(id);
-            var cargoRequests = await requestsService.LatestCargoRequestsAsync(id);
-            var model = new RequestsViewModel(user.Id, user.Name, carRequests, cargoRequests);
-
-            return View(model);
-        }
-
-        return RedirectToAction("Search", "Home");
-    }
-
-    [HttpGet]
     public async Task<IActionResult> AllCarRequests(string? id, int page = 1)
     {
         id ??= userManager.GetUserId(User);
