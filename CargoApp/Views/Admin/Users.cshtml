@@ -1,10 +1,18 @@
-﻿@model List<UserProfileAdminViewModel>
+﻿@model UserProfilesAdminViewModel
 
 @{
     ViewData["Title"] = "Users";
 }
 
 <h2>Користувачі</h2>
+
+<form class="row" method="get">
+    <label class="col-form-label col-2" name="search">Ім'я / Пошта</label>
+    <div class="col-8">
+        <input class="form-control" type="text" name="search" value="@Model.Search" />
+    </div>
+    <button type="submit" class="btn btn-primary col-2">Пошук</button>
+</form>
 
 <table class="table table-striped caption-top align-middle">
     <caption>У стовпці "Оголошення" перше число означає "оголошення на пошук транспорту", друге - "оголошення на пошук вантажу".</caption>
@@ -22,7 +30,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model)
+        @foreach (var user in Model.Profiles)
         {
             <tr>
                 <td>@user.Name</td>
@@ -39,3 +47,39 @@
         }
     </tbody>
 </table>
+
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.Page > 1 ? "" : "disabled")">
+            <a class="page-link" asp-route-page="@(Model.Page - 1)">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        @{
+            int min = Math.Max(1, Model.Page - 2);
+            int max = Math.Min(Model.MaxPages, Model.Page + 2);
+        }
+        @for (int i = min; i <= max; i++)
+        {
+            if (Model.Page == i)
+            {
+                <li class="page-item active">
+                    <a class="page-link">@i</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-route-page="@i">@i</a>
+                </li>
+            }
+        }
+
+        <li class="page-item  @(Model.Page < Model.MaxPages ? "" : "disabled")">
+            <a class="page-link" asp-route-search="" asp-route-page="@(Model.Page + 1)">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

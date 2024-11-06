@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CargoApp.Controllers;
 
@@ -39,9 +40,21 @@ public class AdminController : Controller
         return View(viewModel);
     }
 
-    public async Task<IActionResult> Users()
+    public async Task<IActionResult> Users(string? search, int page = 1)
     {
-        var users = await db.Users
+        int count = await db.Users.CountAsync();
+        int pages = (count - 1) / CargoAppConstants.UsersPerPage + 1;
+        page = Math.Clamp(page, 1, pages);
+
+        IQueryable<User> query = db.Users;
+
+        if (search != null)
+        {
+            search = search.ToUpper();
+            query = query.Where(s => s.Email!.ToUpper().Contains(search) || s.Name.ToUpper().Contains(search));
+        }
+
+        var users = await query
             .Include(s => s.CarRequests)
             .Include(s => s.CargoRequests)
             .Include(s => s.CarResponses)
@@ -59,8 +72,11 @@ public class AdminController : Controller
                 CargoRequestsCount = s.CargoRequests.Count,
                 CarResponsesCount = s.CarResponses.Count,
                 CargoResponsesCount = s.CargoResponses.Count
-            }).ToListAsync();
+            })
+            .Skip((page - 1) * CargoAppConstants.UsersPerPage)
+            .Take(CargoAppConstants.UsersPerPage)
+            .ToListAsync();
 
-        return View(users);
+        return View(new UserProfilesAdminViewModel(users, search, page, pages));
     }
 }
