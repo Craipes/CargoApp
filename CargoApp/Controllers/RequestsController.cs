@@ -251,7 +251,7 @@ public class RequestsController : Controller
             return Forbid();
         }
         await requestsService.EditCarRequestAsync(dbRequest, request);
-        return RedirectToAction("Requests", new { id = request.UserId });
+        return RedirectToAction(nameof(AllCarRequests), new { id = request.UserId });
     }
 
     [HttpPost]
@@ -270,6 +270,6 @@ public class RequestsController : Controller
             return Forbid();
         }
         await requestsService.EditCargoRequestAsync(dbRequest, request);
-        return RedirectToAction("Requests", new { id = request.UserId });
+        return RedirectToAction(nameof(AllCargoRequests), new { id = request.UserId });
     }
 }
