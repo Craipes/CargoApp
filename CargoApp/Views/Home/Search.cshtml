@@ -20,17 +20,21 @@
                 <input asp-for=IsCarSearching checked="checked" hidden="hidden" />
                 <div class="col-lg-6 mt-0 mb-3">
                     <label class="form-label" asp-for=CarSearch.DeparturePlace>Місце відбуття <span class="text-danger">*</span></label>
-                    <input class="form-control mb-3 w-100" id="car-departure" asp-for=CarSearch.DeparturePlace placeholder="Місце відбуття..." autocomplete="off" spellcheck="false" required />
+                    <input class="form-control w-100 mb-3" id="car-departure" asp-for=CarSearch.DeparturePlace placeholder="Місце відбуття..." autocomplete="off" spellcheck="false" required/>
+                    @* <div class="mb-3"><span asp-validation-for="CarSearch.DeparturePlace" class="text-danger"></span></div> *@
                     <label class="form-label" asp-for=CarSearch.DestinationPlace>Місце прибуття <span class="text-danger">*</span></label>
-                    <input class="form-control mb-3 w-100" id="car-destination" asp-for=CarSearch.DestinationPlace placeholder="Місце прибуття..." autocomplete="off" spellcheck="false" required />
+                    <input class="form-control w-100 mb-3" id="car-destination" asp-for=CarSearch.DestinationPlace placeholder="Місце прибуття..." autocomplete="off" spellcheck="false" required/>
+                    @* <div class="mb-3"><span asp-validation-for="CarSearch.DestinationPlace" class="text-danger"></span></div> *@
                     <div class="row">
                         <div class="col-6">
                             <label class="form-label" asp-for="CarSearch.DepartureTime">Ранній час відбуття</label>
                             <input class="form-control" type="date" asp-for="CarSearch.DepartureTime" />
+                            <span asp-validation-for="CarSearch.DepartureTime" class="text-danger"></span>
                         </div>
                         <div class="col-6">
                             <label class="form-label" asp-for="CarSearch.LateDepartureTime">Пізній час відбуття</label>
                             <input class="form-control" type="date" asp-for="CarSearch.LateDepartureTime" />
+                            <span asp-validation-for="CarSearch.LateDepartureTime" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -39,6 +43,7 @@
                         <div class="col-12 mb-3">
                             <label class="form-label" asp-for="CarSearch.TrailerType">Тип причіпу</label>
                             <select class="form-select" asp-for="CarSearch.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()"></select>
+                            <span asp-validation-for="CarSearch.TrailerType" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
                             <label class="form-label" asp-for="CarSearch.Mass">Вага</label>
@@ -46,6 +51,7 @@
                                 <input class="form-control" asp-for="CarSearch.Mass" autocomplete="off" />
                                 <span class="input-group-text">t</span>
                             </div>
+                            <span asp-validation-for="CarSearch.Mass" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
                             <label class="form-label" asp-for="CarSearch.Volume">Об'єм</label>
@@ -53,6 +59,7 @@
                                 <input class="form-control" asp-for="CarSearch.Volume" autocomplete="off" />
                                 <span class="input-group-text">m<sup>3</sup></span>
                             </div>
+                            <span asp-validation-for="CarSearch.Volume" class="text-danger"></span>
                         </div>
                         <div class="col-4">
                             <label class="form-label" asp-for="CarSearch.Length">Довжина</label>
@@ -60,6 +67,7 @@
                                 <input class="form-control" asp-for="CarSearch.Length" autocomplete="off" />
                                 <span class="input-group-text">m</span>
                             </div>
+                            <span asp-validation-for="CarSearch.Length" class="text-danger"></span>
                         </div>
                         <div class="col-4">
                             <label class="form-label" asp-for="CarSearch.Width">Ширина</label>
@@ -67,6 +75,7 @@
                                 <input class="form-control" asp-for="CarSearch.Width" autocomplete="off" />
                                 <span class="input-group-text">m</span>
                             </div>
+                            <span asp-validation-for="CarSearch.Width" class="text-danger"></span>
                         </div>
                         <div class="col-4">
                             <label class="form-label" asp-for="CarSearch.Height">Висота</label>
@@ -74,6 +83,7 @@
                                 <input class="form-control" asp-for="CarSearch.Height" autocomplete="off" />
                                 <span class="input-group-text">m</span>
                             </div>
+                            <span asp-validation-for="CarSearch.Height" class="text-danger"></span>
                         </div>
                         <div class="col-12 form-text">Вага, об'єм та виміри вантажу, необов'язково до заповнення</div>
                     </div>
@@ -85,7 +95,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">Пошук</button>
-                    <div class="col-4"></div>
+                <div class="col-4"></div>
                 <button type="submit" class="btn btn-primary btn-search col-4 skip-form-validation" formaction="/Requests/CarRequestFromSearch">Створити оголошення</button>
             </form>
         </div>
@@ -97,11 +107,14 @@
                 <div class="col-lg-6 mt-0 mb-3">
                     <label class="form-label" asp-for=CargoSearch.DeparturePlace>Місце відбуття <span class="text-danger">*</span></label>
                     <input class="form-control mb-3 w-100" id="car-departure" asp-for=CargoSearch.DeparturePlace placeholder="Місце відбуття..." autocomplete="off" spellcheck="false" required />
+                    @* <div class="mb-3"><span asp-validation-for="CargoSearch.DeparturePlace" class="text-danger"></span></div> *@
                     <label class="form-label" asp-for=CargoSearch.DestinationPlace>Місце прибуття <span class="text-danger">*</span></label>
                     <input class="form-control mb-3 w-100" id="car-destination" asp-for=CargoSearch.DestinationPlace placeholder="Місце прибуття..." autocomplete="off" spellcheck="false" required />
+                    @* <div class="mb-3"><span asp-validation-for="CargoSearch.DestinationPlace" class="text-danger"></span></div> *@
                     <div class="col-12">
                         <label class="form-label" asp-for="CargoSearch.DepartureTime">Час відбуття</label>
                         <input class="form-control" asp-for="CargoSearch.DepartureTime" />
+                        <span asp-validation-for="CargoSearch.DepartureTime" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-lg-6 m-0">
@@ -109,6 +122,7 @@
                         <div class="col-12 mb-3">
                             <label class="form-label" asp-for="CargoSearch.TrailerType">Тип причіпу</label>
                             <select class="form-select" asp-for="CargoSearch.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()"></select>
+                            <span asp-validation-for="CargoSearch.TrailerType" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
                             <label class="form-label" asp-for="CargoSearch.Mass">Вага</label>
@@ -116,6 +130,7 @@
                                 <input class="form-control" asp-for="CargoSearch.Mass" autocomplete="off" />
                                 <span class="input-group-text">t</span>
                             </div>
+                            <span asp-validation-for="CargoSearch.Mass" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
                             <label class="form-label" asp-for="CargoSearch.Volume">Об'єм</label>
@@ -123,6 +138,7 @@
                                 <input class="form-control" asp-for="CargoSearch.Volume" autocomplete="off" />
                                 <span class="input-group-text">m<sup>3</sup></span>
                             </div>
+                            <span asp-validation-for="CargoSearch.Volume" class="text-danger"></span>
                         </div>
                         <div class="col-4">
                             <label class="form-label" asp-for="CargoSearch.Length">Довжина</label>
@@ -130,6 +146,7 @@
                                 <input class="form-control" asp-for="CargoSearch.Length" autocomplete="off" />
                                 <span class="input-group-text">m</span>
                             </div>
+                            <span asp-validation-for="CargoSearch.Length" class="text-danger"></span>
                         </div>
                         <div class="col-4">
                             <label class="form-label" asp-for="CargoSearch.Width">Ширина</label>
@@ -137,6 +154,7 @@
                                 <input class="form-control" asp-for="CargoSearch.Width" autocomplete="off" />
                                 <span class="input-group-text">m</span>
                             </div>
+                            <span asp-validation-for="CargoSearch.Width" class="text-danger"></span>
                         </div>
                         <div class="col-4">
                             <label class="form-label" asp-for="CargoSearch.Height">Висота</label>
@@ -144,6 +162,7 @@
                                 <input class="form-control" asp-for="CargoSearch.Height" autocomplete="off" />
                                 <span class="input-group-text">m</span>
                             </div>
+                            <span asp-validation-for="CargoSearch.Height" class="text-danger"></span>
                         </div>
                         <div class="col-12 form-text">Вага, об'єм та виміри вантажу, необов'язково до заповнення</div>
                     </div>
@@ -163,13 +182,14 @@
 </div>
 
 <div id="search-results"></div>
-@* 
+
 @section Scripts {
-    <script>
+    @* <script>
         const carDepartureAutocomplete = getSettlementAutocomplete("#car-departure", "Місце відбуття...");
         const carDestinationAutocomplete = getSettlementAutocomplete("#car-destination", "Місце прибуття...");
 
         const cargoDepartureAutocomplete = getSettlementAutocomplete("#cargo-departure", "Місце відбуття...");
         const cargoDestinationAutocomplete = getSettlementAutocomplete("#cargo-destination", "Місце прибуття...");
-    </script>
-} *@
+    </script> *@
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

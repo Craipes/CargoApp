@@ -8,7 +8,12 @@ $(document).ready(function () {
     let cargoBtn = $("#cargo-btn");
     let cargoBtnParent = cargoBtn.parent();
 
+    let carSearchActive = true;
+
     carBtn.click(function (event) {
+        if (carSearchActive) return;
+        carSearchActive = true;
+
         carBtn.removeClass("text-black");
         carBtn.addClass("text-white");
         carBtnParent.addClass("bg-primary");
@@ -20,9 +25,14 @@ $(document).ready(function () {
         cargoRequestForm.hide();
         carRequestForm.show();
 
+        searchResults.html("");
+
         event.preventDefault();
     });
     cargoBtn.click(function (event) {
+        if (!carSearchActive) return;
+        carSearchActive = false;
+
         cargoBtn.removeClass("text-black");
         cargoBtn.addClass("text-white");
         cargoBtnParent.addClass("bg-primary");
@@ -33,6 +43,8 @@ $(document).ready(function () {
 
         carRequestForm.hide();
         cargoRequestForm.show();
+
+        searchResults.html("");
 
         event.preventDefault();
     });
@@ -53,6 +65,10 @@ $(document).ready(function () {
             const url = $(this).prop("formaction");
             const form = $(this).closest("form");
             if (!form.get(0).reportValidity()) return;
+            if (!form.valid()) {
+                searchResults.html("");
+                return;
+            }
             const data = form.serialize();
             $.ajax({
                 type: "POST",
@@ -67,7 +83,7 @@ $(document).ready(function () {
 
     $(".skip-form-validation").click(function (e) {
         e.preventDefault();
-        let form = $(this).closest("form").submit();
+        let form = $(this).closest("form").get(0).submit();
     })
 });
 
