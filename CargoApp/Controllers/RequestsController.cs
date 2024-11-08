@@ -196,7 +196,7 @@ public class RequestsController : Controller
             ModelState.AddModelError("", "User not found");
             return View("CarRequest");
         }
-        return RedirectToAction("Search", "Home");
+        return RedirectToAction(nameof(AllCarRequests));
     }
 
     [HttpPost]
@@ -210,7 +210,7 @@ public class RequestsController : Controller
             ModelState.AddModelError("", "User not found");
             return View("CargoRequest");
         }
-        return RedirectToAction("Search", "Home");
+        return RedirectToAction(nameof(AllCargoRequests));
     }
 
     [HttpGet]

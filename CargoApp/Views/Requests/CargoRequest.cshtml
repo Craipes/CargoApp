@@ -19,41 +19,46 @@ else
     </div>
     <div id="cargo-request-form">
         <form method="post" asp-action="@(isCreating ? "CreateCargoRequest" : "EditCargoRequest")" asp-controller="Requests" class="row p-3 g-3">
-            <div class="m-0" asp-validation-summary="All"></div>
             <div class="col-12">
                 <label class="form-label" asp-for="ContactName">Контактне ім'я</label>
                 <input class="form-control" asp-for="ContactName" required />
+                <span asp-validation-for="ContactName" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for="ContactPhoneNumber">Контактний номер</label>
                 <input class="form-control" asp-for="ContactPhoneNumber" placeholder="+380 ** *** ****" />
+                <span asp-validation-for="ContactPhoneNumber" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for="ContactEmail">Контактна пошта</label>
                 <input class="form-control" asp-for="ContactEmail" placeholder="placeholder@gmial.com" />
+                <span asp-validation-for="ContactEmail" class="text-danger"></span>
                 <div class="form-text">Введення пошти не є обов'язковим</div>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for="DeparturePlace">Місце відбуття</label>
                 <input class="form-control" id="cargo-departure" asp-for="DeparturePlace" autocomplete="off" spellcheck="false" required />
+                <span asp-validation-for="DeparturePlace" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for="DestinationPlace">Місце прибуття</label>
                 <input class="form-control" id="cargo-destination" asp-for="DestinationPlace" autocomplete="off" spellcheck="false" required />
+                <span asp-validation-for="DestinationPlace" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <label class="form-label" asp-for="DepartureTime">Час відбуття</label>
                 <input class="form-control" asp-for="DepartureTime" autocomplete="off" required />
+                <span asp-validation-for="DepartureTime" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for="Car.Type">Тип автомобіля</label>
-                <select class="form-select" asp-for="Car.Type" asp-items="Html.GetEnumSelectList<CarType>()" required>
-                </select>
+                <select class="form-select" asp-for="Car.Type" asp-items="Html.GetEnumSelectList<CarType>()" required></select>
+                <span asp-validation-for="Car.Type" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for="Car.TrailerType">Тип причепа</label>
-                <select class="form-select" asp-for="Car.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()" required>
-                </select>
+                <select class="form-select" asp-for="Car.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()" required></select>
+                <span asp-validation-for="Car.TrailerType" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <label class="form-label" asp-for="Car.MaxMass">Вантажопідйомність</label>
@@ -61,6 +66,7 @@ else
                     <input class="form-control" asp-for="Car.MaxMass" autocomplete="off" required />
                     <span class="input-group-text">t</span>
                 </div>
+                <span asp-validation-for="Car.MaxMass" class="text-danger"></span>
             </div>
             <div class="col-lg-6">
                 <label class="form-label" asp-for="Car.MaxVolume">Допустимий об'єм</label>
@@ -68,6 +74,7 @@ else
                     <input class="form-control" asp-for="Car.MaxVolume" autocomplete="off" />
                     <span class="input-group-text">m<sup>3</sup></span>
                 </div>
+                <span asp-validation-for="Car.MaxVolume" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
                 <label class="form-label" asp-for="Car.MaxLength">Довжина</label>
@@ -75,6 +82,7 @@ else
                     <input class="form-control" asp-for="Car.MaxLength" autocomplete="off" />
                     <span class="input-group-text">m</span>
                 </div>
+                <span asp-validation-for="Car.MaxLength" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
                 <label class="form-label" asp-for="Car.MaxWidth">Ширина</label>
@@ -82,6 +90,7 @@ else
                     <input class="form-control" asp-for="Car.MaxWidth" autocomplete="off" />
                     <span class="input-group-text">m</span>
                 </div>
+                <span asp-validation-for="Car.MaxWidth" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
                 <label class="form-label" asp-for="Car.MaxHeight">Висота</label>
@@ -89,6 +98,7 @@ else
                     <input class="form-control" asp-for="Car.MaxHeight" autocomplete="off" />
                     <span class="input-group-text">m</span>
                 </div>
+                <span asp-validation-for="Car.MaxHeight" class="text-danger"></span>
             </div>
             <div class="col-12 form-text">Можна вказати вільний об'єм або виміри, обидва варіанти не обов'язкові</div>
             <div class="col-12">
@@ -96,13 +106,15 @@ else
                 <div class="input-group">
                     <span class="input-group-text">₴</span>
                     <input class="form-control" asp-for="Price" autocomplete="off" required />
-                    <select class="form-select" asp-for="PriceType" asp-items="Html.GetEnumSelectList<PriceType>()" required>
-                    </select>
+                    <select class="form-select" asp-for="PriceType" asp-items="Html.GetEnumSelectList<PriceType>()" required></select>
                 </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+                <span asp-validation-for="PriceType" class="text-danger"></span>
             </div>
             <div class="col-12 text-center">
                 <label class="form-label" asp-for="Details">Деталі</label>
                 <textarea class="form-control" asp-for="Details" rows="3"></textarea>
+                <span asp-validation-for="Details" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <div class="form-check">
@@ -115,3 +127,7 @@ else
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

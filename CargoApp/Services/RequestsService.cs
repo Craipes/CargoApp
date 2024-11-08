@@ -138,7 +138,7 @@ public class RequestsService
     {
         if (request.Cargo.Volume == null && (request.Cargo.Length == null || request.Cargo.Width == null || request.Cargo.Height == null))
         {
-            modelState.AddModelError("", "Volume or dimensions must be specified");
+            modelState.AddModelError<CarRequest>(r => r.Cargo.Volume, "Volume or dimensions must be specified");
         }
     }
 
@@ -146,7 +146,7 @@ public class RequestsService
     {
         if (request.Car.MaxVolume == null && (request.Car.MaxLength == null || request.Car.MaxWidth == null || request.Car.MaxHeight == null))
         {
-            modelState.AddModelError("", "Volume or dimensions must be specified");
+            modelState.AddModelError<CargoRequest>(r => r.Car.MaxVolume, "Volume or dimensions must be specified");
         }
     }
 

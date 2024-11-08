@@ -19,40 +19,46 @@ else
     </div>
     <div id="car-request-form">
         <form method="post" asp-action="@(isCreating ? "CreateCarRequest" : "EditCarRequest")" asp-controller="Requests" class="row p-3 g-3">
-            <div class="m-0" asp-validation-summary="All"></div>
             <div class="col-12">
                 <label class="form-label" asp-for=ContactName>Контактне ім'я</label>
                 <input class="form-control" asp-for=ContactName required />
+                <span asp-validation-for="ContactName" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=ContactPhoneNumber>Контактний номер</label>
                 <input class="form-control" asp-for=ContactPhoneNumber placeholder="+380 ** *** ****" />
+                <span asp-validation-for="ContactPhoneNumber" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=ContactEmail>Контактна пошта</label>
                 <input class="form-control" asp-for=ContactEmail placeholder="placeholder@gmial.com" />
+                <span asp-validation-for="ContactEmail" class="text-danger"></span>
                 <div class="form-text">Введення пошти не є обов'язковим</div>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=DeparturePlace>Місце відбуття</label>
                 <input class="form-control" id="car-departure" asp-for=DeparturePlace autocomplete="off" spellcheck="false" required />
+                <span asp-validation-for="DeparturePlace" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=DestinationPlace>Місце прибуття</label>
                 <input class="form-control" id="car-destination" asp-for=DestinationPlace autocomplete="off" spellcheck="false" required />
+                <span asp-validation-for="DestinationPlace" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=EarlyDepartureDate>Ранній день відбуття</label>
                 <input class="form-control" type="date" asp-for=EarlyDepartureDate autocomplete="off" required />
+                <span asp-validation-for="EarlyDepartureDate" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=LateDepartureDate>Пізній день відбуття</label>
                 <input class="form-control" type="date" asp-for=LateDepartureDate autocomplete="off" required />
+                <span asp-validation-for="LateDepartureDate" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <label class="form-label" asp-for="Cargo.TrailerType">Тип причепа</label>
-                <select class="form-select" asp-for="Cargo.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()" required>
-                </select>
+                <select class="form-select" asp-for="Cargo.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()" required></select>
+                <span asp-validation-for="Cargo.TrailerType" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <label class="form-label" asp-for=Cargo.Mass>Маса вантажу</label>
@@ -60,6 +66,7 @@ else
                     <input class="form-control" asp-for=Cargo.Mass autocomplete="off" required />
                     <span class="input-group-text">t</span>
                 </div>
+                <span asp-validation-for="Cargo.Mass" class="text-danger"></span>
             </div>
             <div class="col-lg-6">
                 <label class="form-label" asp-for=Cargo.Volume>Об'єм</label>
@@ -67,6 +74,7 @@ else
                     <input class="form-control" asp-for=Cargo.Volume autocomplete="off" />
                     <span class="input-group-text">m<sup>3</sup></span>
                 </div>
+                <span asp-validation-for="Cargo.Volume" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
                 <label class="form-label" asp-for=Cargo.Length>Довжина</label>
@@ -74,6 +82,7 @@ else
                     <input class="form-control" asp-for=Cargo.Length autocomplete="off" />
                     <span class="input-group-text">m</span>
                 </div>
+                <span asp-validation-for="Cargo.Length" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
                 <label class="form-label" asp-for=Cargo.Width>Ширина</label>
@@ -81,6 +90,7 @@ else
                     <input class="form-control" asp-for=Cargo.Width autocomplete="off" />
                     <span class="input-group-text">m</span>
                 </div>
+                <span asp-validation-for="Cargo.Width" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
                 <label class="form-label" asp-for=Cargo.Height>Висота</label>
@@ -88,6 +98,7 @@ else
                     <input class="form-control" asp-for=Cargo.Height autocomplete="off" />
                     <span class="input-group-text">m</span>
                 </div>
+                <span asp-validation-for="Cargo.Height" class="text-danger"></span>
             </div>
             <div class="col-12 form-text">Можна вказати об'єм вантажу або його виміри, обидва варіанти не обов'язкові</div>
             <div class="col-12">
@@ -95,13 +106,15 @@ else
                 <div class="input-group">
                     <span class="input-group-text">₴</span>
                     <input class="form-control" asp-for=Price autocomplete="off" required />
-                    <select class="form-select" asp-for=PriceType asp-items="Html.GetEnumSelectList<PriceType>()" required>
-                    </select>
+                    <select class="form-select" asp-for=PriceType asp-items="Html.GetEnumSelectList<PriceType>()" required></select>
                 </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+                <span asp-validation-for="PriceType" class="text-danger"></span>
             </div>
             <div class="col-12 text-center">
                 <label class="form-label" asp-for=Details>Деталі</label>
                 <textarea class="form-control" asp-for=Details rows="3"></textarea>
+                <span asp-validation-for="Details" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <div class="form-check">
@@ -114,3 +127,7 @@ else
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
