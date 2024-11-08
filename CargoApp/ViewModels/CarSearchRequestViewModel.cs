@@ -2,5 +2,5 @@
 
 public class CarSearchRequestViewModel : BaseSearchRequestViewModel
 {
-    [CorrectDepartureTime] public DateTime? LateDepartureTime { get; set; }
+    [CorrectDepartureTime] [LaterThan(nameof(DepartureTime))] public DateTime? LateDepartureTime { get; set; }
 }

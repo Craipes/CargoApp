@@ -9,8 +9,8 @@ public class CorrectDepartureTimeAttribute : ValidationAttribute
         {
             return time > DateTime.Now.AddHours(CargoAppConstants.MinRequestTimeInHours) && time < DateTime.Now.AddHours(CargoAppConstants.MaxRequestTimeInHours) ?
                 ValidationResult.Success :
-                new ValidationResult("Departure time is not correct");
+                new ValidationResult("Should be later then now");
         }
-        return new ValidationResult("Departure time is not of type DateTime");
+        return new ValidationResult("Value is not of type DateTime");
     }
 }
