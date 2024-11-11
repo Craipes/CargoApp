@@ -19,6 +19,8 @@ public abstract class BaseRequest : BaseEntity
     [DataType(DataType.Currency)][Column(TypeName = "decimal(10, 2)")][Range(0, 10000000)] public decimal? Price { get; set; }
     [MaxLength(512)] public string? Details { get; set; }
 
+    public RequestType RequestType { get; set; }
+
     [BindNever] public DateTime AddTime { get; set; } = DateTime.UtcNow;
 
     [BindNever] [ValidateNever] [NotMapped] public abstract bool CanBeResponded { get; }

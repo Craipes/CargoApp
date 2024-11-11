@@ -125,6 +125,45 @@ else
             <input type="hidden" asp-for="Id" />
             <button type="submit" class="btn btn-primary">Підтвердити</button>
         </form>
+
+
+        @if (!isCreating)
+        {
+            <div class="h5 text-center">Статус: @Model!.RequestType</div>
+            @if (Model!.RequestType == RequestType.HiddenByAdmin && !User.IsInRole(CargoAppConstants.AdminRole))
+            {
+                <div class="h6 mb-3 text-center">Не можна змінити статус</div>
+                <div style="height: 10px"></div>
+            }
+            else
+            {
+                <div class="row p-2 g-3 justify-content-center">
+                    <form class="col" asp-action="UpdateCarRequestVisibility" asp-controller="Requests">
+                        <input type="hidden" name="id" value="@Model!.Id" />
+                        <input type="hidden" name="visibility" value="@RequestType.Visible" />
+                        <button class="btn btn-primary w-100" type="submit" @(Model!.RequestType == RequestType.Visible ? "disabled" : "")>Відкрити оголошення</button>
+                    </form>
+                    <form class="col" asp-action="UpdateCarRequestVisibility" asp-controller="Requests">
+                        <input type="hidden" name="id" value="@Model!.Id" />
+                        <input type="hidden" name="visibility" value="@RequestType.Closed" />
+                        <button class="btn btn-primary w-100" type="submit" @(Model!.RequestType == RequestType.Closed ? "disabled" : "")>Закрити оголошення</button>
+                    </form>
+                    <form class="col" asp-action="UpdateCarRequestVisibility" asp-controller="Requests">
+                        <input type="hidden" name="id" value="@Model!.Id" />
+                        <input type="hidden" name="visibility" value="@RequestType.Hidden" />
+                        <button class="btn btn-warning w-100" type="submit" @(Model!.RequestType == RequestType.Hidden ? "disabled" : "")>Приховати</button>
+                    </form>
+                    @if (User.IsInRole(CargoAppConstants.AdminRole))
+                    {
+                        <form class="col" asp-action="UpdateCarRequestVisibility" asp-controller="Requests">
+                            <input type="hidden" name="id" value="@Model!.Id" />
+                            <input type="hidden" name="visibility" value="@RequestType.HiddenByAdmin" />
+                            <button class="btn btn-danger w-100" type="submit" @(Model!.RequestType == RequestType.HiddenByAdmin ? "disabled" : "")>Приховати як адміністратор</button>
+                        </form>
+                    }
+                </div>
+            }
+        }
     </div>
 </div>
 

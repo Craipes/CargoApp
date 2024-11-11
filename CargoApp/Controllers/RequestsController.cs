@@ -20,11 +20,11 @@ public class RequestsController : Controller
     [Authorize(Roles = CargoAppConstants.AdminRole)]
     public async Task<IActionResult> AllCarRequestsAdmin(int page = 1)
     {
-        int requestsCount = await requestsService.CarRequestsCountAsync();
+        int requestsCount = await requestsService.CarRequestsCountAsync(true);
         int pages = (requestsCount - 1) / CargoAppConstants.RequestsPerPage + 1;
         page = Math.Clamp(page, 1, pages);
 
-        var requests = await requestsService.PaginatedCarRequestsAsync(page);
+        var requests = await requestsService.PaginatedCarRequestsAsync(page, true);
         AllCarRequestsViewModel model = new(null, null, page, pages, requests);
         return View(nameof(AllCarRequests), model);
     }
@@ -33,11 +33,11 @@ public class RequestsController : Controller
     [Authorize(Roles = CargoAppConstants.AdminRole)]
     public async Task<IActionResult> AllCargoRequestsAdmin(int page = 1)
     {
-        int requestsCount = await requestsService.CargoRequestsCountAsync();
+        int requestsCount = await requestsService.CargoRequestsCountAsync(true);
         int pages = (requestsCount - 1) / CargoAppConstants.RequestsPerPage + 1;
         page = Math.Clamp(page, 1, pages);
 
-        var requests = await requestsService.PaginatedCargoRequestsAsync(page);
+        var requests = await requestsService.PaginatedCargoRequestsAsync(page, true);
         AllCargoRequestsViewModel model = new(null, null, page, pages, requests);
         return View(nameof(AllCargoRequests), model);
     }
@@ -45,16 +45,18 @@ public class RequestsController : Controller
     [HttpGet]
     public async Task<IActionResult> AllCarRequests(string? id, int page = 1)
     {
-        id ??= userManager.GetUserId(User);
+        var userId = userManager.GetUserId(User);
+        id ??= userId;
         if (id == null) return NotFound();
         var user = await userManager.FindByIdAsync(id);
         if (user == null) return NotFound();
 
-        int requestsCount = await requestsService.CarRequestsCountAsync(id);
+        bool canViewHidden = userId == id || User.IsInRole(CargoAppConstants.AdminRole);
+        int requestsCount = await requestsService.CarRequestsCountAsync(canViewHidden, id);
         int pages = (requestsCount - 1) / CargoAppConstants.RequestsPerPage + 1;
         page = Math.Clamp(page, 1, pages);
 
-        var requests = await requestsService.PaginatedCarRequestsAsync(page, id);
+        var requests = await requestsService.PaginatedCarRequestsAsync(page, canViewHidden, id);
 
         AllCarRequestsViewModel model = new(user.Id, user.Name, page, pages, requests);
         return View(model);
@@ -63,16 +65,18 @@ public class RequestsController : Controller
     [HttpGet]
     public async Task<IActionResult> AllCargoRequests(string? id, int page = 1)
     {
-        id ??= userManager.GetUserId(User);
+        var userId = userManager.GetUserId(User);
+        id ??= userId;
         if (id == null) return NotFound();
         var user = await userManager.FindByIdAsync(id);
         if (user == null) return NotFound();
 
-        int requestsCount = await requestsService.CargoRequestsCountAsync(id);
+        bool canViewHidden = userId == id || User.IsInRole(CargoAppConstants.AdminRole);
+        int requestsCount = await requestsService.CargoRequestsCountAsync(canViewHidden, id);
         int pages = (requestsCount - 1) / CargoAppConstants.RequestsPerPage + 1;
         page = Math.Clamp(page, 1, pages);
 
-        var requests = await requestsService.PaginatedCargoRequestsAsync(page, id);
+        var requests = await requestsService.PaginatedCargoRequestsAsync(page, canViewHidden, id);
 
         AllCargoRequestsViewModel model = new(user.Id, user.Name, page, pages, requests);
         return View(model);
@@ -280,5 +284,23 @@ public class RequestsController : Controller
         }
         await requestsService.EditCargoRequestAsync(dbRequest, request);
         return RedirectToAction(nameof(AllCargoRequests), new { id = request.UserId });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateCarRequestVisibility(int id, RequestType visibility)
+    {
+        var userId = userManager.GetUserId(User);
+        if (userId == null) return Forbid();
+        await requestsService.UpdateCarRequestVisibilityAsync(id, userId, User.IsInRole(CargoAppConstants.AdminRole), visibility);
+        return RedirectToAction(nameof(EditCarRequest), new { id });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateCargoRequestVisibility(int id, RequestType visibility)
+    {
+        var userId = userManager.GetUserId(User);
+        if (userId == null) return Forbid();
+        await requestsService.UpdateCargoRequestVisibilityAsync(id, userId, User.IsInRole(CargoAppConstants.AdminRole), visibility);
+        return RedirectToAction(nameof(EditCargoRequest), new { id });
     }
 }

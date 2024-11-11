@@ -85,29 +85,49 @@ public class RequestsService
         return await _context.CargoRequests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id);
     }
 
-    public async Task<int> CarRequestsCountAsync(string? userId = null)
+    public async Task<int> CarRequestsCountAsync(bool includeHidden, string? userId = null)
     {
-        if (userId == null) return await _context.CarRequests.CountAsync();
-        return await _context.CarRequests.Where(r => r.UserId == userId).CountAsync();
+        if (userId == null)
+        {
+            if (includeHidden) return await _context.CarRequests.CountAsync();
+            return await _context.CarRequests.Where(r => r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_VISIBLE).CountAsync();
+        }
+        if (includeHidden) return await _context.CarRequests.Where(r => r.UserId == userId).CountAsync();
+        return await _context.CarRequests.Where(r => r.UserId == userId && r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_VISIBLE).CountAsync();
     }
 
-    public async Task<int> CargoRequestsCountAsync(string? userId = null)
+    public async Task<int> CargoRequestsCountAsync(bool includeHidden, string? userId = null)
     {
-        if (userId == null) return await _context.CargoRequests.CountAsync();
-        return await _context.CargoRequests.Where(r => r.UserId == userId).CountAsync();
+        if (userId == null)
+        {
+            if (includeHidden) return await _context.CargoRequests.CountAsync();
+            return await _context.CargoRequests.Where(r => r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_VISIBLE).CountAsync();
+        }
+        if (includeHidden) return await _context.CargoRequests.Where(r => r.UserId == userId).CountAsync();
+        return await _context.CargoRequests.Where(r => r.UserId == userId && r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_VISIBLE).CountAsync();
     }
 
-    public async Task<List<CarRequest>> PaginatedCarRequestsAsync(int page, string? userId = null)
+    public async Task<List<CarRequest>> PaginatedCarRequestsAsync(int page, bool includeHidden, string? userId = null)
     {
+        if (includeHidden) return await GetCarRequestsNoTrackingQuery(userId)
+            .Skip((page - 1) * CargoAppConstants.RequestsPerPage)
+            .Take(CargoAppConstants.RequestsPerPage)
+            .ToListAsync();
         return await GetCarRequestsNoTrackingQuery(userId)
+            .Where(r => r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_VISIBLE)
             .Skip((page - 1) * CargoAppConstants.RequestsPerPage)
             .Take(CargoAppConstants.RequestsPerPage)
             .ToListAsync();
     }
 
-    public async Task<List<CargoRequest>> PaginatedCargoRequestsAsync(int page, string? userId = null)
+    public async Task<List<CargoRequest>> PaginatedCargoRequestsAsync(int page, bool includeHidden, string? userId = null)
     {
+        if (includeHidden) return await GetCargoRequestsNoTrackingQuery(userId)
+            .Skip((page - 1) * CargoAppConstants.RequestsPerPage)
+            .Take(CargoAppConstants.RequestsPerPage)
+            .ToListAsync();
         return await GetCargoRequestsNoTrackingQuery(userId)
+            .Where(r => r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_VISIBLE)
             .Skip((page - 1) * CargoAppConstants.RequestsPerPage)
             .Take(CargoAppConstants.RequestsPerPage)
             .ToListAsync();
@@ -127,6 +147,28 @@ public class RequestsService
             .Where(r => r.DepartureTime >= DateTime.UtcNow.AddDays(-CargoAppConstants.LatestRequestsMaxDays))
             .Take(CargoAppConstants.LatestRequestsMaxCount)
             .ToListAsync();
+    }
+
+    public async Task<bool> UpdateCarRequestVisibilityAsync(int id, string userId, bool isAdmin, RequestType requestType)
+    {
+        var request = await _context.CarRequests.FindAsync(id);
+        return await UpdateRequestVisibilityAsync(request, userId, isAdmin, requestType);
+    }
+
+    public async Task<bool> UpdateCargoRequestVisibilityAsync(int id, string userId, bool isAdmin, RequestType requestType)
+    {
+        var request = await _context.CargoRequests.FindAsync(id);
+        return await UpdateRequestVisibilityAsync(request, userId, isAdmin, requestType);
+    }
+
+    private async Task<bool> UpdateRequestVisibilityAsync(BaseRequest? request, string userId, bool isAdmin, RequestType requestType)
+    {
+        if (request == null) return false;
+        if (request.UserId != userId && !isAdmin) return false;
+        if (request.RequestType == RequestType.HiddenByAdmin && !isAdmin) return false;
+        request.RequestType = requestType;
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public bool CanEditRequest(BaseRequest request)

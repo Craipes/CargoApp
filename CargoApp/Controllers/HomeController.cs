@@ -38,6 +38,7 @@ public class HomeController : Controller
                 var search = model.CarSearch;
                 var requests = db.CargoRequests
                     .AsNoTracking()
+                    .Where(r => r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_OPEN)
                     .Where(r => r.DeparturePlace.ToUpper().Contains(search.DeparturePlace.ToUpper()) && r.DestinationPlace.ToUpper().Contains(search.DestinationPlace.ToUpper()));
 
                 if (search.Mass.HasValue)
@@ -95,6 +96,7 @@ public class HomeController : Controller
                 var search = model.CargoSearch;
                 var requests = db.CarRequests
                     .AsNoTracking()
+                    .Where(r => r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_OPEN)
                     .Where(r => r.DeparturePlace.ToUpper().Contains(search.DeparturePlace.ToUpper()) && r.DestinationPlace.ToUpper().Contains(search.DestinationPlace.ToUpper()));
 
                 if (search.Mass.HasValue)
