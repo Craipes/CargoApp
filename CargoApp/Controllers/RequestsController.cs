@@ -238,6 +238,11 @@ public class RequestsController : Controller
     [HttpPost]
     public async Task<IActionResult> EditCarRequest(CarRequest request)
     {
+        ModelState.Remove(nameof(CarRequest.DeparturePlace));
+        ModelState.Remove(nameof(CarRequest.DestinationPlace));
+        ModelState.Remove(nameof(CarRequest.EarlyDepartureDate));
+        ModelState.Remove(nameof(CarRequest.LateDepartureDate));
+
         requestsService.ValidateVolumeAndDimensions(ModelState, request);
         if (!ModelState.IsValid) return View("CarRequest", request);
 
@@ -257,6 +262,10 @@ public class RequestsController : Controller
     [HttpPost]
     public async Task<IActionResult> EditCargoRequest(CargoRequest request)
     {
+        ModelState.Remove(nameof(CargoRequest.DeparturePlace));
+        ModelState.Remove(nameof(CargoRequest.DestinationPlace));
+        ModelState.Remove(nameof(CargoRequest.DepartureTime));
+
         requestsService.ValidateVolumeAndDimensions(ModelState, request);
         if (!ModelState.IsValid) return View("CargoRequest", request);
 

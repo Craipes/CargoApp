@@ -37,22 +37,22 @@ else
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=DeparturePlace>Місце відбуття</label>
-                <input class="form-control" id="car-departure" asp-for=DeparturePlace autocomplete="off" spellcheck="false" required />
+                <input class="form-control make-readonly" id="car-departure" asp-for=DeparturePlace autocomplete="off" spellcheck="false" required />
                 <span asp-validation-for="DeparturePlace" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=DestinationPlace>Місце прибуття</label>
-                <input class="form-control" id="car-destination" asp-for=DestinationPlace autocomplete="off" spellcheck="false" required />
+                <input class="form-control make-readonly" id="car-destination" asp-for=DestinationPlace autocomplete="off" spellcheck="false" required />
                 <span asp-validation-for="DestinationPlace" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=EarlyDepartureDate>Ранній день відбуття</label>
-                <input class="form-control" type="date" asp-for=EarlyDepartureDate autocomplete="off" required />
+                <input class="form-control make-readonly" type="date" asp-for=EarlyDepartureDate autocomplete="off" required />
                 <span asp-validation-for="EarlyDepartureDate" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for=LateDepartureDate>Пізній день відбуття</label>
-                <input class="form-control" type="date" asp-for=LateDepartureDate autocomplete="off" required />
+                <input class="form-control make-readonly" type="date" asp-for=LateDepartureDate autocomplete="off" required />
                 <span asp-validation-for="LateDepartureDate" class="text-danger"></span>
             </div>
             <div class="col-12">
@@ -130,4 +130,12 @@ else
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    @if (!isCreating)
+    {
+        <script>
+            $(document).ready(function () {
+                $('.make-readonly').prop('readonly', true);
+            });
+        </script>
+    }
 }

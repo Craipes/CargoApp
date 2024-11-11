@@ -37,17 +37,17 @@ else
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for="DeparturePlace">Місце відбуття</label>
-                <input class="form-control" id="cargo-departure" asp-for="DeparturePlace" autocomplete="off" spellcheck="false" required />
+                <input class="form-control make-readonly" id="cargo-departure" asp-for="DeparturePlace" autocomplete="off" spellcheck="false" required />
                 <span asp-validation-for="DeparturePlace" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label class="form-label" asp-for="DestinationPlace">Місце прибуття</label>
-                <input class="form-control" id="cargo-destination" asp-for="DestinationPlace" autocomplete="off" spellcheck="false" required />
+                <input class="form-control make-readonly" id="cargo-destination" asp-for="DestinationPlace" autocomplete="off" spellcheck="false" required />
                 <span asp-validation-for="DestinationPlace" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <label class="form-label" asp-for="DepartureTime">Час відбуття</label>
-                <input class="form-control" asp-for="DepartureTime" autocomplete="off" required />
+                <input class="form-control make-readonly" asp-for="DepartureTime" autocomplete="off" required />
                 <span asp-validation-for="DepartureTime" class="text-danger"></span>
             </div>
             <div class="col-md-6">
@@ -130,4 +130,12 @@ else
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    @if (!isCreating)
+    {
+        <script>
+            $(document).ready(function () {
+                $('.make-readonly').prop('readonly', true);
+            });
+        </script>
+    }
 }

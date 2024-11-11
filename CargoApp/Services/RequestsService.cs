@@ -59,8 +59,8 @@ public class RequestsService
     public async Task EditCarRequestAsync(CarRequest initial, CarRequest updated)
     {
         updated.UserId = initial.UserId;
-        updated.EarlyDepartureDate = updated.EarlyDepartureDate.Date;
-        updated.LateDepartureDate = updated.LateDepartureDate.Date;
+        updated.EarlyDepartureDate = initial.EarlyDepartureDate;
+        updated.LateDepartureDate = initial.LateDepartureDate;
 
         _context.CarRequests.Update(updated);
         await _context.SaveChangesAsync();
@@ -69,7 +69,7 @@ public class RequestsService
     public async Task EditCargoRequestAsync(CargoRequest initial, CargoRequest updated)
     {
         updated.UserId = initial.UserId;
-        updated.DepartureTime = updated.DepartureTime.RoundToMinutes();
+        updated.DepartureTime = initial.DepartureTime;
 
         _context.CargoRequests.Update(updated);
         await _context.SaveChangesAsync();
