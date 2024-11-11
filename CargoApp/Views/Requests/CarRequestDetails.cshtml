@@ -11,6 +11,7 @@
         <span class="fs-3 text-white">Деталі запиту</span>
     </div>
     <div id="car-request-details" class="p-3">
+        <span class="badge bg-secondary mb-2">@Model.CarRequest.RequestType.ToString()</span>
         <div class="row">
             <label class="form-label col-6">Ім'я користувача:</label>
             <p class="col-6"><a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.CarRequest.UserId">@Model.UserName</a></p>

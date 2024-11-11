@@ -134,17 +134,17 @@ public class AccountController : Controller
             var updateUser = await userManager.FindByIdAsync(model.Id);
             if (user == null || updateUser == null)
             {
-                return RedirectToAction("Profile");
+                return RedirectToAction(nameof(Profile));
             }
             if (user.Id != updateUser.Id && !User.IsInRole(CargoAppConstants.AdminRole))
             {
-                return RedirectToAction("Profile");
+                return RedirectToAction(nameof(Profile));
             }
 
             updateUser.Name = model.Name;
             updateUser.PhoneNumber = model.Phone;
             await userManager.UpdateAsync(updateUser);
-            return RedirectToAction("Profile", new { id = model.Id });
+            return RedirectToAction(nameof(Profile), new { id = model.Id });
         }
         model.AllowEditing = true;
         return View(nameof(Profile), model);
