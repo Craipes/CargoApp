@@ -1,15 +1,17 @@
+using Microsoft.AspNetCore.Localization;
 using Microsoft.OpenApi.Models;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+    builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddViewLocalization();
 }
 else
 {
-    builder.Services.AddControllersWithViews();
+    builder.Services.AddControllersWithViews().AddViewLocalization();
 }
 
 builder.Services.AddDbContext<CargoAppContext>(options =>
@@ -54,6 +56,28 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddLocalization();
+
+const string defaultCulture = "en";
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("uk"),
+};
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture(defaultCulture);
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+    options.RequestCultureProviders =
+    [
+        new QueryStringRequestCultureProvider(),
+        new CookieRequestCultureProvider(),
+        new AcceptLanguageHeaderRequestCultureProvider()
+    ];
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -73,6 +97,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseRequestLocalization();
 
 app.UseAuthentication();
 app.UseAuthorization();
