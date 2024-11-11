@@ -116,6 +116,7 @@ public class RequestsService
     public async Task<List<CarRequest>> LatestCarRequestsAsync(string? userId = null)
     {
         return await GetCarRequestsNoTrackingQuery(userId)
+            .Where(r => r.LateDepartureDate >= DateTime.UtcNow.AddDays(-CargoAppConstants.LatestRequestsMaxDays))
             .Take(CargoAppConstants.LatestRequestsMaxCount)
             .ToListAsync();
     }
@@ -123,6 +124,7 @@ public class RequestsService
     public async Task<List<CargoRequest>> LatestCargoRequestsAsync(string? userId = null)
     {
         return await GetCargoRequestsNoTrackingQuery(userId)
+            .Where(r => r.DepartureTime >= DateTime.UtcNow.AddDays(-CargoAppConstants.LatestRequestsMaxDays))
             .Take(CargoAppConstants.LatestRequestsMaxCount)
             .ToListAsync();
     }
