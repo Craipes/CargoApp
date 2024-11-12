@@ -333,4 +333,13 @@
   <data name="Cargo responses count:" xml:space="preserve">
     <value>Cargo responses count:</value>
   </data>
+  <data name="Too early" xml:space="preserve">
+    <value>Too early</value>
+  </data>
+  <data name="Too late" xml:space="preserve">
+    <value>Too late</value>
+  </data>
+  <data name="Should be later than early date" xml:space="preserve">
+    <value>Should be later than early date</value>
+  </data>
 </root>

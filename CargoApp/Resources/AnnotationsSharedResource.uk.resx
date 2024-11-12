@@ -333,4 +333,13 @@
   <data name="Cargo responses count:" xml:space="preserve">
     <value>Відповідей на пошук вантажу:</value>
   </data>
+  <data name="Too early" xml:space="preserve">
+    <value>Занадто рано</value>
+  </data>
+  <data name="Too late" xml:space="preserve">
+    <value>Занадто пізно</value>
+  </data>
+  <data name="Should be later than early date" xml:space="preserve">
+    <value>Має бути пізніше, ніж рання дата</value>
+  </data>
 </root>

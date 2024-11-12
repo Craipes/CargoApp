@@ -1,4 +1,6 @@
-﻿namespace CargoApp.Attributes;
+﻿using Microsoft.Extensions.Localization;
+
+namespace CargoApp.Attributes;
 
 public class LaterThanAttribute : ValidationAttribute
 {
@@ -19,10 +21,15 @@ public class LaterThanAttribute : ValidationAttribute
             {
                 return time >= compareTime ?
                     ValidationResult.Success :
-                    new ValidationResult("Should be later than " + comparePropertyName);
+                    GetLocalizedError("Should be later than early date", validationContext);
             }
-            return new ValidationResult("Compare value is not of type DateTime");
         }
-        return new ValidationResult("Value is not of type DateTime");
+        return GetLocalizedError("Invalid data format", validationContext);
+    }
+
+    protected ValidationResult GetLocalizedError(string error, ValidationContext validationContext)
+    {
+        var localizationService = validationContext.GetService<IStringLocalizer<AnnotationsSharedResource>>();
+        return new ValidationResult(localizationService?[error].Value ?? error);
     }
 }
