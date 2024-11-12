@@ -123,9 +123,6 @@
   <data name="I need a cargo" xml:space="preserve">
     <value>I need a cargo</value>
   </data>
-  <data name="Height" xml:space="preserve">
-    <value>Height</value>
-  </data>
   <data name="SearchFieldsDescription" xml:space="preserve">
     <value>Weight, volume and dimensions not necessarily to be filled in</value>
   </data>
@@ -139,10 +136,7 @@
     <value>Search</value>
   </data>
   <data name="Create Request" xml:space="preserve">
-    <value>Create Request</value>
-  </data>
-  <data name="Has GPS?" xml:space="preserve">
-    <value>Has GPS?</value>
+    <value>Create request</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>About project</value>
@@ -167,5 +161,38 @@
   </data>
   <data name="Language:" xml:space="preserve">
     <value>Language:</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="No search results" xml:space="preserve">
+    <value>No results found. Try changing your search parameters</value>
+  </data>
+  <data name="Hryvnia" xml:space="preserve">
+    <value>hrn</value>
+  </data>
+  <data name="Car requests" xml:space="preserve">
+    <value>Car requests</value>
+  </data>
+  <data name="Cargo requests" xml:space="preserve">
+    <value>Cargo requests</value>
+  </data>
+  <data name="Cargo requests of" xml:space="preserve">
+    <value>Cargo requests of</value>
+  </data>
+  <data name="Request Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Request Expired" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Something wrong" xml:space="preserve">
+    <value>Whoops, something went wrong :(</value>
+  </data>
+  <data name="Car requests of" xml:space="preserve">
+    <value>Car requests of</value>
   </data>
 </root>

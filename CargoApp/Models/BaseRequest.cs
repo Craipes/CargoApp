@@ -16,7 +16,7 @@ public abstract class BaseRequest : BaseEntity
     [Display(Name = "Destination place")] public required string DestinationPlace { get; set; }
 
     [Display(Name = "Price type")] public PriceType PriceType { get; set; } = PriceType.Negotiable;
-    [Display(Name = "Price")][DataType(DataType.Currency)][Column(TypeName = "decimal(10, 2)")][Range(0, 10000000)] public decimal? Price { get; set; }
+    [Display(Name = "Price")][Column(TypeName = "decimal(10, 2)")][Range(0, 10000000)] public decimal? Price { get; set; }
     [Display(Name = "Details")][MaxLength(512)] public string? Details { get; set; }
 
     [Display(Name = "Request status")] public RequestType RequestType { get; set; }

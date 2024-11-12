@@ -4,7 +4,7 @@
     ViewData["Title"] = "Search";
 }
 
-<h1 class="text-center mb-5">Пошук</h1>
+<h1 class="text-center mb-5">@Localizer["Search"]</h1>
 
 <div class="panel box-shadow mx-auto col-10 text-start">
     <div class="d-flex text-center">
@@ -20,20 +20,20 @@
             <form method="post" class="row g-3 pt-3" asp-controller="Requests" asp-action="CarRequestFromSearch">
                 <input asp-for=IsCarSearching checked="checked" hidden="hidden" />
                 <div class="col-lg-6 mt-0 mb-3">
-                    <label class="form-label" asp-for=CarSearch.DeparturePlace>@Localizer["Departure Place"]<span class="text-danger">*</span></label>
-                    <input class="form-control w-100 mb-3" id="car-departure" asp-for=CarSearch.DeparturePlace placeholder="@Localizer["Departure Place"]..." autocomplete="off" spellcheck="false" required />
+                    <label class="form-label" asp-for=CarSearch.DeparturePlace></label><span class="text-danger">*</span>
+                    <input class="form-control w-100 mb-3" id="car-departure" asp-for=CarSearch.DeparturePlace autocomplete="off" spellcheck="false" required />
                     @* <div class="mb-3"><span asp-validation-for="CarSearch.DeparturePlace" class="text-danger"></span></div> *@
-                    <label class="form-label" asp-for=CarSearch.DestinationPlace>@Localizer["Destination Place"]<span class="text-danger">*</span></label>
-                    <input class="form-control w-100 mb-3" id="car-destination" asp-for=CarSearch.DestinationPlace placeholder="@Localizer["Destination Place"]..." autocomplete="off" spellcheck="false" required/>
+                    <label class="form-label" asp-for=CarSearch.DestinationPlace></label><span class="text-danger">*</span>
+                    <input class="form-control w-100 mb-3" id="car-destination" asp-for=CarSearch.DestinationPlace autocomplete="off" spellcheck="false" required/>
                     @* <div class="mb-3"><span asp-validation-for="CarSearch.DestinationPlace" class="text-danger"></span></div> *@
                     <div class="row">
                         <div class="col-6">
-                            <label class="form-label" asp-for="CarSearch.DepartureTime">@Localizer["Early Departure Time"]</label>
-                            <input class="form-control" type="date" asp-for="CarSearch.DepartureTime" />
-                            <span asp-validation-for="CarSearch.DepartureTime" class="text-danger"></span>
+                            <label class="form-label" asp-for="CarSearch.EarlyDepartureTime"></label>
+                            <input class="form-control" type="date" asp-for="CarSearch.EarlyDepartureTime" />
+                            <span asp-validation-for="CarSearch.EarlyDepartureTime" class="text-danger"></span>
                         </div>
                         <div class="col-6">
-                            <label class="form-label" asp-for="CarSearch.LateDepartureTime">@Localizer["Late Departure Time"]</label>
+                            <label class="form-label" asp-for="CarSearch.LateDepartureTime"></label>
                             <input class="form-control" type="date" asp-for="CarSearch.LateDepartureTime" />
                             <span asp-validation-for="CarSearch.LateDepartureTime" class="text-danger"></span>
                         </div>
@@ -42,12 +42,12 @@
                 <div class="col-lg-6 m-0">
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <label class="form-label" asp-for="CarSearch.TrailerType">@Localizer["Trailer Type"]</label>
+                            <label class="form-label" asp-for="CarSearch.TrailerType"></label>
                             <select class="form-select" asp-for="CarSearch.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()"></select>
                             <span asp-validation-for="CarSearch.TrailerType" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
-                            <label class="form-label" asp-for="CarSearch.Mass">@Localizer["Mass"]</label>
+                            <label class="form-label" asp-for="CarSearch.Mass"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CarSearch.Mass" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["massUnit"]</span>
@@ -55,7 +55,7 @@
                             <span asp-validation-for="CarSearch.Mass" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
-                            <label class="form-label" asp-for="CarSearch.Volume">@Localizer["Volume"]</label>
+                            <label class="form-label" asp-for="CarSearch.Volume"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CarSearch.Volume" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]<sup>3</sup></span>
@@ -63,7 +63,7 @@
                             <span asp-validation-for="CarSearch.Volume" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CarSearch.Length">@Localizer["Length"]</label>
+                            <label class="form-label" asp-for="CarSearch.Length"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CarSearch.Length" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
@@ -71,7 +71,7 @@
                             <span asp-validation-for="CarSearch.Length" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CarSearch.Width">@Localizer["Width"]</label>
+                            <label class="form-label" asp-for="CarSearch.Width"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CarSearch.Width" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
@@ -79,7 +79,7 @@
                             <span asp-validation-for="CarSearch.Width" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CarSearch.Height">@Localizer["Height"]</label>
+                            <label class="form-label" asp-for="CarSearch.Height"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CarSearch.Height" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
@@ -91,8 +91,8 @@
                 </div>
                 <div class="col-12 m-0">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" asp-for="CarSearch.GPS" value="true">
-                        <label class="form-check-label" asp-for="CarSearch.GPS">@Localizer["Needs GPS"]</label>
+                        <input class="form-check-input" type="checkbox" asp-for="CarSearch.NeedsGPS" value="true">
+                        <label class="form-check-label" asp-for="CarSearch.NeedsGPS"></label>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">@Localizer["Search"]</button>
@@ -106,14 +106,14 @@
             <form method="post" class="row g-3 pt-3" asp-controller="Requests" asp-action="CargoRequestFromSearch">
                 <input asp-for=IsCargoSearching checked="checked" hidden="hidden" />
                 <div class="col-lg-6 mt-0 mb-3">
-                    <label class="form-label" asp-for=CargoSearch.DeparturePlace>@Localizer["Departure Place"]<span class="text-danger">*</span></label>
-                    <input class="form-control mb-3 w-100" id="car-departure" asp-for=CargoSearch.DeparturePlace placeholder="@Localizer["Departure Place"]..." autocomplete="off" spellcheck="false" required />
+                    <label class="form-label" asp-for=CargoSearch.DeparturePlace></label><span class="text-danger">*</span>
+                    <input class="form-control mb-3 w-100" id="car-departure" asp-for=CargoSearch.DeparturePlace autocomplete="off" spellcheck="false" required />
                     @* <div class="mb-3"><span asp-validation-for="CargoSearch.DeparturePlace" class="text-danger"></span></div> *@
-                    <label class="form-label" asp-for=CargoSearch.DestinationPlace>@Localizer["Destination Place"]<span class="text-danger">*</span></label>
-                    <input class="form-control mb-3 w-100" id="car-destination" asp-for=CargoSearch.DestinationPlace placeholder="@Localizer["Destination Place"]..." autocomplete="off" spellcheck="false" required />
+                    <label class="form-label" asp-for=CargoSearch.DestinationPlace></label><span class="text-danger">*</span>
+                    <input class="form-control mb-3 w-100" id="car-destination" asp-for=CargoSearch.DestinationPlace autocomplete="off" spellcheck="false" required />
                     @* <div class="mb-3"><span asp-validation-for="CargoSearch.DestinationPlace" class="text-danger"></span></div> *@
                     <div class="col-12">
-                        <label class="form-label" asp-for="CargoSearch.DepartureTime">@Localizer["Departure Time"]</label>
+                        <label class="form-label" asp-for="CargoSearch.DepartureTime"></label>
                         <input class="form-control" asp-for="CargoSearch.DepartureTime" />
                         <span asp-validation-for="CargoSearch.DepartureTime" class="text-danger"></span>
                     </div>
@@ -121,12 +121,12 @@
                 <div class="col-lg-6 m-0">
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <label class="form-label" asp-for="CargoSearch.TrailerType">@Localizer["Trailer Type"]</label>
+                            <label class="form-label" asp-for="CargoSearch.TrailerType"></label>
                             <select class="form-select" asp-for="CargoSearch.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()"></select>
                             <span asp-validation-for="CargoSearch.TrailerType" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
-                            <label class="form-label" asp-for="CargoSearch.Mass">@Localizer["Mass"]</label>
+                            <label class="form-label" asp-for="CargoSearch.Mass"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CargoSearch.Mass" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["massUnit"]</span>
@@ -134,7 +134,7 @@
                             <span asp-validation-for="CargoSearch.Mass" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
-                            <label class="form-label" asp-for="CargoSearch.Volume">@Localizer["Volume"]</label>
+                            <label class="form-label" asp-for="CargoSearch.Volume"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CargoSearch.Volume" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]<sup>3</sup></span>
@@ -142,7 +142,7 @@
                             <span asp-validation-for="CargoSearch.Volume" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CargoSearch.Length">@Localizer["Length"]</label>
+                            <label class="form-label" asp-for="CargoSearch.Length"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CargoSearch.Length" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
@@ -150,7 +150,7 @@
                             <span asp-validation-for="CargoSearch.Length" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CargoSearch.Width">@Localizer["Width"]</label>
+                            <label class="form-label" asp-for="CargoSearch.Width"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CargoSearch.Width" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
@@ -158,7 +158,7 @@
                             <span asp-validation-for="CargoSearch.Width" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CargoSearch.Height">@Localizer["Height"]</label>
+                            <label class="form-label" asp-for="CargoSearch.Height"></label>
                             <div class="input-group">
                                 <input class="form-control" asp-for="CargoSearch.Height" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
@@ -170,8 +170,8 @@
                 </div>
                 <div class="col-12 m-0">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" asp-for="CargoSearch.GPS" value="true">
-                        <label class="form-check-label" asp-for="CargoSearch.GPS">@Localizer["Has GPS"]</label>
+                        <input class="form-check-input" type="checkbox" asp-for="CargoSearch.HasGPS" value="true">
+                        <label class="form-check-label" asp-for="CargoSearch.HasGPS"></label>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">@Localizer["Search"]</button>

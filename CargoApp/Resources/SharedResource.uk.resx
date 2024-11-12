@@ -123,9 +123,6 @@
   <data name="I need a cargo" xml:space="preserve">
     <value>Мені потрібен вантаж</value>
   </data>
-  <data name="Height" xml:space="preserve">
-    <value>Висота</value>
-  </data>
   <data name="SearchFieldsDescription" xml:space="preserve">
     <value>Вага, об'єм та виміри необов'язково до заповнення</value>
   </data>
@@ -140,9 +137,6 @@
   </data>
   <data name="Create Request" xml:space="preserve">
     <value>Створити оголошення</value>
-  </data>
-  <data name="Has GPS?" xml:space="preserve">
-    <value>Присутній GPS?</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>Про проєкт</value>
@@ -167,5 +161,38 @@
   </data>
   <data name="Language:" xml:space="preserve">
     <value>Мова:</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Переглянути</value>
+  </data>
+  <data name="No search results" xml:space="preserve">
+    <value>Результатів не знайдено. Спробуйте змінити параметри пошуку</value>
+  </data>
+  <data name="Hryvnia" xml:space="preserve">
+    <value>грн</value>
+  </data>
+  <data name="Car requests" xml:space="preserve">
+    <value>Оголошення пошуку транспорту</value>
+  </data>
+  <data name="Cargo requests" xml:space="preserve">
+    <value>Оголошення пошуку вантажу</value>
+  </data>
+  <data name="Cargo requests of" xml:space="preserve">
+    <value>Оголошення пошуку вантажу користувача</value>
+  </data>
+  <data name="Request Active" xml:space="preserve">
+    <value>Активне</value>
+  </data>
+  <data name="Request Expired" xml:space="preserve">
+    <value>Час вичерпано</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="Something wrong" xml:space="preserve">
+    <value>Ой, щось пішло не так :(</value>
+  </data>
+  <data name="Car requests of" xml:space="preserve">
+    <value>Оголошення пошуку транспорту користувача</value>
   </data>
 </root>

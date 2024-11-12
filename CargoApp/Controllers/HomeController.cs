@@ -62,7 +62,7 @@ public class HomeController : Controller
                 {
                     requests = requests.Where(r => r.Car.MaxHeight >= search.Height);
                 }
-                if (search.GPS)
+                if (search.NeedsGPS)
                 {
                     requests = requests.Where(r => r.Car.AvailableGPS);
                 }
@@ -70,9 +70,9 @@ public class HomeController : Controller
                 {
                     requests = requests.Where(r => r.Car.TrailerType == search.TrailerType);
                 }
-                if (search.DepartureTime.HasValue)
+                if (search.EarlyDepartureTime.HasValue)
                 {
-                    requests = requests.Where(r => r.DepartureTime.Date >= search.DepartureTime.Value.Date);
+                    requests = requests.Where(r => r.DepartureTime.Date >= search.EarlyDepartureTime.Value.Date);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ public class HomeController : Controller
                 {
                     requests = requests.Where(r => r.Cargo.Height <= search.Height);
                 }
-                if (!search.GPS)
+                if (!search.HasGPS)
                 {
                     requests = requests.Where(r => !r.NeedsGPS);
                 }

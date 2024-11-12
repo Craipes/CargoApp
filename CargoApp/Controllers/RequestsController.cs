@@ -139,9 +139,9 @@ public class RequestsController : Controller
             ContactPhoneNumber = null!,
             DeparturePlace = model.CarSearch.DeparturePlace,
             DestinationPlace = model.CarSearch.DestinationPlace,
-            EarlyDepartureDate = (model.CarSearch.DepartureTime ?? DateTime.UtcNow).Date,
+            EarlyDepartureDate = (model.CarSearch.EarlyDepartureTime ?? DateTime.UtcNow).Date,
             LateDepartureDate = (model.CarSearch.LateDepartureTime ?? DateTime.UtcNow).Date,
-            NeedsGPS = model.CarSearch.GPS,
+            NeedsGPS = model.CarSearch.NeedsGPS,
             Cargo = new()
             {
                 Volume = model.CarSearch.Volume,
@@ -182,7 +182,7 @@ public class RequestsController : Controller
                 MaxHeight = model.CargoSearch.Height,
                 MaxMass = model.CargoSearch.Mass ?? 0,
                 TrailerType = model.CargoSearch.TrailerType,
-                AvailableGPS = model.CargoSearch.GPS
+                AvailableGPS = model.CargoSearch.HasGPS
             }
         };
         ModelState.Clear();
