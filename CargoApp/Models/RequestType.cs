@@ -2,5 +2,14 @@
 
 public enum RequestType
 {
-    Visible = 0, Closed = 1000, Hidden = 2000, HiddenByAdmin = 2001
+    [Display(Name = "Request Visible")]
+    Visible = 0,
+
+    [Display(Name = "Request Closed")]
+    Closed = 1000,
+
+    [Display(Name = "Request Hidden")]
+    Hidden = 2000,
+    [Display(Name = "Request Hidden By Admin")]
+    HiddenByAdmin = 2001
 }

@@ -25,7 +25,7 @@ else
             {
                 <span class="badge bg-danger">Час оголошення вичерпано</span>
             }
-            <span class="badge bg-secondary">@request.RequestType.ToString()</span>
+            <span class="badge bg-secondary">@request.RequestType.GetDisplayNameContext(Context)</span>
             <div class="row">
                 <span class="fw-bold col-6">Контактне ім'я</span>
                 <span class="col-6">@request.ContactName</span>
@@ -48,11 +48,11 @@ else
             </div>
             <div class="row">
                 <span class="fw-bold col-6">Тип причіпу</span>
-                <span class="col-6">@request.Car.Type</span>
+                <span class="col-6">@request.Car.Type.GetDisplayNameContext(Context)</span>
             </div>
             <div class="row">
                 <span class="fw-bold col-6">Тип транспорту</span>
-                <span class="col-6">@request.Car.TrailerType</span>
+                <span class="col-6">@request.Car.TrailerType.GetDisplayNameContext(Context)</span>
             </div>
             <div class="row">
                 <span class="fw-bold col-6">Вантажопідйоність</span>
@@ -64,7 +64,7 @@ else
             </div>
             <div class="row">
                 <span class="fw-bold col-6">Пропонована ціна</span>
-                <span class="col-6">@request.Price грн (@request.PriceType)</span>
+                <span class="col-6">@request.Price грн (@request.PriceType.GetDisplayNameContext(Context))</span>
             </div>
             <div class="row">
                 <span class="fw-bold col-6">Час подання</span>

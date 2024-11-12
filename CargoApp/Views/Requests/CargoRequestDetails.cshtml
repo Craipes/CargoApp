@@ -11,7 +11,7 @@
         <span class="fs-3 text-white">Деталі запиту</span>
     </div>
     <div id="car-request-details" class="p-3">
-        <span class="badge bg-secondary mb-2">@Model.CargoRequest.RequestType.ToString()</span>
+        <span class="badge bg-secondary mb-2">@Model.CargoRequest.RequestType.GetDisplayNameContext(Context)</span>
         <div class="row">
             <label class="form-label col-6">Ім'я користувача:</label>
             <p class="col-6"><a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.CargoRequest.UserId">@Model.UserName</a></p>
@@ -42,11 +42,11 @@
         </div>
         <div class="row">
             <label class="form-label col-6">Тип причіпу:</label>
-            <p class="col-6">@Model.CargoRequest.Car.Type</p>
+            <p class="col-6">@Model.CargoRequest.Car.Type.GetDisplayNameContext(Context)</p>
         </div>
         <div class="row">
             <label class="form-label col-6">Тип транспорту:</label>
-            <p class="col-6">@Model.CargoRequest.Car.TrailerType</p>
+            <p class="col-6">@Model.CargoRequest.Car.TrailerType.GetDisplayNameContext(Context)</p>
         </div>
         <div class="row">
             <label class="form-label col-6">Вантажопідйомність:</label>
@@ -58,7 +58,7 @@
         </div>
         <div class="row">
             <label class="form-label col-6">Пропонована ціна:</label>
-            <p class="col-6">@Model.CargoRequest.Price грн (@Model.CargoRequest.PriceType)</p>
+            <p class="col-6">@Model.CargoRequest.Price грн (@Model.CargoRequest.PriceType.GetDisplayNameContext(Context))</p>
         </div>
         <div class="row">
             <label class="form-label col-6 m-0">Час додавання:</label>

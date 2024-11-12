@@ -4,6 +4,7 @@ global using System.ComponentModel.DataAnnotations.Schema;
 global using CargoApp.Attributes;
 global using CargoApp.Data;
 global using CargoApp.Services;
+global using CargoApp.Resources;
 global using CargoApp.Models;
 global using CargoApp.ViewModels;
 global using CargoApp.ViewModels.Requests;
