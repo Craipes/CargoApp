@@ -123,33 +123,6 @@
   <data name="I need a cargo" xml:space="preserve">
     <value>Мені потрібен вантаж</value>
   </data>
-  <data name="Departure Place" xml:space="preserve">
-    <value>Місце відбуття</value>
-  </data>
-  <data name="Destination Place" xml:space="preserve">
-    <value>Місце прибуття</value>
-  </data>
-  <data name="Early Departure Time" xml:space="preserve">
-    <value>Ранній час відбуття</value>
-  </data>
-  <data name="Late Departure Time" xml:space="preserve">
-    <value>Пізній час відбуття</value>
-  </data>
-  <data name="Trailer Type" xml:space="preserve">
-    <value>Тип причіпу</value>
-  </data>
-  <data name="Mass" xml:space="preserve">
-    <value>Маса</value>
-  </data>
-  <data name="Volume" xml:space="preserve">
-    <value>Об'єм</value>
-  </data>
-  <data name="Length" xml:space="preserve">
-    <value>Довжина</value>
-  </data>
-  <data name="Width" xml:space="preserve">
-    <value>Ширина</value>
-  </data>
   <data name="Height" xml:space="preserve">
     <value>Висота</value>
   </data>
@@ -162,20 +135,14 @@
   <data name="lengthUnit" xml:space="preserve">
     <value>м</value>
   </data>
-  <data name="Needs GPS" xml:space="preserve">
-    <value>Потрібен GPS?</value>
-  </data>
   <data name="Search" xml:space="preserve">
     <value>Пошук</value>
   </data>
   <data name="Create Request" xml:space="preserve">
     <value>Створити оголошення</value>
   </data>
-  <data name="Has GPS" xml:space="preserve">
+  <data name="Has GPS?" xml:space="preserve">
     <value>Присутній GPS?</value>
-  </data>
-  <data name="Departure Time" xml:space="preserve">
-    <value>Час відправлення</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>Про проєкт</value>

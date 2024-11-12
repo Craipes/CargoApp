@@ -2,11 +2,12 @@
 
 public class User : IdentityUser
 {
-    [MaxLength(64)] public required string Name { get; set; }
-    [CorrectPhone] public string? DefaultPhoneNumber { get; set; }
+    [Display(Name = "Name")][MaxLength(64)] public required string Name { get; set; }
+    [Display(Name = "Default phone number")][CorrectPhone] public string? DefaultPhoneNumber { get; set; }
 
-    [Column(TypeName = "decimal(3, 2)")]
-    [Range(1.00f, 5.00f)] public float Rating { get; set; }
+    // Obsolete
+    [Column(TypeName = "decimal(3, 2)")][Range(1.00f, 5.00f)] public float Rating { get; set; }
+    // Obsolete
     public int ReviewsCount { get; set; }
     public List<Review> ReviewsReceived { get; set; } = [];
     public List<Review> ReviewsSent { get; set; } = [];

@@ -198,4 +198,103 @@
   <data name="Request Hidden By Admin" xml:space="preserve">
     <value>Hidden By Admin</value>
   </data>
+  <data name="Max mass" xml:space="preserve">
+    <value>Max mass</value>
+  </data>
+  <data name="Car type" xml:space="preserve">
+    <value>Car type</value>
+  </data>
+  <data name="Trailer type" xml:space="preserve">
+    <value>Trailer type</value>
+  </data>
+  <data name="Max length" xml:space="preserve">
+    <value>Max length</value>
+  </data>
+  <data name="Max width" xml:space="preserve">
+    <value>Max width</value>
+  </data>
+  <data name="Max height" xml:space="preserve">
+    <value>Max height</value>
+  </data>
+  <data name="Max volume" xml:space="preserve">
+    <value>Max volume</value>
+  </data>
+  <data name="GPS available" xml:space="preserve">
+    <value>GPS available</value>
+  </data>
+  <data name="Mass" xml:space="preserve">
+    <value>Mass</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="Destination place" xml:space="preserve">
+    <value>Destination place</value>
+  </data>
+  <data name="Departure place" xml:space="preserve">
+    <value>Departure place</value>
+  </data>
+  <data name="Departure time" xml:space="preserve">
+    <value>Departure time</value>
+  </data>
+  <data name="Early departure time" xml:space="preserve">
+    <value>Early departure time</value>
+  </data>
+  <data name="Late departure time" xml:space="preserve">
+    <value>Late departure time</value>
+  </data>
+  <data name="Length" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="Needs GPS?" xml:space="preserve">
+    <value>Needs GPS?</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="Has GPS?" xml:space="preserve">
+    <value>Has GPS?</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Contact name" xml:space="preserve">
+    <value>Contact name</value>
+  </data>
+  <data name="Contact phone" xml:space="preserve">
+    <value>Contact phone</value>
+  </data>
+  <data name="Contact email" xml:space="preserve">
+    <value>Contact email</value>
+  </data>
+  <data name="Price type" xml:space="preserve">
+    <value>Price type</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Request status" xml:space="preserve">
+    <value>Request status</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points count</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Default phone number" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
 </root>

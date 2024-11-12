@@ -7,9 +7,9 @@ public class CarRequest : BaseRequest
 {
     [ValidateObjectMembers] public Cargo Cargo { get; set; } = null!;
 
-    [CorrectDepartureTime] public DateTime EarlyDepartureDate { get; set; }
-    [CorrectDepartureTime] [LaterThan(nameof(EarlyDepartureDate))] public DateTime LateDepartureDate { get; set; }
-    public bool NeedsGPS { get; set; }
+    [Display(Name = "Early departure time")][CorrectDepartureTime] public DateTime EarlyDepartureDate { get; set; }
+    [Display(Name = "Late departure time")][CorrectDepartureTime] [LaterThan(nameof(EarlyDepartureDate))] public DateTime LateDepartureDate { get; set; }
+    [Display(Name = "Needs GPS?")] public bool NeedsGPS { get; set; }
 
     public List<CarResponse> Responses { get; set; } = [];
 

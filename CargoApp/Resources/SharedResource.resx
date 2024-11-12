@@ -123,33 +123,6 @@
   <data name="I need a cargo" xml:space="preserve">
     <value>I need a cargo</value>
   </data>
-  <data name="Departure Place" xml:space="preserve">
-    <value>Departure Place</value>
-  </data>
-  <data name="Destination Place" xml:space="preserve">
-    <value>Destination Place</value>
-  </data>
-  <data name="Early Departure Time" xml:space="preserve">
-    <value>Early Departure Time</value>
-  </data>
-  <data name="Late Departure Time" xml:space="preserve">
-    <value>Late Departure Time</value>
-  </data>
-  <data name="Trailer Type" xml:space="preserve">
-    <value>Trailer Type</value>
-  </data>
-  <data name="Mass" xml:space="preserve">
-    <value>Mass</value>
-  </data>
-  <data name="Volume" xml:space="preserve">
-    <value>Volume</value>
-  </data>
-  <data name="Length" xml:space="preserve">
-    <value>Length</value>
-  </data>
-  <data name="Width" xml:space="preserve">
-    <value>Width</value>
-  </data>
   <data name="Height" xml:space="preserve">
     <value>Height</value>
   </data>
@@ -162,20 +135,14 @@
   <data name="lengthUnit" xml:space="preserve">
     <value>m</value>
   </data>
-  <data name="Needs GPS" xml:space="preserve">
-    <value>Needs GPS?</value>
-  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="Create Request" xml:space="preserve">
     <value>Create Request</value>
   </data>
-  <data name="Has GPS" xml:space="preserve">
+  <data name="Has GPS?" xml:space="preserve">
     <value>Has GPS?</value>
-  </data>
-  <data name="Departure Time" xml:space="preserve">
-    <value>Departure Time</value>
   </data>
   <data name="About" xml:space="preserve">
     <value>About project</value>

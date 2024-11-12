@@ -198,4 +198,103 @@
   <data name="Request Hidden By Admin" xml:space="preserve">
     <value>Приховане адміністратором</value>
   </data>
+  <data name="Max mass" xml:space="preserve">
+    <value>Вантажопідйомність</value>
+  </data>
+  <data name="Car type" xml:space="preserve">
+    <value>Тип транспорту</value>
+  </data>
+  <data name="Trailer type" xml:space="preserve">
+    <value>Тип причіпу</value>
+  </data>
+  <data name="Max length" xml:space="preserve">
+    <value>Максимальна довжина</value>
+  </data>
+  <data name="Max width" xml:space="preserve">
+    <value>Максимальна ширина</value>
+  </data>
+  <data name="Max height" xml:space="preserve">
+    <value>Максимальна висота</value>
+  </data>
+  <data name="Max volume" xml:space="preserve">
+    <value>Максимальний об'єм</value>
+  </data>
+  <data name="GPS available" xml:space="preserve">
+    <value>Наявний GPS</value>
+  </data>
+  <data name="Mass" xml:space="preserve">
+    <value>Маса</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Об'єм</value>
+  </data>
+  <data name="Destination place" xml:space="preserve">
+    <value>Місце прибуття</value>
+  </data>
+  <data name="Departure place" xml:space="preserve">
+    <value>Місце відбуття</value>
+  </data>
+  <data name="Departure time" xml:space="preserve">
+    <value>Час відправлення</value>
+  </data>
+  <data name="Early departure time" xml:space="preserve">
+    <value>Ранній час відбуття</value>
+  </data>
+  <data name="Late departure time" xml:space="preserve">
+    <value>Пізній час відбуття</value>
+  </data>
+  <data name="Length" xml:space="preserve">
+    <value>Довжина</value>
+  </data>
+  <data name="Needs GPS?" xml:space="preserve">
+    <value>Потрібен GPS?</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Ширина</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Висота</value>
+  </data>
+  <data name="Has GPS?" xml:space="preserve">
+    <value>Присутній GPS?</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Опис</value>
+  </data>
+  <data name="Contact name" xml:space="preserve">
+    <value>Контактне ім'я</value>
+  </data>
+  <data name="Contact phone" xml:space="preserve">
+    <value>Контактний телефон</value>
+  </data>
+  <data name="Contact email" xml:space="preserve">
+    <value>Контактна пошта</value>
+  </data>
+  <data name="Price type" xml:space="preserve">
+    <value>Тип ціни</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Ціна</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Деталі</value>
+  </data>
+  <data name="Request status" xml:space="preserve">
+    <value>Статус оголошення</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Коментар</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Кількість очок</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Відгук</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ім'я</value>
+  </data>
+  <data name="Default phone number" xml:space="preserve">
+    <value>Номер телефону</value>
+  </data>
 </root>
