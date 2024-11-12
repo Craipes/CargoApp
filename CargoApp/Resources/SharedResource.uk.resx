@@ -177,4 +177,28 @@
   <data name="Departure Time" xml:space="preserve">
     <value>Час відправлення</value>
   </data>
+  <data name="About" xml:space="preserve">
+    <value>Про проєкт</value>
+  </data>
+  <data name="All Car Requests" xml:space="preserve">
+    <value>Усі оголошення транспорту</value>
+  </data>
+  <data name="All Cargo Requests" xml:space="preserve">
+    <value>Усі оголошення вантажу</value>
+  </data>
+  <data name="All Users" xml:space="preserve">
+    <value>Усі користувачі</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Вийти</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Реєстрація</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Вхід</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>Мова:</value>
+  </data>
 </root>

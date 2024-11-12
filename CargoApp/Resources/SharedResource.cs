@@ -1,4 +1,4 @@
-﻿namespace CargoApp;
+﻿namespace CargoApp.Resources;
 
 public class SharedResource
 {

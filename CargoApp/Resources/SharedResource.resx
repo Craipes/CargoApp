@@ -177,4 +177,28 @@
   <data name="Departure Time" xml:space="preserve">
     <value>Departure Time</value>
   </data>
+  <data name="About" xml:space="preserve">
+    <value>About project</value>
+  </data>
+  <data name="All Car Requests" xml:space="preserve">
+    <value>All car requests</value>
+  </data>
+  <data name="All Cargo Requests" xml:space="preserve">
+    <value>All cargo requests</value>
+  </data>
+  <data name="All Users" xml:space="preserve">
+    <value>All users</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>Language:</value>
+  </data>
 </root>

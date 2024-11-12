@@ -1,17 +1,22 @@
+using CargoApp.Resources;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var mvcBuilder = builder.Services
+    .AddControllersWithViews()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization(options => {
+        options.DataAnnotationLocalizerProvider = (type, factory) =>
+            factory.Create(typeof(AnnotationsSharedResource));
+    });
+
 // Add services to the container.
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddViewLocalization();
-}
-else
-{
-    builder.Services.AddControllersWithViews().AddViewLocalization();
+    mvcBuilder.AddRazorRuntimeCompilation();
 }
 
 builder.Services.AddDbContext<CargoAppContext>(options =>
