@@ -1,9 +1,13 @@
-using CargoApp.Resources;
+using CargoApp;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLocalization();
 
 var mvcBuilder = builder.Services
     .AddControllersWithViews()
@@ -12,6 +16,8 @@ var mvcBuilder = builder.Services
         options.DataAnnotationLocalizerProvider = (type, factory) =>
             factory.Create(typeof(AnnotationsSharedResource));
     });
+
+builder.Services.AddSingleton<IConfigureOptions<MvcOptions>, MvcConfiguration>();
 
 // Add services to the container.
 if (builder.Environment.IsDevelopment())
@@ -60,8 +66,6 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddHttpContextAccessor();
-
-builder.Services.AddLocalization();
 
 const string defaultCulture = "en";
 var supportedCultures = new[]

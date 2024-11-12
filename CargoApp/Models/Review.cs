@@ -8,8 +8,8 @@ public class Review
     public string SenderId { get; set; }
     public User Sender { get; set; } = null!;
 
-    [Display(Name = "Points")][Range(1, 5)] public int Points { get; set; }
-    [Display(Name = "Review")][MaxLength(1024)] public string? Content { get; set; }
+    [Display(Name = "Points")][Range(1, 5, ErrorMessage = "Range Error")][Required(ErrorMessage = "Required Error")] public int Points { get; set; }
+    [Display(Name = "Review")][MaxLength(1024, ErrorMessage = "Max Length Error")] public string? Content { get; set; }
 
     public Review(string receiverId, string senderId)
     {

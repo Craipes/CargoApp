@@ -342,4 +342,25 @@
   <data name="Should be later than early date" xml:space="preserve">
     <value>Має бути пізніше, ніж рання дата</value>
   </data>
+  <data name="Range Error" xml:space="preserve">
+    <value>Значення поля "{0}" повинно бути між {1} та {2}</value>
+  </data>
+  <data name="Required Error" xml:space="preserve">
+    <value>Поле "{0}" обов'язкове</value>
+  </data>
+  <data name="Max Length Error" xml:space="preserve">
+    <value>Максимальне значення поля "{0}" повинно бути {1}</value>
+  </data>
+  <data name="Phone Error" xml:space="preserve">
+    <value>Поле "{0}" має бути номером телефону</value>
+  </data>
+  <data name="Email Error" xml:space="preserve">
+    <value>Поле "{0}" має бути електроною поштою</value>
+  </data>
+  <data name="Number Error" xml:space="preserve">
+    <value>Поле "{0}" має бути числом</value>
+  </data>
+  <data name="Volume Or Dimensions Error" xml:space="preserve">
+    <value>Об'єм чи виміри мають бути вказані</value>
+  </data>
 </root>

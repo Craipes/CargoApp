@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Localization;
 
 namespace CargoApp.Services;
 
@@ -7,12 +8,15 @@ public class RequestsService
     private readonly IHttpContextAccessor _contextAccessor;
     private readonly UserManager<User> _userManager;
     private readonly CargoAppContext _context;
+    private readonly IStringLocalizer<AnnotationsSharedResource> _stringLocalizer;
 
-    public RequestsService(IHttpContextAccessor contextAccessor, UserManager<User> userManager, CargoAppContext context)
+    public RequestsService(IHttpContextAccessor contextAccessor, UserManager<User> userManager, CargoAppContext context,
+        IStringLocalizer<AnnotationsSharedResource> stringLocalizer)
     {
         _contextAccessor = contextAccessor;
         _userManager = userManager;
         _context = context;
+        _stringLocalizer = stringLocalizer;
     }
 
     public async Task<CarRequest?> NoTrackingCarDetailsAsync(int id)
@@ -182,7 +186,7 @@ public class RequestsService
     {
         if (request.Cargo.Volume == null && (request.Cargo.Length == null || request.Cargo.Width == null || request.Cargo.Height == null))
         {
-            modelState.AddModelError<CarRequest>(r => r.Cargo.Volume, "Volume or dimensions must be specified");
+            modelState.AddModelError<CarRequest>(r => r.Cargo.Volume, _stringLocalizer["Volume Or Dimensions Error"]);
         }
     }
 
@@ -190,7 +194,7 @@ public class RequestsService
     {
         if (request.Car.MaxVolume == null && (request.Car.MaxLength == null || request.Car.MaxWidth == null || request.Car.MaxHeight == null))
         {
-            modelState.AddModelError<CargoRequest>(r => r.Car.MaxVolume, "Volume or dimensions must be specified");
+            modelState.AddModelError<CargoRequest>(r => r.Car.MaxVolume, _stringLocalizer["Volume Or Dimensions Error"]);
         }
     }
 
