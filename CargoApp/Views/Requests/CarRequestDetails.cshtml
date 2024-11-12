@@ -1,75 +1,76 @@
-﻿@model CarRequestViewModel
+﻿@inject IHtmlLocalizer<SharedResource> Localizer
+@model CarRequestViewModel
 
 @{
-    ViewData["Title"] = "Car Request Details";
+    ViewData["Title"] = Localizer["Request details"];
 }
 
-<h1 class="text-center mb-5">Оголошення на пошук транспорту</h1>
+<h1 class="text-center mb-5">@Localizer["Car request"]</h1>
 
 <div class="panel box-shadow mx-auto col-10 text-start">
     <div class="text-center bg-primary panel-top">
-        <span class="fs-3 text-white">Деталі запиту</span>
+        <span class="fs-3 text-white">@Localizer["Request details"]</span>
     </div>
     <div id="car-request-details" class="p-3">
-        <span class="badge bg-secondary mb-2">@Model.CarRequest.RequestType.GetDisplayNameContext(Context)</span>
+        <span class="badge bg-secondary mb-2">@Html.DisplayNameFor(model => model.CarRequest.RequestType)</span>
         <div class="row">
-            <label class="form-label col-6">Ім'я користувача:</label>
-            <p class="col-6"><a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.CarRequest.UserId">@Model.UserName</a></p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.UserName)</span>
+            <span class="col-6"><a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.CarRequest.UserId">@Html.DisplayFor(model => model.UserName)</a></span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Контактне ім'я:</label>
-            <p class="col-6">@Model.CarRequest.ContactName</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.ContactName)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.ContactName)</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Контактний номер:</label>
-            <p class="col-6">@Model.CarRequest.ContactPhoneNumber</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.ContactPhoneNumber)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.ContactPhoneNumber)</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Контактна пошта:</label>
-            <p class="col-6">@(Model.CarRequest.ContactEmail ?? "Не вказано")</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.ContactEmail)</span>
+            <span class="col-6">@(Model.CarRequest.ContactEmail != null ? Html.DisplayFor(model => model.CarRequest.ContactEmail) : Localizer["Not specified"])</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Місце відбуття:</label>
-            <p class="col-6">@Model.CarRequest.DeparturePlace</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.DeparturePlace)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.DeparturePlace)</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Місце прибуття:</label>
-            <p class="col-6">@Model.CarRequest.DestinationPlace</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.DestinationPlace)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.DestinationPlace)</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Ранній день відбуття:</label>
-            <p class="col-6">@Model.CarRequest.EarlyDepartureDate.ToString("d")</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.EarlyDepartureDate)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.EarlyDepartureDate)</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Пізній день відбуття:</label>
-            <p class="col-6">@Model.CarRequest.LateDepartureDate.ToString("d")</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.LateDepartureDate)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.LateDepartureDate)</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Необхідний транспорт:</label>
-            <p class="col-6">@Model.CarRequest.Cargo.TrailerType.GetDisplayNameContext(Context)</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.Cargo.TrailerType)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.Cargo.TrailerType)</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Маса вантажу:</label>
-            <p class="col-6">@Model.CarRequest.Cargo.Mass т</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.Cargo.Mass)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.Cargo.Mass) @Localizer["massUnit"]</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Об'єм вантажу:</label>
-            <p class="col-6">@Model.CarRequest.Cargo.Volume м³    (@(Model.CarRequest.Cargo.Length == null ? "-" : (Model.CarRequest.Cargo.Length.Value.ToString("F2")) + " м") x @(Model.CarRequest.Cargo.Width == null ? "-" : (Model.CarRequest.Cargo.Width.Value.ToString("F2")) + " м") x @(Model.CarRequest.Cargo.Height == null ? "-" : (Model.CarRequest.Cargo.Height.Value.ToString("F2") + " м")))</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.Cargo.Volume)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.Cargo.Volume) @Localizer["lengthUnit"]³ (@(Model.CarRequest.Cargo.Length == null ? "-" : (Model.CarRequest.Cargo.Length.Value.ToString("F2")) + " " + Localizer["lengthUnit"].Value) x @(Model.CarRequest.Cargo.Width == null ? "-" : (Model.CarRequest.Cargo.Width.Value.ToString("F2")) + " " + Localizer["lengthUnit"].Value) x @(Model.CarRequest.Cargo.Height == null ? "-" : (Model.CarRequest.Cargo.Height.Value.ToString("F2") + " " + Localizer["lengthUnit"].Value)))</span>
         </div>
         <div class="row">
-            <label class="form-label col-6">Пропонована ціна:</label>
-            <p class="col-6">@Model.CarRequest.Price грн (@Model.CarRequest.PriceType.GetDisplayNameContext(Context))</p>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CarRequest.Price)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CarRequest.Price) @Localizer["Hryvnia"] (@Html.DisplayFor(model => model.CarRequest.PriceType))</span>
         </div>
         <div class="row">
-            <label class="form-label col-6 m-0">Час додавання:</label>
-            <p class="col-6 m-0">@Model.CarRequest.AddTime</p>
+            <span class="form-label col-6 m-0">@Html.DisplayNameFor(model => model.CarRequest.AddTime)</span>
+            <span class="col-6 m-0">@Html.DisplayFor(model => model.CarRequest.AddTime)</span>
         </div>
     </div>
 </div>
 
 <div class="panel box-shadow mx-auto col-10 text-start mt-5">
     <div class="text-center bg-primary panel-top">
-        <span class="fs-3 text-white">Відповіді</span>
+        <span class="fs-3 text-white">@Localizer["Responses"]</span>
     </div>
     <div id="car-responses" class="p-3">
         <div class="list-group">

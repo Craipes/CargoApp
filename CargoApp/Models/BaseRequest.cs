@@ -21,7 +21,7 @@ public abstract class BaseRequest : BaseEntity
 
     [Display(Name = "Request status")] public RequestType RequestType { get; set; }
 
-    [BindNever] public DateTime AddTime { get; set; } = DateTime.UtcNow;
+    [Display(Name = "Adding time")] [BindNever] public DateTime AddTime { get; set; } = DateTime.UtcNow;
 
     [BindNever] [ValidateNever] [NotMapped] public abstract bool CanBeResponded { get; }
 }

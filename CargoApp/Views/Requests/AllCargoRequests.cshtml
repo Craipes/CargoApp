@@ -1,7 +1,7 @@
 ﻿@inject IHtmlLocalizer<SharedResource> Localizer
 @model AllCargoRequestsViewModel
 @{
-    ViewData["Title"] = "Cargo Requests";
+    ViewData["Title"] = Localizer["Cargo requests"];
 }
 
 @if (Model.Id == null)

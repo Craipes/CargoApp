@@ -195,4 +195,61 @@
   <data name="Car requests of" xml:space="preserve">
     <value>Car requests of</value>
   </data>
+  <data name="Request creation" xml:space="preserve">
+    <value>Request creation</value>
+  </data>
+  <data name="Request editing" xml:space="preserve">
+    <value>Request editing</value>
+  </data>
+  <data name="Car search" xml:space="preserve">
+    <value>Car search</value>
+  </data>
+  <data name="Cargo search" xml:space="preserve">
+    <value>Cargo search</value>
+  </data>
+  <data name="Email is not necessary" xml:space="preserve">
+    <value>Email is not necessary</value>
+  </data>
+  <data name="Volume or Dimensions" xml:space="preserve">
+    <value>You can specify a free volume or measurements, both options are optional</value>
+  </data>
+  <data name="Confirm changes" xml:space="preserve">
+    <value>Confirm changes</value>
+  </data>
+  <data name="Can't change status" xml:space="preserve">
+    <value>Can't change status</value>
+  </data>
+  <data name="Open request" xml:space="preserve">
+    <value>Open request</value>
+  </data>
+  <data name="Close request" xml:space="preserve">
+    <value>Close request</value>
+  </data>
+  <data name="Hide request" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="Hide request admin" xml:space="preserve">
+    <value>Hide as admin</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Car request" xml:space="preserve">
+    <value>Car request</value>
+  </data>
+  <data name="Cargo request" xml:space="preserve">
+    <value>Cargo request</value>
+  </data>
+  <data name="Request details" xml:space="preserve">
+    <value>Request details</value>
+  </data>
+  <data name="Not specified" xml:space="preserve">
+    <value>Not specified</value>
+  </data>
+  <data name="Responses" xml:space="preserve">
+    <value>Responses</value>
+  </data>
+  <data name="Project About" xml:space="preserve">
+    <value>The project was developed by a student of the IPZ-22-1 group, Roman Yurchuk, as a course project on the topic: “Web resource for cargo delivery”</value>
+  </data>
 </root>

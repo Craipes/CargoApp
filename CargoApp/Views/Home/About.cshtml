@@ -1,7 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Про проєкт";
+﻿@inject IHtmlLocalizer<SharedResource> Localizer
+@{
+    ViewData["Title"] = Localizer["About"];
 }
-<h1 class="text-center">@ViewData["Title"]</h1>
+<h1 class="text-center">@ViewData["About"]</h1>
 
 <p class="text-center">
     Проєкт розробив студент групи ІПЗ-22-1 Юрчук Роман Володимирович як курсовий проєкт на тему: "Вебресурс для доставки вантажів"

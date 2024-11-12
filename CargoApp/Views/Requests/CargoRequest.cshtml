@@ -1,110 +1,111 @@
-﻿@model CargoApp.Models.CargoRequest
+﻿@inject IHtmlLocalizer<SharedResource> Localizer
+@model CargoApp.Models.CargoRequest
 @{
     bool isCreating = Model == null || Model?.Id == 0;
-    ViewData["Title"] = isCreating ? "Create Cargo Request" : "Edit Cargo Request";
+    ViewData["Title"] = isCreating ? Localizer["Request creation"] : Localizer["Request editing"];
 }
 
 @if (isCreating)
 {
-    <h1 class="text-center mb-5">Створення запиту</h1>
+    <h1 class="text-center mb-5">@Localizer["Request creation"]</h1>
 }
 else
 {
-    <h1 class="text-center mb-5">Редагування запиту</h1>
+    <h1 class="text-center mb-5">@Localizer["Request editing"]</h1>
 }
 
 <div class="panel box-shadow mx-auto col-10 text-start">
     <div class="text-center bg-primary panel-top">
-        <span class="fs-3 text-white">Пошук вантажу</span>
+        <span class="fs-3 text-white">@Localizer["Cargo search"]</span>
     </div>
     <div id="cargo-request-form">
         <form method="post" asp-action="@(isCreating ? "CreateCargoRequest" : "EditCargoRequest")" asp-controller="Requests" class="row p-3 g-3">
             <div class="col-12">
-                <label class="form-label" asp-for="ContactName">Контактне ім'я</label>
+                <label class="form-label" asp-for="ContactName"></label>
                 <input class="form-control" asp-for="ContactName" required />
                 <span asp-validation-for="ContactName" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <label class="form-label" asp-for="ContactPhoneNumber">Контактний номер</label>
-                <input class="form-control" asp-for="ContactPhoneNumber" placeholder="+380 ** *** ****" />
+                <label class="form-label" asp-for="ContactPhoneNumber"></label>
+                <input class="form-control" asp-for="ContactPhoneNumber" placeholder="*** *** ****" />
                 <span asp-validation-for="ContactPhoneNumber" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <label class="form-label" asp-for="ContactEmail">Контактна пошта</label>
+                <label class="form-label" asp-for="ContactEmail"></label>
                 <input class="form-control" asp-for="ContactEmail" placeholder="placeholder@gmial.com" />
                 <span asp-validation-for="ContactEmail" class="text-danger"></span>
-                <div class="form-text">Введення пошти не є обов'язковим</div>
+                <div class="form-text">@Localizer["Email is not necessary"]</div>
             </div>
             <div class="col-md-6">
-                <label class="form-label" asp-for="DeparturePlace">Місце відбуття</label>
+                <label class="form-label" asp-for="DeparturePlace"></label>
                 <input class="form-control make-readonly" id="cargo-departure" asp-for="DeparturePlace" autocomplete="off" spellcheck="false" required />
                 <span asp-validation-for="DeparturePlace" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <label class="form-label" asp-for="DestinationPlace">Місце прибуття</label>
+                <label class="form-label" asp-for="DestinationPlace"></label>
                 <input class="form-control make-readonly" id="cargo-destination" asp-for="DestinationPlace" autocomplete="off" spellcheck="false" required />
                 <span asp-validation-for="DestinationPlace" class="text-danger"></span>
             </div>
             <div class="col-12">
-                <label class="form-label" asp-for="DepartureTime">Час відбуття</label>
+                <label class="form-label" asp-for="DepartureTime"></label>
                 <input class="form-control make-readonly" asp-for="DepartureTime" autocomplete="off" required />
                 <span asp-validation-for="DepartureTime" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <label class="form-label" asp-for="Car.Type">Тип автомобіля</label>
+                <label class="form-label" asp-for="Car.Type"></label>
                 <select class="form-select" asp-for="Car.Type" asp-items="Html.GetEnumSelectList<CarType>()" required></select>
                 <span asp-validation-for="Car.Type" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <label class="form-label" asp-for="Car.TrailerType">Тип причепа</label>
+                <label class="form-label" asp-for="Car.TrailerType"></label>
                 <select class="form-select" asp-for="Car.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()" required></select>
                 <span asp-validation-for="Car.TrailerType" class="text-danger"></span>
             </div>
             <div class="col-12">
-                <label class="form-label" asp-for="Car.MaxMass">Вантажопідйомність</label>
+                <label class="form-label" asp-for="Car.MaxMass"></label>
                 <div class="input-group">
                     <input class="form-control" asp-for="Car.MaxMass" autocomplete="off" required />
-                    <span class="input-group-text">t</span>
+                    <span class="input-group-text">@Localizer["massUnit"]</span>
                 </div>
                 <span asp-validation-for="Car.MaxMass" class="text-danger"></span>
             </div>
             <div class="col-lg-6">
-                <label class="form-label" asp-for="Car.MaxVolume">Допустимий об'єм</label>
+                <label class="form-label" asp-for="Car.MaxVolume"></label>
                 <div class="input-group">
                     <input class="form-control" asp-for="Car.MaxVolume" autocomplete="off" />
-                    <span class="input-group-text">m<sup>3</sup></span>
+                    <span class="input-group-text">@Localizer["lengthUnit"]<sup>3</sup></span>
                 </div>
                 <span asp-validation-for="Car.MaxVolume" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
-                <label class="form-label" asp-for="Car.MaxLength">Довжина</label>
+                <label class="form-label" asp-for="Car.MaxLength"></label>
                 <div class="input-group">
                     <input class="form-control" asp-for="Car.MaxLength" autocomplete="off" />
-                    <span class="input-group-text">m</span>
+                    <span class="input-group-text">@Localizer["lengthUnit"]</span>
                 </div>
                 <span asp-validation-for="Car.MaxLength" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
-                <label class="form-label" asp-for="Car.MaxWidth">Ширина</label>
+                <label class="form-label" asp-for="Car.MaxWidth"></label>
                 <div class="input-group">
                     <input class="form-control" asp-for="Car.MaxWidth" autocomplete="off" />
-                    <span class="input-group-text">m</span>
+                    <span class="input-group-text">@Localizer["lengthUnit"]</span>
                 </div>
                 <span asp-validation-for="Car.MaxWidth" class="text-danger"></span>
             </div>
             <div class="col-4 col-lg-2">
-                <label class="form-label" asp-for="Car.MaxHeight">Висота</label>
+                <label class="form-label" asp-for="Car.MaxHeight"></label>
                 <div class="input-group">
                     <input class="form-control" asp-for="Car.MaxHeight" autocomplete="off" />
-                    <span class="input-group-text">m</span>
+                    <span class="input-group-text">@Localizer["lengthUnit"]</span>
                 </div>
                 <span asp-validation-for="Car.MaxHeight" class="text-danger"></span>
             </div>
-            <div class="col-12 form-text">Можна вказати вільний об'єм або виміри, обидва варіанти не обов'язкові</div>
+            <div class="col-12 form-text">@Localizer["Volume or Dimensions"]</div>
             <div class="col-12">
-                <label class="form-label" asp-for="Price">Пропонована ціна</label>
+                <label class="form-label" asp-for="Price"></label>
                 <div class="input-group">
-                    <span class="input-group-text">₴</span>
+                    <span class="input-group-text">@Localizer["Hryvnia"]</span>
                     <input class="form-control" asp-for="Price" autocomplete="off" required />
                     <select class="form-select" asp-for="PriceType" asp-items="Html.GetEnumSelectList<PriceType>()" required></select>
                 </div>
@@ -112,26 +113,26 @@ else
                 <span asp-validation-for="PriceType" class="text-danger"></span>
             </div>
             <div class="col-12 text-center">
-                <label class="form-label" asp-for="Details">Деталі</label>
+                <label class="form-label" asp-for="Details"></label>
                 <textarea class="form-control" asp-for="Details" rows="3"></textarea>
                 <span asp-validation-for="Details" class="text-danger"></span>
             </div>
             <div class="col-12">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" asp-for="Car.AvailableGPS" value="true">
-                    <label class="form-check-label" asp-for="Car.AvailableGPS">Наявний GPS?</label>
+                    <label class="form-check-label" asp-for="Car.AvailableGPS"></label>
                 </div>
             </div>
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="btn btn-primary">Підтвердити зміни</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Confirm changes"]</button>
         </form>
 
         @if (!isCreating)
         {
-            <div class="h5 text-center">Статус: @Model!.RequestType</div>
+            <div class="h5 text-center">@Localizer["Status"]: @Model!.RequestType</div>
             @if (Model!.RequestType == RequestType.HiddenByAdmin && !User.IsInRole(CargoAppConstants.AdminRole))
             {
-                <div class="h6 mb-3 text-center">Не можна змінити статус</div>
+                <div class="h6 mb-3 text-center">@Localizer["Can't change status"]</div>
                 <div style="height: 10px"></div>
             }
             else
@@ -140,24 +141,24 @@ else
                     <form class="col" asp-action="UpdateCargoRequestVisibility" asp-controller="Requests">
                         <input type="hidden" name="id" value="@Model!.Id" />
                         <input type="hidden" name="visibility" value="@RequestType.Visible" />
-                        <button class="btn btn-primary w-100" type="submit" @(Model!.RequestType == RequestType.Visible ? "disabled" : "")>Відкрити оголошення</button>
+                        <button class="btn btn-primary w-100" type="submit" @(Model!.RequestType == RequestType.Visible ? "disabled" : "")>@Localizer["Open request"]</button>
                     </form>
                     <form class="col" asp-action="UpdateCargoRequestVisibility" asp-controller="Requests">
                         <input type="hidden" name="id" value="@Model!.Id" />
                         <input type="hidden" name="visibility" value="@RequestType.Closed" />
-                        <button class="btn btn-primary w-100" type="submit" @(Model!.RequestType == RequestType.Closed ? "disabled" : "")>Закрити оголошення</button>
+                        <button class="btn btn-primary w-100" type="submit" @(Model!.RequestType == RequestType.Closed ? "disabled" : "")>@Localizer["Close request"]</button>
                     </form>
                     <form class="col" asp-action="UpdateCargoRequestVisibility" asp-controller="Requests">
                         <input type="hidden" name="id" value="@Model!.Id" />
                         <input type="hidden" name="visibility" value="@RequestType.Hidden" />
-                        <button class="btn btn-warning w-100" type="submit" @(Model!.RequestType == RequestType.Hidden ? "disabled" : "")>Приховати</button>
+                        <button class="btn btn-warning w-100" type="submit" @(Model!.RequestType == RequestType.Hidden ? "disabled" : "")>@Localizer["Hide request"]</button>
                     </form>
                     @if (User.IsInRole(CargoAppConstants.AdminRole))
                     {
                         <form class="col" asp-action="UpdateCargoRequestVisibility" asp-controller="Requests">
                             <input type="hidden" name="id" value="@Model!.Id" />
                             <input type="hidden" name="visibility" value="@RequestType.HiddenByAdmin" />
-                            <button class="btn btn-danger w-100" type="submit" @(Model!.RequestType == RequestType.HiddenByAdmin ? "disabled" : "")>Приховати як адміністратор</button>
+                            <button class="btn btn-danger w-100" type="submit" @(Model!.RequestType == RequestType.HiddenByAdmin ? "disabled" : "")>@Localizer["Hide request admin"]</button>
                         </form>
                     }
                 </div>

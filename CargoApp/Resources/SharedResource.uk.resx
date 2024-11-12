@@ -195,4 +195,61 @@
   <data name="Car requests of" xml:space="preserve">
     <value>Оголошення пошуку транспорту користувача</value>
   </data>
+  <data name="Request creation" xml:space="preserve">
+    <value>Створення оголошення</value>
+  </data>
+  <data name="Request editing" xml:space="preserve">
+    <value>Редагування оголошення</value>
+  </data>
+  <data name="Car search" xml:space="preserve">
+    <value>Пошук транспорту</value>
+  </data>
+  <data name="Cargo search" xml:space="preserve">
+    <value>Пошук вантажу</value>
+  </data>
+  <data name="Email is not necessary" xml:space="preserve">
+    <value>Введення пошти не є обов'язковим</value>
+  </data>
+  <data name="Volume or Dimensions" xml:space="preserve">
+    <value>Можна вказати вільний об'єм або виміри, обидва варіанти не обов'язкові</value>
+  </data>
+  <data name="Confirm changes" xml:space="preserve">
+    <value>Підтвердити зміни</value>
+  </data>
+  <data name="Can't change status" xml:space="preserve">
+    <value>Не можна змінити статус</value>
+  </data>
+  <data name="Open request" xml:space="preserve">
+    <value>Відкрити оголошення</value>
+  </data>
+  <data name="Close request" xml:space="preserve">
+    <value>Закрити оголошення</value>
+  </data>
+  <data name="Hide request" xml:space="preserve">
+    <value>Приховати</value>
+  </data>
+  <data name="Hide request admin" xml:space="preserve">
+    <value>Приховати як адміністратор</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Car request" xml:space="preserve">
+    <value>Оголошення на пошук транспорту</value>
+  </data>
+  <data name="Cargo request" xml:space="preserve">
+    <value>Оголошення на пошук вантажу</value>
+  </data>
+  <data name="Request details" xml:space="preserve">
+    <value>Деталі запиту</value>
+  </data>
+  <data name="Not specified" xml:space="preserve">
+    <value>Не вказано</value>
+  </data>
+  <data name="Responses" xml:space="preserve">
+    <value>Відповіді</value>
+  </data>
+  <data name="Project About" xml:space="preserve">
+    <value>Проєкт розробив студент групи ІПЗ-22-1 Юрчук Роман Володимирович як курсовий проєкт на тему: "Вебресурс для доставки вантажів"</value>
+  </data>
 </root>

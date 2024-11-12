@@ -208,13 +208,13 @@
     <value>Тип причіпу</value>
   </data>
   <data name="Max length" xml:space="preserve">
-    <value>Максимальна довжина</value>
+    <value>Макс. довжина</value>
   </data>
   <data name="Max width" xml:space="preserve">
-    <value>Максимальна ширина</value>
+    <value>Макс. ширина</value>
   </data>
   <data name="Max height" xml:space="preserve">
-    <value>Максимальна висота</value>
+    <value>Макс. висота</value>
   </data>
   <data name="Max volume" xml:space="preserve">
     <value>Максимальний об'єм</value>
@@ -296,5 +296,8 @@
   </data>
   <data name="Default phone number" xml:space="preserve">
     <value>Номер телефону</value>
+  </data>
+  <data name="Adding time" xml:space="preserve">
+    <value>Час додавання</value>
   </data>
 </root>

@@ -127,6 +127,12 @@ public class RequestsController : Controller
         return View("CarRequest");
     }
 
+    [HttpGet]
+    public IActionResult CarRequestFromSearch()
+    {
+        return View("CarRequest");
+    }
+
     [HttpPost]
     public IActionResult CarRequestFromSearch(SearchViewModel? model)
     {
@@ -157,6 +163,12 @@ public class RequestsController : Controller
     }
 
     public IActionResult CreateCargoRequest()
+    {
+        return View("CargoRequest");
+    }
+
+    [HttpGet]
+    public IActionResult CargoRequestFromSearch()
     {
         return View("CargoRequest");
     }
