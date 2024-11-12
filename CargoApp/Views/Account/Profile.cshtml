@@ -1,7 +1,8 @@
-﻿@model UserProfileViewModel
+﻿@inject IHtmlLocalizer<SharedResource> Localizer
+@model UserProfileViewModel
 
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = Localizer["Profile of user"].Value + " " + Model.Name;
 }
 
 
@@ -9,43 +10,43 @@
     <div class="profile-update-form">
         <div class="row mt-5 shadow p-3 pb-5 panel">
             <div class="col-lg-6 mt-4">
-                <h2 class="mb-4">Профіль користувача @Model.Name</h2>
+                <h2 class="mb-4">@ViewData["Title"]</h2>
                 <div class="row align-middle">
                     <div class="col-5">
-                        <div>Оголошень пошуку транспорту:</div>
+                        <div>@Html.DisplayNameFor(model => Model.CarRequestsCount)</div>
                     </div>
                     <div class="col-1 text-end">
-                        @Model.CarRequestsCount
+                        @Html.DisplayFor(model => Model.CarRequestsCount)
                     </div>
                     <div class="col-5">
-                        <div>Оголошень пошуку вантажу:</div>
+                        <div>@Html.DisplayNameFor(model => Model.CargoRequestsCount)</div>
                     </div>
                     <div class="col-1 text-end">
-                        @Model.CargoRequestsCount
+                        @Html.DisplayFor(model => Model.CargoRequestsCount)
                     </div>
                     <div class="mt-3"></div>
                     <div class="col-5">
-                        <div>Відподей на пошук транспорту:</div>
+                        <div>@Html.DisplayNameFor(model => Model.CarResponsesCount)</div>
                     </div>
                     <div class="col-1 text-end">
-                        @Model.CarResponsesCount
+                        @Html.DisplayFor(model => Model.CarResponsesCount)
                     </div>
                     <div class="col-5">
-                        <div>Відповідей на пошук вантажу:</div>
+                        <div>@Html.DisplayNameFor(model => Model.CargoResponsesCount)</div>
                     </div>
                     <div class="col-1 text-end">
-                        @Model.CargoResponsesCount
+                        @Html.DisplayFor(model => Model.CargoResponsesCount)
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 mt-4 text-center">
-                <h2 class="mb-4">Рейтинг: @Model.Rating.ToString("F2")</h2>
+                <h2 class="mb-4">@Html.DisplayNameFor(model => Model.Rating): @Model.Rating.ToString("F2")</h2>
                 <div class="row">
                     <div class="col-6">
-                        <div>Отриманих відгуків: @Model.ReviewsReceivedCount</div>
+                        <div>@Html.DisplayNameFor(model => Model.ReviewsReceivedCount) @Model.ReviewsReceivedCount</div>
                     </div>
                     <div class="col-6">
-                        <div>Надісланих відгуків: @Model.ReviewsSentCount</div>
+                        <div>@Html.DisplayNameFor(model => Model.ReviewsSentCount) @Model.ReviewsSentCount</div>
                     </div>
                 </div>
             </div>
@@ -55,53 +56,53 @@
                 @if (Model.AllowEditing)
                 {
                     <form asp-action="UpdateProfile" method="post" class="mt-3 text-start">
-                        <h3 class="mb-3 text-center">Оновити дані</h3>
+                        <h3 class="mb-3 text-center">@Localizer["Update data"]</h3>
                         <div class="mb-3">
-                            <label class="form-label" asp-for="Email">Пошта</label>
+                            <label class="form-label" asp-for="Email"></label>
                             <input class="form-control" asp-for="Email" class="form-control" readonly />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" asp-for="Name">Ім'я користувача</label>
+                            <label class="form-label" asp-for="Name"></label>
                             <input class="form-control" asp-for="Name" class="form-control" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" asp-for="Phone">Номер телефону</label>
+                            <label class="form-label" asp-for="Phone"></label>
                             <input class="form-control" asp-for="Phone" class="form-control" />
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
                         <input type="hidden" asp-for="Id" />
-                        <button type="submit" class="btn btn-primary w-100">Оновити</button>
+                        <button type="submit" class="btn btn-primary w-100">@Localizer["Confirm changes"]</button>
                     </form>
                 }
                 <div asp-validation-summary="All"></div>
             </div>
         </div>
         @* <div>
-            @if (Model.ReviewsReceivedCount == 0)
-            {
-                <h2 class="text-center mt-5">Жодного відгука про користувача не було надано</h2>
-            }
-            else
-            {
-                <h2 class="text-center mt-5">Відгуки про користувача:</h2>
-                @foreach (var review in Model.ReviewsReceived)
-                {
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-subtitle">Оцінка: @review.Points</h5>
-                            <h5 class="card-title"><a asp-action="Profile" asp-controller="Account" asp-route-id="@review.SenderId">@review.Sender</a></h5>
-                            <p class="card-text">@review.Comment</p>
-                        </div>
-                    </div>
-                }
-            }
+        @if (Model.ReviewsReceivedCount == 0)
+        {
+        <h2 class="text-center mt-5">Жодного відгука про користувача не було надано</h2>
+        }
+        else
+        {
+        <h2 class="text-center mt-5">Відгуки про користувача:</h2>
+        @foreach (var review in Model.ReviewsReceived)
+        {
+        <div class="card">
+        <div class="card-body">
+        <h5 class="card-subtitle">Оцінка: @review.Points</h5>
+        <h5 class="card-title"><a asp-action="Profile" asp-controller="Account" asp-route-id="@review.SenderId">@review.Sender</a></h5>
+        <p class="card-text">@review.Comment</p>
+        </div>
+        </div>
+        }
+        }
         </div> *@
         <div>
-            <h2 class="text-center mt-5">Останні оголошення користувача</h2>
+            <h2 class="text-center mt-5">@Localizer["Last user requests"]</h2>
             <div class="row">
                 <div class="col-lg-6 mt-5">
-                    <h3>Оголошення пошуку транспорту</h3>
+                    <h3>@Localizer["Car requests"]</h3>
                     @if (Model.CarRequests.Count != 0)
                     {
                         <div class="list-group">
@@ -111,62 +112,62 @@
                                 <div class="list-group-item @(request.CanBeResponded ? "" : "list-group-item-dark")">
                                     @if (request.CanBeResponded)
                                     {
-                                        <span class="badge bg-success">Активне</span>
+                                        <span class="badge bg-success">@Localizer["Request Active"]</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-danger">Час оголошення вичерпано</span>
+                                        <span class="badge bg-danger">@Localizer["Request Expired"]</span>
                                     }
-                                    <span class="badge bg-secondary">@request.RequestType.GetDisplayNameContext(Context)</span>
+                                    <span class="badge bg-secondary">@Html.DisplayFor(model => request.RequestType)</span>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Контактне ім'я</span>
-                                        <span class="col-6">@request.ContactName</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.ContactName)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.ContactName)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Контактний номер</span>
-                                        <span class="col-6">@request.ContactPhoneNumber</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.ContactPhoneNumber)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.ContactPhoneNumber)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Місце відбуття</span>
-                                        <span class="col-6">@request.DeparturePlace</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DeparturePlace)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.DeparturePlace)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Місце прибуття</span>
-                                        <span class="col-6">@request.DestinationPlace</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DestinationPlace)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.DestinationPlace)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Ранній час відправлення</span>
-                                        <span class="col-6">@request.EarlyDepartureDate.ToString("d")</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.EarlyDepartureDate)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.EarlyDepartureDate)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Пізній час відправлення</span>
-                                        <span class="col-6">@request.LateDepartureDate.ToString("d")</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.LateDepartureDate)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.LateDepartureDate)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Тип транспорту</span>
-                                        <span class="col-6">@request.Cargo.TrailerType.GetDisplayNameContext(Context)</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Cargo.TrailerType)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Cargo.TrailerType)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Маса вантажу</span>
-                                        <span class="col-6">@request.Cargo.Mass т</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Cargo.Mass)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Cargo.Mass) @Localizer["massUnit"]</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Об'єм вантажу</span>
-                                        <span class="col-6">@request.Cargo.Volume м³  (@(request.Cargo.Length == null ? "-" : (request.Cargo.Length.Value.ToString("F2")) + " м") x @(request.Cargo.Width == null ? "-" : (request.Cargo.Width.Value.ToString("F2")) + " м") x @(request.Cargo.Height == null ? "-" : (request.Cargo.Height.Value.ToString("F2") + " м")))</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Cargo.Volume)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Cargo.Volume) @Localizer["lengthUnit"]³ (@(request.Cargo.Length == null ? "-" : (request.Cargo.Length.Value.ToString("F2")) + " " + Localizer["lengthUnit"].Value) x @(request.Cargo.Width == null ? "-" : (request.Cargo.Width.Value.ToString("F2")) + " " + Localizer["lengthUnit"].Value) x @(request.Cargo.Height == null ? "-" : (request.Cargo.Height.Value.ToString("F2") + " " + Localizer["lengthUnit"].Value)))</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Пропонована ціна</span>
-                                        <span class="col-6">@request.Price грн (@request.PriceType.GetDisplayNameContext(Context))</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Price)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Price) грн (@Html.DisplayFor(model => request.PriceType))</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Час подання</span>
-                                        <span class="col-6">@request.AddTime</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.AddTime)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.AddTime)</span>
                                     </div>
                                     <div class="row justify-content-between">
-                                        <a class="btn btn-primary mt-2 col-4" asp-action="CarRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">Переглянути</a>
+                                        <a class="btn btn-primary mt-2 col-4" asp-action="CarRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">@Localizer["View"]</a>
                                         @if (Model.AllowEditing)
                                         {
-                                            <a class="btn btn-warning mt-2 col-4" asp-action="EditCarRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+                                            <a class="btn btn-warning mt-2 col-4" asp-action="EditCarRequest" asp-controller="Requests" asp-route-id="@request.Id">@Localizer["Edit"]</a>
                                         }
                                     </div>
                                 </div>
@@ -175,80 +176,80 @@
                     }
                     else
                     {
-                        <div class="mb-2">Відсутні нещодавні оголошення</div>
+                        <div class="mb-2">@Localizer["No recent requests"]</div>
                     }
                     @if (Model.AllowEditing)
                     {
-                        <a class="link-primary" asp-controller="Requests" asp-action="AllCarRequests" asp-route-id="@Model.Id">Переглянути усі</a>
+                        <a class="link-primary" asp-controller="Requests" asp-action="AllCarRequests" asp-route-id="@Model.Id">@Localizer["View all"]</a>
                     }
                 </div>
                 <div class="col-lg-6 mt-5">
-                    <h3>Оголошення пошуку вантажу</h3>
+                    <h3>@Localizer["Cargo requests"]</h3>
                     @if (Model.CargoRequests.Count != 0)
                     {
-                        <div action="list-group">
+                        <div class="list-group">
                             @for (int i = 0; i < Model.CargoRequests.Count; i++)
                             {
                                 var request = Model.CargoRequests[i];
                                 <div class="list-group-item @(request.CanBeResponded ? "" : "list-group-item-dark")">
                                     @if (request.CanBeResponded)
                                     {
-                                        <span class="badge bg-success">Активне</span>
+                                        <span class="badge bg-success">@Localizer["Request Active"]</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-danger">Час оголошення вичерпано</span>
+                                        <span class="badge bg-danger">@Localizer["Request Expired"]</span>
                                     }
-                                    <span class="badge bg-secondary">@request.RequestType.GetDisplayNameContext(Context)</span>
+                                    <span class="badge bg-secondary">@Html.DisplayFor(model => request.RequestType)</span>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Контактне ім'я</span>
-                                        <span class="col-6">@request.ContactName</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.ContactName)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.ContactName)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Контактний номер</span>
-                                        <span class="col-6">@request.ContactPhoneNumber</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.ContactPhoneNumber)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.ContactPhoneNumber)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Місце відбуття</span>
-                                        <span class="col-6">@request.DeparturePlace</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DeparturePlace)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.DeparturePlace)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Місце прибуття</span>
-                                        <span class="col-6">@request.DestinationPlace</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DestinationPlace)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.DestinationPlace)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Час відбуття</span>
-                                        <span class="col-6">@request.DepartureTime.ToString("g")</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DepartureTime)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.DepartureTime)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Тип причіпу</span>
-                                        <span class="col-6">@request.Car.Type.GetDisplayNameContext(Context)</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Car.Type)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Car.Type)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Тип транспорту</span>
-                                        <span class="col-6">@request.Car.TrailerType.GetDisplayNameContext(Context)</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Car.TrailerType)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Car.TrailerType)</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Вантажопідйоність</span>
-                                        <span class="col-6">@request.Car.MaxMass т</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Car.MaxMass)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Car.MaxMass) @Localizer["massUnit"]</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Об'єм</span>
-                                        <span class="col-6">@request.Car.MaxVolume м³  (@(request.Car.MaxLength == null ? "-" : (request.Car.MaxLength.Value.ToString("F2")) + " м") x @(request.Car.MaxWidth == null ? "-" : (request.Car.MaxWidth.Value.ToString("F2")) + " м") x @(request.Car.MaxHeight == null ? "-" : (request.Car.MaxHeight.Value.ToString("F2") + " м")))</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Car.MaxVolume)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Car.MaxVolume) @Localizer["lengthUnit"]³ (@(request.Car.MaxLength == null ? "-" : (request.Car.MaxLength.Value.ToString("F2")) + " " + Localizer["lengthUnit"].Value) x @(request.Car.MaxWidth == null ? "-" : (request.Car.MaxWidth.Value.ToString("F2")) + " " + Localizer["lengthUnit"].Value) x @(request.Car.MaxHeight == null ? "-" : (request.Car.MaxHeight.Value.ToString("F2") + " " + Localizer["lengthUnit"].Value)))</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Пропонована ціна</span>
-                                        <span class="col-6">@request.Price грн (@request.PriceType.GetDisplayNameContext(Context))</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Price)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.Price) грн (@Html.DisplayFor(model => request.PriceType))</span>
                                     </div>
                                     <div class="row">
-                                        <span class="fw-bold col-6">Час подання</span>
-                                        <span class="col-6">@request.AddTime</span>
+                                        <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.AddTime)</span>
+                                        <span class="col-6">@Html.DisplayFor(model => request.AddTime)</span>
                                     </div>
                                     <div class="row justify-content-between">
-                                        <a class="btn btn-primary mt-2 col-4" asp-action="CargoRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">Переглянути</a>
+                                        <a class="btn btn-primary mt-2 col-4" asp-action="CargoRequestDetails" asp-controller="Requests" asp-route-id="@request.Id">@Localizer["View"]</a>
                                         @if (Model.AllowEditing)
                                         {
-                                            <a class="btn btn-warning mt-2 col-4" asp-action="EditCargoRequest" asp-controller="Requests" asp-route-id="@request.Id">Редагувати</a>
+                                            <a class="btn btn-warning mt-2 col-4" asp-action="EditCargoRequest" asp-controller="Requests" asp-route-id="@request.Id">@Localizer["Edit"]</a>
                                         }
                                     </div>
                                 </div>
@@ -257,11 +258,11 @@
                     }
                     else
                     {
-                        <div class="mb-2">Відсутні нещодавні оголошення</div>
+                        <div class="mb-2">@Localizer["No recent requests"]</div>
                     }
                     @if (Model.AllowEditing)
                     {
-                        <a class="link-primary" asp-controller="Requests" asp-action="AllCargoRequests" asp-route-id="@Model.Id">Переглянути усі</a>
+                        <a class="link-primary" asp-controller="Requests" asp-action="AllCargoRequests" asp-route-id="@Model.Id">@Localizer["View all"]</a>
                     }
                 </div>
             </div>

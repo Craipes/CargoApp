@@ -1,32 +1,34 @@
-﻿@model UserProfilesAdminViewModel
+﻿@inject IHtmlLocalizer<SharedResource> Localizer
+@model UserProfilesAdminViewModel
 
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = Localizer["Users management"];
+    UserProfileAdminViewModel userModel = null!;
 }
 
-<h2>Користувачі</h2>
+<h2>@Localizer["Users management"]</h2>
 
 <form class="row" method="get">
-    <label class="col-form-label col-2" name="search">Ім'я / Пошта</label>
+    <label class="col-form-label col-2" name="search">@Html.DisplayNameFor(model => userModel.Name) / @Html.DisplayNameFor(model => userModel.Email)</label>
     <div class="col-8">
         <input class="form-control" type="text" name="search" value="@Model.Search" />
     </div>
-    <button type="submit" class="btn btn-primary col-2">Пошук</button>
+    <button type="submit" class="btn btn-primary col-2">@Localizer["Search"]</button>
 </form>
 
 <table class="table table-striped caption-top align-middle">
-    <caption>У стовпці "Оголошення" перше число означає "оголошення на пошук транспорту", друге - "оголошення на пошук вантажу".</caption>
-    <caption>У стовпці "Відповіді" перше число означає "відповіді на оголошення пошуку транспорту", друге - "відповіді на оголошення пошуку вантажу".</caption>
+    <caption>@Localizer["Users management caption 1"]</caption>
+    <caption>@Localizer["Users management caption 2"]</caption>
     <thead>
         <tr>
-            <th>Ім'я</th>
-            <th>Пошта</th>
-            <th>Рейтинг</th>
-            <th>Отримані відгуки</th>
-            <th>Написані відгуки</th>
-            <th>Оголошення</th>
-            <th>Відповіді</th>
-            <th>Дії</th>
+            <th>@Html.DisplayNameFor(model => userModel.Name)</th>
+            <th>@Html.DisplayNameFor(model => userModel.Email)</th>
+            <th>@Html.DisplayNameFor(model => userModel.Rating)</th>
+            <th>@Localizer["Received reviews"]</th>
+            <th>@Localizer["Sent reviews"]</th>
+            <th>@Localizer["Requests"]</th>
+            <th>@Localizer["Responses"]</th>
+            <th>@Localizer["Actions"]</th>
         </tr>
     </thead>
     <tbody>
@@ -41,7 +43,7 @@
                 <td>@user.CarRequestsCount/@user.CargoRequestsCount</td>
                 <td>@user.CarResponsesCount/@user.CargoResponsesCount</td>
                 <td>
-                    <a asp-controller="Account" asp-action="Profile" asp-route-id="@user.Id" class="btn btn-warning">Перевірка</a>
+                    <a asp-controller="Account" asp-action="Profile" asp-route-id="@user.Id" class="btn btn-primary">@Localizer["View"]</a>
                 </td>
             </tr>
         }

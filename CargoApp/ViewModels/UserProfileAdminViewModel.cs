@@ -5,10 +5,10 @@ namespace CargoApp.ViewModels;
 public class UserProfileAdminViewModel
 {
     public required string Id { get; set; }
-    [EmailAddress] public required string Email { get; set; }
-    [MaxLength(64)] public required string Name { get; set; }
+    [Display(Name = "Email")] [EmailAddress] public required string Email { get; set; }
+    [Display(Name = "Name")] [MaxLength(64)] public required string Name { get; set; }
 
-    [ValidateNever][Range(1.00f, 5.00f)] public double Rating { get; set; }
+    [Display(Name = "Rating")] [ValidateNever][Range(1.00f, 5.00f)] public double Rating { get; set; }
     public int ReviewsReceivedCount { get; set; }
     public int ReviewsSentCount { get; set; }
     public int CarRequestsCount { get; set; }

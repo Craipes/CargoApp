@@ -1,25 +1,26 @@
-﻿@model RegisterViewModel
+﻿@inject IHtmlLocalizer<SharedResource> Localizer
+@model RegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = Localizer["Register"];
 }
 
-<h3>Registration form</h3>
+<h3>@Localizer["Register"]</h3>
 <form method="post">
     <div class="mb-3">
-        <label class="form-label" asp-for=Email>Email</label>
+        <label class="form-label" asp-for=Email></label>
         <input class="form-control" asp-for=Email />
     </div>
     <div class="mb-3">
-        <label class="form-label" asp-for=Name>Name</label>
+        <label class="form-label" asp-for=Name></label>
         <input class="form-control" asp-for=Name />
     </div>
     <div class="mb-3">
-        <label class="form-label" asp-for=Password>Password</label>
+        <label class="form-label" asp-for=Password></label>
         <input class="form-control" asp-for=Password />
     </div>
     <div class="mb-3">
-        <label class="form-label" asp-for=ConfirmPassword>Confirm password</label>
+        <label class="form-label" asp-for=ConfirmPassword></label>
         <input class="form-control" asp-for=ConfirmPassword />
     </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn btn-primary" type="submit">@Localizer["Confirm"]</button>
 </form>

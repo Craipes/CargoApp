@@ -252,4 +252,43 @@
   <data name="Project About" xml:space="preserve">
     <value>Проєкт розробив студент групи ІПЗ-22-1 Юрчук Роман Володимирович як курсовий проєкт на тему: "Вебресурс для доставки вантажів"</value>
   </data>
+  <data name="Users management" xml:space="preserve">
+    <value>Керування користувачами</value>
+  </data>
+  <data name="Users management caption 1" xml:space="preserve">
+    <value>У стовпці "Оголошення" перше число означає "оголошення на пошук транспорту", друге - "оголошення на пошук вантажу".</value>
+  </data>
+  <data name="Users management caption 2" xml:space="preserve">
+    <value>У стовпці "Відповіді" перше число означає "відповіді на оголошення пошуку транспорту", друге - "відповіді на оголошення пошуку вантажу".</value>
+  </data>
+  <data name="Received reviews" xml:space="preserve">
+    <value>Отримані відгуки</value>
+  </data>
+  <data name="Sent reviews" xml:space="preserve">
+    <value>Написані відгуки</value>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Оголошення</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Дії</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Підтвердити</value>
+  </data>
+  <data name="Profile of user" xml:space="preserve">
+    <value>Профіль користувача</value>
+  </data>
+  <data name="Update data" xml:space="preserve">
+    <value>Оновити дані</value>
+  </data>
+  <data name="Last user requests" xml:space="preserve">
+    <value>Останні оголошення користувача</value>
+  </data>
+  <data name="View all" xml:space="preserve">
+    <value>Переглянути усі</value>
+  </data>
+  <data name="No recent requests" xml:space="preserve">
+    <value>Відсутні нещодавні оголошення</value>
+  </data>
 </root>

@@ -300,4 +300,37 @@
   <data name="Adding time" xml:space="preserve">
     <value>Adding time</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Remember me" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="Confirm password" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="Reviews received count:" xml:space="preserve">
+    <value>Reviews received count:</value>
+  </data>
+  <data name="Reviews sent count:" xml:space="preserve">
+    <value>Reviews sent count:</value>
+  </data>
+  <data name="Car requests count:" xml:space="preserve">
+    <value>Car requests count:</value>
+  </data>
+  <data name="Cargo requests count:" xml:space="preserve">
+    <value>Cargo requests count:</value>
+  </data>
+  <data name="Car responses count:" xml:space="preserve">
+    <value>Car responses count:</value>
+  </data>
+  <data name="Cargo responses count:" xml:space="preserve">
+    <value>Cargo responses count:</value>
+  </data>
 </root>

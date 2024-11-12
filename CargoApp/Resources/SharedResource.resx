@@ -252,4 +252,43 @@
   <data name="Project About" xml:space="preserve">
     <value>The project was developed by a student of the IPZ-22-1 group, Roman Yurchuk, as a course project on the topic: “Web resource for cargo delivery”</value>
   </data>
+  <data name="Users management" xml:space="preserve">
+    <value>Users management</value>
+  </data>
+  <data name="Users management caption 1" xml:space="preserve">
+    <value>In the “Requests” column, the first number means “requests for transport search” and the second means “requests for cargo search”.</value>
+  </data>
+  <data name="Users management caption 2" xml:space="preserve">
+    <value>In the “Responses” column, the first number means “responses to transport search requests” and the second number means “responses to cargo search requests”.</value>
+  </data>
+  <data name="Received reviews" xml:space="preserve">
+    <value>Received reviews</value>
+  </data>
+  <data name="Sent reviews" xml:space="preserve">
+    <value>Sent reviews</value>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Requests</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Profile of user" xml:space="preserve">
+    <value>Profile of user</value>
+  </data>
+  <data name="Update data" xml:space="preserve">
+    <value>Update data</value>
+  </data>
+  <data name="Last user requests" xml:space="preserve">
+    <value>Last user requests</value>
+  </data>
+  <data name="View all" xml:space="preserve">
+    <value>View all</value>
+  </data>
+  <data name="No recent requests" xml:space="preserve">
+    <value>No recent requests</value>
+  </data>
 </root>
