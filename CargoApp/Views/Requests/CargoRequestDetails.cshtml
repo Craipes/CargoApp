@@ -74,55 +74,144 @@
     </div>
 </div>
 
-<div class="panel box-shadow mx-auto col-10 text-start mt-5">
-    <div class="text-center bg-primary panel-top">
-        <span class="fs-3 text-white">@Localizer["Responses"]</span>
-    </div>
-    <div id="car-responses" class="p-3">
-        <div class="list-group">
-            @foreach (var response in Model.Responses)
-            {
-                @* <div class="list-group-item mb-3">
-            <div class="row mb-2">
-            <div class="col-6">
-            <label class="form-label">Контактне ім'я:</label>
-            <p>@response.ContactName</p>
+@if (Model.Responses.Count != 0)
+{
+    <div class="panel box-shadow mx-auto col-10 text-start mt-5">
+        <div class="text-center bg-primary panel-top">
+            <span class="fs-3 text-white">@(Model.AllowEditing ? Localizer["Responses"].Value : Localizer["Your response"].Value)</span>
+        </div>
+        <div id="car-responses" class="p-3">
+            <div class="list-group">
+                @foreach (var response in Model.Responses)
+                {
+                    <div class="row">
+                        <span class="form-label col-6">@Html.DisplayNameFor(model => response.User!.Name)</span>
+                        <span class="col-6"><a asp-action="Profile" asp-controller="Account" asp-route-id="@response.UserId">@Html.DisplayFor(model => response.User!.Name)</a></span>
+                    </div>
+                    <div class="row">
+                        <span class="form-label col-6">@Html.DisplayNameFor(model => response.ContactName)</span>
+                        <span class="col-6">@Html.DisplayFor(model => response.ContactName)</span>
+                    </div>
+                    <div class="row">
+                        <span class="form-label col-6">@Html.DisplayNameFor(model => response.ContactPhoneNumber)</span>
+                        <span class="col-6">@Html.DisplayFor(model => response.ContactPhoneNumber)</span>
+                    </div>
+                    <div class="row">
+                        <span class="form-label col-6">@Html.DisplayNameFor(model => response.ContactEmail)</span>
+                        <span class="col-6">@(response.ContactEmail != null ? Html.DisplayFor(model => response.ContactEmail) : Localizer["Not specified"])</span>
+                    </div>
+                    <div class="row">
+                        <span class="form-label col-6">@Html.DisplayNameFor(model => response.Cargo.TrailerType)</span>
+                        <span class="col-6">@Html.DisplayFor(model => response.Cargo.TrailerType)</span>
+                    </div>
+                    <div class="row">
+                        <span class="form-label col-6">@Html.DisplayNameFor(model => response.Cargo.Mass)</span>
+                        <span class="col-6">@Html.DisplayFor(model => response.Cargo.Mass) @Localizer["massUnit"]</span>
+                    </div>
+                    <div class="row">
+                        <span class="form-label col-6">@Html.DisplayNameFor(model => response.Cargo.Volume)</span>
+                        <span class="col-6">@Html.DisplayFor(model => response.Cargo.Volume) @Localizer["lengthUnit"]³ (@(response.Cargo.Length == null ? "-" : (response.Cargo.Length.Value.ToString("F2")) + " " + Localizer["lengthUnit"].Value) x @(response.Cargo.Width == null ? "-" : (response.Cargo.Width.Value.ToString("F2")) + " " + Localizer["lengthUnit"].Value) x @(response.Cargo.Height == null ? "-" : (response.Cargo.Height.Value.ToString("F2") + " " + Localizer["lengthUnit"].Value)))</span>
+                    </div>
+                    <div class="row">
+                        <span class="form-label col-6">@Html.DisplayNameFor(model => response.AddTime)</span>
+                        <span class="col-6">@Html.DisplayFor(model => response.AddTime)</span>
+                    </div>
+                    <div class="form-label">@Html.DisplayNameFor(model => response.Details)</div>
+                    <div class="form-label" style="white-space: pre-line">@Html.DisplayFor(model => response.Details)</div>
+                    @if (response.UserId == Model.UserId)
+                    {
+                        <form asp-action="DeleteCargoResponse" asp-controller="Requests" method="post">
+                            <input type="hidden" name="requestId" value="@Model.CargoRequest.Id" />
+                            <input type="hidden" name="responseId" value="@response.Id" />
+                            <button class="btn btn-danger mt-2 w-100" type="submit">@Localizer["Delete"]</button>
+                        </form>
+                    }
+                }
             </div>
-            <div class="col-6">
-            <label class="form-label">Контактний номер:</label>
-            <p>@response.ContactPhoneNumber</p>
-            </div>
-            </div>
-            <div class="row mb-2">
-            <div class="col-6">
-            <label class="form-label">Місце відбуття:</label>
-            <p>@response.DeparturePlace</p>
-            </div>
-            <div class="col-6">
-            <label class="form-label">Місце прибуття:</label>
-            <p>@response.DestinationPlace</p>
-            </div>
-            </div>
-            <div class="row mb-2">
-            <div class="col-6">
-            <label class="form-label">Час відбуття:</label>
-            <p>@response.DepartureTime.ToString("g")</p>
-            </div>
-            <div class="col-6">
-            <label class="form-label">Тип автомобіля:</label>
-            <p>@response.Car.Type</p>
-            </div>
-            </div>
-            <div class="row mb-2">
-            <div class="col-6">
-            <label class="form-label">Ціна:</label>
-            <p>@response.Price грн (@response.PriceType)</p>
-            </
-            </div>
-            </div>
-            </div>
-            *@
-            }
         </div>
     </div>
-</div>
+}
+
+@if (Model.AllowResponding)
+{
+    <div class="panel box-shadow mx-auto col-10 mt-5">
+        <div class="text-center bg-primary panel-top">
+            <span class="fs-3 text-white">@Localizer["Create response"]</span>
+        </div>
+        <form method="post" asp-action="CreateCargoResponse" asp-controller="Requests" class="row p-3 g-3">
+            <div class="col-12">
+                <label class="form-label" asp-for=Response.ContactName></label>
+                <input class="form-control" asp-for=Response.ContactName required />
+                <span asp-validation-for="Response.ContactName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for=Response.ContactPhoneNumber></label>
+                <input class="form-control" asp-for=Response.ContactPhoneNumber placeholder="*** *** ****" />
+                <span asp-validation-for="Response.ContactPhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" asp-for=Response.ContactEmail></label>
+                <input class="form-control" asp-for=Response.ContactEmail placeholder="placeholder@gmial.com" />
+                <span asp-validation-for="Response.ContactEmail" class="text-danger"></span>
+                <div class="form-text">@Localizer["Email is not necessary"]</div>
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for="Response.Cargo.TrailerType"></label>
+                <select class="form-select" asp-for="Response.Cargo.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()" required></select>
+                <span asp-validation-for="Response.Cargo.TrailerType" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for=Response.Cargo.Mass></label>
+                <div class="input-group">
+                    <input class="form-control" asp-for=Response.Cargo.Mass autocomplete="off" required />
+                    <span class="input-group-text">@Localizer["massUnit"]</span>
+                </div>
+                <span asp-validation-for="Response.Cargo.Mass" class="text-danger"></span>
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" asp-for=Response.Cargo.Volume></label>
+                <div class="input-group">
+                    <input class="form-control" asp-for=Response.Cargo.Volume autocomplete="off" />
+                    <span class="input-group-text">@Localizer["lengthUnit"]<sup>3</sup></span>
+                </div>
+                <span asp-validation-for="Response.Cargo.Volume" class="text-danger"></span>
+            </div>
+            <div class="col-4 col-lg-2">
+                <label class="form-label" asp-for=Response.Cargo.Length></label>
+                <div class="input-group">
+                    <input class="form-control" asp-for=Response.Cargo.Length autocomplete="off" />
+                    <span class="input-group-text">@Localizer["lengthUnit"]</span>
+                </div>
+                <span asp-validation-for="Response.Cargo.Length" class="text-danger"></span>
+            </div>
+            <div class="col-4 col-lg-2">
+                <label class="form-label" asp-for=Response.Cargo.Width></label>
+                <div class="input-group">
+                    <input class="form-control" asp-for=Response.Cargo.Width autocomplete="off" />
+                    <span class="input-group-text">@Localizer["lengthUnit"]</span>
+                </div>
+                <span asp-validation-for="Response.Cargo.Width" class="text-danger"></span>
+            </div>
+            <div class="col-4 col-lg-2">
+                <label class="form-label" asp-for=Response.Cargo.Height></label>
+                <div class="input-group">
+                    <input class="form-control" asp-for=Response.Cargo.Height autocomplete="off" />
+                    <span class="input-group-text">@Localizer["lengthUnit"]</span>
+                </div>
+                <span asp-validation-for="Response.Cargo.Height" class="text-danger"></span>
+            </div>
+            <div class="col-12 form-text">@Localizer["Volume or Dimensions"]</div>
+            <div class="col-12 text-center">
+                <label class="form-label" asp-for=Response.Details></label>
+                <textarea class="form-control" asp-for=Response.Details rows="3"></textarea>
+                <span asp-validation-for="Response.Details" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Response.CargoRequestId" value="@Model.CargoRequest.Id" />
+            <button type="submit" class="btn btn-primary">@Localizer["Confirm changes"]</button>
+        </form>
+    </div>
+}
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

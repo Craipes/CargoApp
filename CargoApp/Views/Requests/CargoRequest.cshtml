@@ -1,5 +1,5 @@
 ﻿@inject IHtmlLocalizer<SharedResource> Localizer
-@model CargoApp.Models.CargoRequest
+@model CargoRequest
 @{
     bool isCreating = Model == null || Model?.Id == 0;
     ViewData["Title"] = isCreating ? Localizer["Request creation"] : Localizer["Request editing"];

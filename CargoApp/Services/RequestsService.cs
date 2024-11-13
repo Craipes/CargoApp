@@ -3,18 +3,14 @@ using Microsoft.Extensions.Localization;
 
 namespace CargoApp.Services;
 
-public class RequestsService
+public class RequestsService : ServiceBase
 {
-    private readonly IHttpContextAccessor _contextAccessor;
-    private readonly UserManager<User> _userManager;
     private readonly CargoAppContext _context;
     private readonly IStringLocalizer<AnnotationsSharedResource> _stringLocalizer;
 
     public RequestsService(IHttpContextAccessor contextAccessor, UserManager<User> userManager, CargoAppContext context,
-        IStringLocalizer<AnnotationsSharedResource> stringLocalizer)
+        IStringLocalizer<AnnotationsSharedResource> stringLocalizer) : base(contextAccessor, userManager)
     {
-        _contextAccessor = contextAccessor;
-        _userManager = userManager;
         _context = context;
         _stringLocalizer = stringLocalizer;
     }
@@ -25,6 +21,7 @@ public class RequestsService
             .AsNoTracking()
             .Include(r => r.User)
             .Include(r => r.Responses)
+            .ThenInclude(r => r.User)
             .FirstOrDefaultAsync(r => r.Id == id);
     }
 
@@ -34,6 +31,7 @@ public class RequestsService
             .AsNoTracking()
             .Include(r => r.User)
             .Include(r => r.Responses)
+            .ThenInclude(r => r.User)
             .FirstOrDefaultAsync(r => r.Id == id);
     }
 
@@ -219,17 +217,5 @@ public class RequestsService
             .ThenBy(r => r.DepartureTime);
         if (userId != null) query = query.Where(r => r.UserId == userId);
         return query;
-    }
-
-    private bool TryGetUserId(out string? userId)
-    {
-        var user = _contextAccessor.HttpContext?.User;
-        if (user == null)
-        {
-            userId = null;
-            return false;
-        }
-        userId = _userManager.GetUserId(user);
-        return userId != null;
     }
 }

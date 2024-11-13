@@ -294,4 +294,13 @@
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="Your response" xml:space="preserve">
+    <value>Your response</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Create response" xml:space="preserve">
+    <value>Create response</value>
+  </data>
 </root>

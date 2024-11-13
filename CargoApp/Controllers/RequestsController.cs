@@ -1,4 +1,5 @@
-﻿using CargoApp.Models;
+﻿using Azure.Core;
+using CargoApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +10,13 @@ public class RequestsController : Controller
 {
     private readonly UserManager<User> userManager;
     private readonly RequestsService requestsService;
+    private readonly ResponsesService responsesService;
 
-    public RequestsController(UserManager<User> userManager, RequestsService requestsService)
+    public RequestsController(UserManager<User> userManager, RequestsService requestsService, ResponsesService responsesService)
     {
         this.userManager = userManager;
         this.requestsService = requestsService;
+        this.responsesService = responsesService;
     }
 
     [HttpGet]
@@ -106,21 +109,11 @@ public class RequestsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> CargoRequestDetails(int id)
     {
-        var cargoRequest = await requestsService.NoTrackingCargoDetailsAsync(id);
-
-        if (cargoRequest == null)
+        var viewModel = await GetCargoRequestViewModel(id);
+        if (viewModel == null)
         {
             return NotFound();
         }
-
-        var viewModel = new CargoRequestViewModel
-        {
-            CargoRequest = cargoRequest,
-            UserName = cargoRequest.User?.Name ?? "",
-            Responses = cargoRequest.Responses,
-            AllowEditing = requestsService.CanEditRequest(cargoRequest)
-        };
-
         return View(viewModel);
     }
 
@@ -199,8 +192,7 @@ public class RequestsController : Controller
 
         if (!await requestsService.CreateCarRequestAsync(request))
         {
-            ModelState.AddModelError("", "User not found");
-            return View("CarRequest");
+            return RedirectToAction("Error", "Home");
         }
         return RedirectToAction(nameof(AllCarRequests));
     }
@@ -213,8 +205,7 @@ public class RequestsController : Controller
 
         if (!await requestsService.CreateCargoRequestAsync(request))
         {
-            ModelState.AddModelError("", "User not found");
-            return View("CargoRequest");
+            return RedirectToAction("Error", "Home");
         }
         return RedirectToAction(nameof(AllCargoRequests));
     }
@@ -304,5 +295,79 @@ public class RequestsController : Controller
         if (userId == null) return Forbid();
         await requestsService.UpdateCargoRequestVisibilityAsync(id, userId, User.IsInRole(CargoAppConstants.AdminRole), visibility);
         return RedirectToAction(nameof(EditCargoRequest), new { id });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateCargoResponse(CargoRequestViewModel request)
+    {
+        responsesService.ValidateVolumeAndDimensions(ModelState, request);
+        if (!ModelState.IsValid)
+        {
+            var viewModel = await GetCargoRequestViewModel(request.Response.CargoRequestId);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            viewModel.Response = request.Response;
+            return View(nameof(CargoRequestDetails), viewModel);
+        }
+
+        if (!await responsesService.CreateCargoResponseAsync(request.Response))
+        {
+            return RedirectToAction("Error", "Home");
+        }
+
+        return RedirectToAction(nameof(CargoRequestDetails), new { id = request.Response.CargoRequestId });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteCargoResponse(int requestId, int responseId)
+    {
+        var userId = userManager.GetUserId(User);
+        if (userId == null) return Forbid();
+        var response = await responsesService.NoTrackingCargoFindAsync(responseId);
+        if (response == null) return NotFound();
+        if (!responsesService.CanDeleteResponse(response)) return Forbid();
+
+        if (!await responsesService.DeleteCargoResponseAsync(response))
+        {
+            return RedirectToAction("Error", "Home");
+        }
+        return RedirectToAction(nameof(CargoRequestDetails), new { id = requestId });
+    }
+
+    private async Task<CargoRequestViewModel?> GetCargoRequestViewModel(int id)
+    {
+        var cargoRequest = await requestsService.NoTrackingCargoDetailsAsync(id);
+
+        if (cargoRequest == null)
+        {
+            return null;
+        }
+
+        string? userId = userManager.GetUserId(User);
+        bool allowEditing = requestsService.CanEditRequest(cargoRequest);
+        List<CargoResponse> responses;
+        if (allowEditing)
+        {
+            responses = cargoRequest.Responses;
+        }
+        else if (cargoRequest.Responses.Any(r => r.UserId == userId))
+        {
+            responses = cargoRequest.Responses.Where(r => r.UserId == userId).ToList();
+        }
+        else
+        {
+            responses = [];
+        }
+        return new CargoRequestViewModel
+        {
+            CargoRequest = cargoRequest,
+            UserName = cargoRequest.User?.Name ?? "",
+            Responses = responses,
+            AllowEditing = allowEditing,
+            AllowResponding = userId != null && cargoRequest.UserId != userId && !cargoRequest.Responses.Any(r => r.UserId == userId),
+            UserId = userId
+        };
     }
 }
