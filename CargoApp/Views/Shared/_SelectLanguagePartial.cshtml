@@ -24,7 +24,7 @@
                 <label class="col-form-label" asp-for="@requestCulture!.RequestCulture.UICulture.Name">@Localizer["Language:"]</label>
             </div>
             <div class="col-auto">
-                <select class="form-select" name="culture" onchange="this.form.submit();" asp-for="@requestCulture!.RequestCulture.UICulture.Name" asp-items="cultureItems">
+                <select class="form-select border-0" name="culture" onchange="this.form.submit();" asp-for="@requestCulture!.RequestCulture.UICulture.Name" asp-items="cultureItems">
                 </select>
             </div>
         </form>

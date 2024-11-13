@@ -65,7 +65,7 @@ else
             </div>
             <div class="row">
                 <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Price)</span>
-                <span class="col-6">@Html.DisplayFor(model => request.Price) грн (@Html.DisplayFor(model => request.PriceType))</span>
+                <span class="col-6">@Html.DisplayFor(model => request.Price) @Localizer["Hryvnia"] (@Html.DisplayFor(model => request.PriceType))</span>
             </div>
             <div class="row">
                 <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.AddTime)</span>
