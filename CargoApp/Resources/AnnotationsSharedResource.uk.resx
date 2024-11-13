@@ -363,4 +363,10 @@
   <data name="Volume Or Dimensions Error" xml:space="preserve">
     <value>Об'єм чи виміри мають бути вказані</value>
   </data>
+  <data name="Invalid property specified" xml:space="preserve">
+    <value>Неправильно вказане поле</value>
+  </data>
+  <data name="Invalid data format" xml:space="preserve">
+    <value>Неправильний формат даних</value>
+  </data>
 </root>

@@ -1,17 +1,21 @@
 ﻿//const { auto } = require("@popperjs/core");
 
 $(document).ready(function () {
-    let carRequestForm = $("#car-request-form");
-    let cargoRequestForm = $("#cargo-request-form");
+    let carRequestElements = $(".car-request-element");
+    let cargoRequestElements = $(".cargo-request-element");
+    let carRequestCheck = $("#car-request-check");
+    let cargoRequestCheck = $("#cargo-request-check");
     let carBtn = $("#car-btn");
     let carBtnParent = carBtn.parent();
     let cargoBtn = $("#cargo-btn");
     let cargoBtnParent = cargoBtn.parent();
+    let searchResults = $("#search-results");
 
-    let carSearchActive = true;
+    let carSearchActive = !cargoRequestCheck.attr("checked");
+    //if (carSearchActive) showCarRequestForm();
+    //else showCargoRequestForm();
 
-    carBtn.click(function (event) {
-        if (carSearchActive) return;
+    function showCarRequestForm() {
         carSearchActive = true;
 
         carBtn.removeClass("text-black");
@@ -22,15 +26,16 @@ $(document).ready(function () {
         cargoBtn.addClass("text-black");
         cargoBtnParent.removeClass("bg-primary");
 
-        cargoRequestForm.hide();
-        carRequestForm.show();
+        cargoRequestElements.hide();
+        carRequestElements.show();
+
+        carRequestCheck.attr("checked", true);
+        cargoRequestCheck.attr("checked", false);
 
         searchResults.html("");
+    }
 
-        event.preventDefault();
-    });
-    cargoBtn.click(function (event) {
-        if (!carSearchActive) return;
+    function showCargoRequestForm() {
         carSearchActive = false;
 
         cargoBtn.removeClass("text-black");
@@ -41,12 +46,24 @@ $(document).ready(function () {
         carBtn.addClass("text-black");
         carBtnParent.removeClass("bg-primary");
 
-        carRequestForm.hide();
-        cargoRequestForm.show();
+        carRequestElements.hide();
+        cargoRequestElements.show();
+
+        cargoRequestCheck.attr("checked", true);
+        carRequestCheck.attr("checked", false);
 
         searchResults.html("");
+    }
 
+    carBtn.click(function (event) {
         event.preventDefault();
+        if (carSearchActive) return;
+        showCarRequestForm();
+    });
+    cargoBtn.click(function (event) {
+        event.preventDefault();
+        if (!carSearchActive) return;
+        showCargoRequestForm();
     });
 
     $(".clear-group").each(function () {
@@ -57,33 +74,34 @@ $(document).ready(function () {
         });
     });
 
-    let searchResults = $("#search-results");
-    if (searchResults != null) {
-        $(".search-button").click(async function (e) {
-            e.preventDefault();
+    //if (searchResults != null) {
+    //    $(".search-button").click(async function (e) {
+    //        e.preventDefault();
 
-            const url = $(this).prop("formaction");
-            const form = $(this).closest("form");
-            if (!form.get(0).reportValidity()) return;
-            if (!form.valid()) {
-                searchResults.html("");
-                return;
-            }
-            const data = form.serialize();
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: data,
-                success: function (response) {
-                    searchResults.html(response);
-                }
-            })
-        });
-    }
+    //        const url = $(this).prop("formaction");
+    //        const form = $(this).closest("form");
+    //        if (!form.get(0).reportValidity()) return;
+    //        if (!form.valid()) {
+    //            searchResults.html("");
+    //            return;
+    //        }
+    //        const data = form.serialize();
+    //        $.ajax({
+    //            type: "POST",
+    //            url: url,
+    //            data: data,
+    //            success: function (response) {
+    //                searchResults.html(response);
+    //            }
+    //        })
+    //    });
+    //}
 
     $(".skip-form-validation").click(function (e) {
         e.preventDefault();
-        let form = $(this).closest("form").get(0).submit();
+        let form = $(this).closest("form").get(0);
+        form.action = $(this).attr("formaction");
+        form.submit();
     })
 });
 

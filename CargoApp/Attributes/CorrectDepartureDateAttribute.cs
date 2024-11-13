@@ -2,14 +2,12 @@
 
 namespace CargoApp.Attributes;
 
-public class CorrectDepartureTimeAttribute : ValidationAttribute
+public class CorrectDepartureDateAttribute : ValidationAttribute
 {
-    private readonly double minHoursOffset;
     private readonly double maxHoursOffset;
 
-    public CorrectDepartureTimeAttribute(double minHoursOffset, double maxHoursOffset = CargoAppConstants.MaxRequestTimeInHours)
+    public CorrectDepartureDateAttribute(double maxHoursOffset = CargoAppConstants.MaxRequestTimeInHours)
     {
-        this.minHoursOffset = minHoursOffset;
         this.maxHoursOffset = maxHoursOffset;
     }
 
@@ -18,8 +16,8 @@ public class CorrectDepartureTimeAttribute : ValidationAttribute
         if (value == null) return ValidationResult.Success;
         if (value is DateTime time)
         {
-            if (time < DateTime.UtcNow.AddHours(minHoursOffset)) return GetLocalizedError("Too early", validationContext);
-            if (time > DateTime.UtcNow.AddHours(maxHoursOffset)) return GetLocalizedError("Too late", validationContext);
+            if (time < DateTime.UtcNow.Date) return GetLocalizedError("Too early", validationContext);
+            if (time > DateTime.UtcNow.AddHours(maxHoursOffset).Date) return GetLocalizedError("Too late", validationContext);
             return ValidationResult.Success;
         }
         return GetLocalizedError("Invalid data format", validationContext);

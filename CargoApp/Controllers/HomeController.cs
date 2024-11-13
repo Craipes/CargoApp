@@ -22,21 +22,15 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult Search()
+    public async Task<IActionResult> Search(SearchViewModel model)
     {
-        return View();
-    }
-
-    [AjaxOnly]
-    [HttpPost]
-    public async Task<PartialViewResult> Search(SearchViewModel model)
-    {
+        var search = model.Search;
         if (model.IsCarSearching)
         {
             RemoveFor(ModelState, nameof(model.CargoSearch));
             if (ModelState.IsValid)
             {
-                var search = model.CarSearch;
+                var carSearch = model.CarSearch;
                 var requests = db.CargoRequests
                     .AsNoTracking()
                     .Where(r => r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_OPEN)
@@ -62,7 +56,7 @@ public class HomeController : Controller
                 {
                     requests = requests.Where(r => r.Car.MaxHeight >= search.Height);
                 }
-                if (search.NeedsGPS)
+                if (carSearch.NeedsGPS)
                 {
                     requests = requests.Where(r => r.Car.AvailableGPS);
                 }
@@ -70,23 +64,23 @@ public class HomeController : Controller
                 {
                     requests = requests.Where(r => r.Car.TrailerType == search.TrailerType);
                 }
-                if (search.EarlyDepartureTime.HasValue)
+                if (carSearch.EarlyDepartureTime.HasValue)
                 {
-                    requests = requests.Where(r => r.DepartureTime.Date >= search.EarlyDepartureTime.Value.Date);
+                    requests = requests.Where(r => r.DepartureTime.Date >= carSearch.EarlyDepartureTime.Value.Date);
                 }
                 else
                 {
                     requests = requests.Where(r => r.DepartureTime >= DateTime.UtcNow);
                 }
-                if (search.LateDepartureTime.HasValue)
+                if (carSearch.LateDepartureTime.HasValue)
                 {
-                    requests = requests.Where(r => r.DepartureTime.Date <= search.LateDepartureTime.Value);
+                    requests = requests.Where(r => r.DepartureTime.Date <= carSearch.LateDepartureTime.Value);
                 }
 
                 requests = requests.OrderBy(r => r.DepartureTime);
                 model.CargoRequests = await requests.ToListAsync();
-
-                return PartialView("SearchResultsPartial", model);
+                model.SearchWasPerformed = true;
+                return View(model);
             }
         }
         else if (model.IsCargoSearching)
@@ -94,7 +88,7 @@ public class HomeController : Controller
             RemoveFor(ModelState, nameof(model.CarSearch));
             if (ModelState.IsValid)
             {
-                var search = model.CargoSearch;
+                var cargoSearch = model.CargoSearch;
                 var requests = db.CarRequests
                     .AsNoTracking()
                     .Where(r => r.RequestType < CargoAppConstants.REQUEST_TYPE_MAX_OPEN)
@@ -120,7 +114,7 @@ public class HomeController : Controller
                 {
                     requests = requests.Where(r => r.Cargo.Height <= search.Height);
                 }
-                if (!search.HasGPS)
+                if (!cargoSearch.HasGPS)
                 {
                     requests = requests.Where(r => !r.NeedsGPS);
                 }
@@ -132,9 +126,9 @@ public class HomeController : Controller
                 {
                     requests = requests.Where(r => r.Cargo.TrailerType == TrailerType.Any);
                 }
-                if (search.DepartureTime.HasValue)
+                if (cargoSearch.DepartureTime.HasValue)
                 {
-                    var shift = search.DepartureTime.Value.Date.AddHours(-6);
+                    var shift = cargoSearch.DepartureTime.Value.Date.AddHours(-6);
                     requests = requests.Where(r => r.LateDepartureDate >= shift);
                 }
                 else
@@ -144,10 +138,12 @@ public class HomeController : Controller
 
                 requests = requests.OrderBy(r => r.EarlyDepartureDate);
                 model.CarRequests = await requests.ToListAsync();
-                return PartialView("SearchResultsPartial", model);
+                model.SearchWasPerformed = true;
+                return View(model);
             }
         }
-        return PartialView("SearchResultsPartial", model);
+        model.IsCarSearching = true;
+        return View(model);
     }
 
     [HttpPost]
@@ -174,6 +170,7 @@ public class HomeController : Controller
         {
             if (ms.Key.StartsWith(valueName + ".") || ms.Key == valueName)
             {
+                //modelState[ms.Key]?.Errors.Clear();
                 modelState.Remove(ms.Key);
             }
         }

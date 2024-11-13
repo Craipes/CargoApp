@@ -2,187 +2,212 @@
 @model SearchViewModel
 @{
     ViewData["Title"] = Localizer["Search"];
+    bool isCarSearching = !Model.IsCargoSearching;
+    var carFormDisplay = Model.IsCargoSearching ? "none" : "block";
+    var cargoFormDisplay = !Model.IsCargoSearching ? "none" : "block";
 }
 
 <h1 class="text-center mb-5">@Localizer["Search"]</h1>
 
 <div class="panel box-shadow mx-auto col-10 text-start">
     <div class="d-flex text-center">
-        <div class="panel-top-left bg-primary">
-            <a class="fs-3 text-white text-decoration-none stretched-link" href="#" id="car-btn">@Localizer["I need a driver"]</a>
+        <div class="panel-top-left @(isCarSearching ? "bg-primary" : "")">
+            <a class="fs-3 text-decoration-none stretched-link @(isCarSearching ? "text-white" : "text-black")" href="#" id="car-btn">@Localizer["I need a driver"]</a>
         </div>
-        <div class="panel-top-right">
-            <a class="fs-3 text-black text-decoration-none stretched-link" href="#" id="cargo-btn">@Localizer["I need a cargo"]</a>
+        <div class="panel-top-right @(!isCarSearching ? "bg-primary" : "")">
+            <a class="fs-3 text-decoration-none stretched-link @(!isCarSearching ? "text-white" : "text-black")" href="#" id="cargo-btn">@Localizer["I need a cargo"]</a>
         </div>
     </div>
-    <div class="p-3" id="car-request-form">
+    <div class="p-3">
         <div>
-            <form method="post" class="row g-3 pt-3" asp-controller="Requests" asp-action="CarRequestFromSearch">
-                <input asp-for=IsCarSearching checked="checked" hidden="hidden" />
+            <form method="get" class="row g-3 pt-3" asp-controller="Requests" asp-action="CarRequestFromSearch">
+                <input id="car-request-check" asp-for=IsCarSearching hidden="hidden" />
+                <input id="cargo-request-check" asp-for=IsCargoSearching hidden="hidden" />
                 <div class="col-lg-6 mt-0 mb-3">
-                    <label class="form-label" asp-for=CarSearch.DeparturePlace></label><span class="text-danger">*</span>
-                    <input class="form-control w-100 mb-3" id="car-departure" asp-for=CarSearch.DeparturePlace autocomplete="off" spellcheck="false" required />
+                    <label class="form-label" asp-for=Search.DeparturePlace></label><span class="text-danger">*</span>
+                    <input class="form-control w-100 mb-3" id="car-departure" asp-for=Search.DeparturePlace autocomplete="off" spellcheck="false" required />
                     @* <div class="mb-3"><span asp-validation-for="CarSearch.DeparturePlace" class="text-danger"></span></div> *@
-                    <label class="form-label" asp-for=CarSearch.DestinationPlace></label><span class="text-danger">*</span>
-                    <input class="form-control w-100 mb-3" id="car-destination" asp-for=CarSearch.DestinationPlace autocomplete="off" spellcheck="false" required/>
+                    <label class="form-label" asp-for=Search.DestinationPlace></label><span class="text-danger">*</span>
+                    <input class="form-control w-100 mb-3" id="car-destination" asp-for=Search.DestinationPlace autocomplete="off" spellcheck="false" required/>
                     @* <div class="mb-3"><span asp-validation-for="CarSearch.DestinationPlace" class="text-danger"></span></div> *@
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label" asp-for="CarSearch.EarlyDepartureTime"></label>
-                            <input class="form-control" type="date" asp-for="CarSearch.EarlyDepartureTime" />
-                            <span asp-validation-for="CarSearch.EarlyDepartureTime" class="text-danger"></span>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label" asp-for="CarSearch.LateDepartureTime"></label>
-                            <input class="form-control" type="date" asp-for="CarSearch.LateDepartureTime" />
-                            <span asp-validation-for="CarSearch.LateDepartureTime" class="text-danger"></span>
+                    <div class="car-request-element" style="display: @carFormDisplay;">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="form-label" asp-for="CarSearch.EarlyDepartureTime"></label>
+                                <div class="input-group clear-group">
+                                    <input class="form-control clear-input" type="date" asp-for="CarSearch.EarlyDepartureTime" />
+                                    <button type="button" class="btn btn-primary clear-btn">@Localizer["Clear"]</button>
+                                </div>
+                                <span asp-validation-for="CarSearch.EarlyDepartureTime" class="text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" asp-for="CarSearch.LateDepartureTime"></label>
+                                <div class="input-group clear-group">
+                                    <input class="form-control clear-input" type="date" asp-for="CarSearch.LateDepartureTime" />
+                                    <button type="button" class="btn btn-primary clear-btn">@Localizer["Clear"]</button>
+                                </div>
+                                <span asp-validation-for="CarSearch.LateDepartureTime" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 m-0">
-                    <div class="row">
-                        <div class="col-12 mb-3">
-                            <label class="form-label" asp-for="CarSearch.TrailerType"></label>
-                            <select class="form-select" asp-for="CarSearch.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()"></select>
-                            <span asp-validation-for="CarSearch.TrailerType" class="text-danger"></span>
-                        </div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" asp-for="CarSearch.Mass"></label>
-                            <div class="input-group">
-                                <input class="form-control" asp-for="CarSearch.Mass" autocomplete="off" />
-                                <span class="input-group-text">@Localizer["massUnit"]</span>
-                            </div>
-                            <span asp-validation-for="CarSearch.Mass" class="text-danger"></span>
-                        </div>
-                        <div class="col-6 mb-3">
-                            <label class="form-label" asp-for="CarSearch.Volume"></label>
-                            <div class="input-group">
-                                <input class="form-control" asp-for="CarSearch.Volume" autocomplete="off" />
-                                <span class="input-group-text">@Localizer["lengthUnit"]<sup>3</sup></span>
-                            </div>
-                            <span asp-validation-for="CarSearch.Volume" class="text-danger"></span>
-                        </div>
-                        <div class="col-4">
-                            <label class="form-label" asp-for="CarSearch.Length"></label>
-                            <div class="input-group">
-                                <input class="form-control" asp-for="CarSearch.Length" autocomplete="off" />
-                                <span class="input-group-text">@Localizer["lengthUnit"]</span>
-                            </div>
-                            <span asp-validation-for="CarSearch.Length" class="text-danger"></span>
-                        </div>
-                        <div class="col-4">
-                            <label class="form-label" asp-for="CarSearch.Width"></label>
-                            <div class="input-group">
-                                <input class="form-control" asp-for="CarSearch.Width" autocomplete="off" />
-                                <span class="input-group-text">@Localizer["lengthUnit"]</span>
-                            </div>
-                            <span asp-validation-for="CarSearch.Width" class="text-danger"></span>
-                        </div>
-                        <div class="col-4">
-                            <label class="form-label" asp-for="CarSearch.Height"></label>
-                            <div class="input-group">
-                                <input class="form-control" asp-for="CarSearch.Height" autocomplete="off" />
-                                <span class="input-group-text">@Localizer["lengthUnit"]</span>
-                            </div>
-                            <span asp-validation-for="CarSearch.Height" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 form-text">@Localizer["SearchFieldsDescription"]</div>
-                    </div>
-                </div>
-                <div class="col-12 m-0">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" asp-for="CarSearch.NeedsGPS" value="true">
-                        <label class="form-check-label" asp-for="CarSearch.NeedsGPS"></label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">@Localizer["Search"]</button>
-                <div class="col-4"></div>
-                <button type="submit" class="btn btn-primary btn-search col-4 skip-form-validation" formaction="/Requests/CarRequestFromSearch">@Localizer["Create Request"]</button>
-            </form>
-        </div>
-    </div>
-    <div class="p-3" id="cargo-request-form" style="display: none;">
-        <div>
-            <form method="post" class="row g-3 pt-3" asp-controller="Requests" asp-action="CargoRequestFromSearch">
-                <input asp-for=IsCargoSearching checked="checked" hidden="hidden" />
-                <div class="col-lg-6 mt-0 mb-3">
-                    <label class="form-label" asp-for=CargoSearch.DeparturePlace></label><span class="text-danger">*</span>
-                    <input class="form-control mb-3 w-100" id="car-departure" asp-for=CargoSearch.DeparturePlace autocomplete="off" spellcheck="false" required />
-                    @* <div class="mb-3"><span asp-validation-for="CargoSearch.DeparturePlace" class="text-danger"></span></div> *@
-                    <label class="form-label" asp-for=CargoSearch.DestinationPlace></label><span class="text-danger">*</span>
-                    <input class="form-control mb-3 w-100" id="car-destination" asp-for=CargoSearch.DestinationPlace autocomplete="off" spellcheck="false" required />
-                    @* <div class="mb-3"><span asp-validation-for="CargoSearch.DestinationPlace" class="text-danger"></span></div> *@
-                    <div class="col-12">
+                    <div class="cargo-request-element" style="display: @cargoFormDisplay;">
                         <label class="form-label" asp-for="CargoSearch.DepartureTime"></label>
-                        <input class="form-control" asp-for="CargoSearch.DepartureTime" />
+                        <div class="input-group clear-group">
+                            <input class="form-control clear-input" asp-for="CargoSearch.DepartureTime" />
+                            <button type="button" class="btn btn-primary clear-btn">@Localizer["Clear"]</button>
+                        </div>
                         <span asp-validation-for="CargoSearch.DepartureTime" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-lg-6 m-0">
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <label class="form-label" asp-for="CargoSearch.TrailerType"></label>
-                            <select class="form-select" asp-for="CargoSearch.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()"></select>
-                            <span asp-validation-for="CargoSearch.TrailerType" class="text-danger"></span>
+                            <label class="form-label" asp-for="Search.TrailerType"></label>
+                            <select class="form-select" asp-for="Search.TrailerType" asp-items="Html.GetEnumSelectList<TrailerType>()"></select>
+                            <span asp-validation-for="Search.TrailerType" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
-                            <label class="form-label" asp-for="CargoSearch.Mass"></label>
+                            <label class="form-label" asp-for="Search.Mass"></label>
                             <div class="input-group">
-                                <input class="form-control" asp-for="CargoSearch.Mass" autocomplete="off" />
+                                <input class="form-control" asp-for="Search.Mass" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["massUnit"]</span>
                             </div>
-                            <span asp-validation-for="CargoSearch.Mass" class="text-danger"></span>
+                            <span asp-validation-for="Search.Mass" class="text-danger"></span>
                         </div>
                         <div class="col-6 mb-3">
-                            <label class="form-label" asp-for="CargoSearch.Volume"></label>
+                            <label class="form-label" asp-for="Search.Volume"></label>
                             <div class="input-group">
-                                <input class="form-control" asp-for="CargoSearch.Volume" autocomplete="off" />
+                                <input class="form-control" asp-for="Search.Volume" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]<sup>3</sup></span>
                             </div>
-                            <span asp-validation-for="CargoSearch.Volume" class="text-danger"></span>
+                            <span asp-validation-for="Search.Volume" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CargoSearch.Length"></label>
+                            <label class="form-label" asp-for="Search.Length"></label>
                             <div class="input-group">
-                                <input class="form-control" asp-for="CargoSearch.Length" autocomplete="off" />
+                                <input class="form-control" asp-for="Search.Length" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
                             </div>
-                            <span asp-validation-for="CargoSearch.Length" class="text-danger"></span>
+                            <span asp-validation-for="Search.Length" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CargoSearch.Width"></label>
+                            <label class="form-label" asp-for="Search.Width"></label>
                             <div class="input-group">
-                                <input class="form-control" asp-for="CargoSearch.Width" autocomplete="off" />
+                                <input class="form-control" asp-for="Search.Width" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
                             </div>
-                            <span asp-validation-for="CargoSearch.Width" class="text-danger"></span>
+                            <span asp-validation-for="Search.Width" class="text-danger"></span>
                         </div>
                         <div class="col-4">
-                            <label class="form-label" asp-for="CargoSearch.Height"></label>
+                            <label class="form-label" asp-for="Search.Height"></label>
                             <div class="input-group">
-                                <input class="form-control" asp-for="CargoSearch.Height" autocomplete="off" />
+                                <input class="form-control" asp-for="Search.Height" autocomplete="off" />
                                 <span class="input-group-text">@Localizer["lengthUnit"]</span>
                             </div>
-                            <span asp-validation-for="CargoSearch.Height" class="text-danger"></span>
+                            <span asp-validation-for="Search.Height" class="text-danger"></span>
                         </div>
                         <div class="col-12 form-text">@Localizer["SearchFieldsDescription"]</div>
                     </div>
                 </div>
                 <div class="col-12 m-0">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" asp-for="CargoSearch.HasGPS" value="true">
-                        <label class="form-check-label" asp-for="CargoSearch.HasGPS"></label>
+                    <div class="car-request-element" style="display: @carFormDisplay;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" asp-for="CarSearch.NeedsGPS" value="true">
+                            <label class="form-check-label" asp-for="CarSearch.NeedsGPS"></label>
+                        </div>
+                    </div>
+                    <div class="cargo-request-element" style="display: @cargoFormDisplay;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" asp-for="CargoSearch.HasGPS" value="true">
+                            <label class="form-check-label" asp-for="CargoSearch.HasGPS"></label>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-search col-4 search-button" formaction="/Home/Search">@Localizer["Search"]</button>
                 <div class="col-4"></div>
-                <button type="submit" class="btn btn-primary btn-search col-4 skip-form-validation" formaction="/Requests/CargoRequestFromSearch">@Localizer["Create Request"]</button>
+                <button type="submit" class="btn btn-primary btn-search col-4 skip-form-validation car-request-element" style="display: @carFormDisplay;" formaction="/Requests/CarRequestFromSearch">@Localizer["Create Request"]</button>
+                <button type="submit" class="btn btn-primary btn-search col-4 skip-form-validation cargo-request-element" style="display: @cargoFormDisplay;" formaction="/Requests/CargoRequestFromSearch">@Localizer["Create Request"]</button>
             </form>
         </div>
     </div>
 </div>
 
 <div id="search-results"></div>
+<div class="mt-5">
+    @if (Model != null)
+    {
+        <div class="col-10 mx-auto">
+            @if (Model.CarRequests != null && Model.CarRequests.Count != 0)
+            {
+                <h3 class="text-center">@Localizer["Car requests"]</h3>
+                <div class="list-group">
+                    @for (int i = 0; i < Model.CarRequests.Count; i++)
+                    {
+                        var request = Model.CarRequests[i];
+                        <div class="list-group-item">
+                            <div class="row">
+                                <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DeparturePlace)</span>
+                                <span class="col-6">@Html.DisplayFor(model => request.DeparturePlace)</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DestinationPlace)</span>
+                                <span class="col-6">@Html.DisplayFor(model => request.DestinationPlace)</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Cargo.Mass)</span>
+                                <span class="col-6">@Html.DisplayFor(model => request.DeparturePlace) @Localizer["massUnit"]</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Cargo.Volume)</span>
+                                <span class="col-6">@Html.DisplayFor(model => request.Cargo.Volume) @Localizer["lengthUnit"]³</span>
+                            </div>
+                            <div class="row">
+                                <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Price)</span>
+                                <span class="col-6">@Html.DisplayFor(model => request.Price) @Localizer["Hryvnia"]</span>
+                            </div>
+                            <div class="row justify-content-center mt-4">
+                                <a class="btn btn-primary col-4" asp-controller="Requests" asp-action="CarRequestDetails" asp-route-id="@request.Id">@Localizer["View"]</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else if (Model.CargoRequests != null && Model.CargoRequests.Count != 0)
+            {
+                <h3 class="text-center">@Localizer["Cargo requests"]</h3>
+                @for (int i = 0; i < Model.CargoRequests.Count; i++)
+                {
+                    var request = Model.CargoRequests[i];
+                    <div class="list-group-item rounded">
+                        <div class="row">
+                            <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DeparturePlace)</span>
+                            <span class="col-6">@Html.DisplayFor(model => request.DeparturePlace)</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DestinationPlace)</span>
+                            <span class="col-6">@Html.DisplayFor(model => request.DestinationPlace)</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.DepartureTime)</span>
+                            <span class="col-6">@Html.DisplayFor(model => request.DepartureTime)</span>
+                        </div>
+                        <div class="row">
+                            <span class="fw-bold col-6">@Html.DisplayNameFor(model => request.Price)</span>
+                            <span class="col-6">@Html.DisplayFor(model => request.Price) @Localizer["Hryvnia"]</span>
+                        </div>
+                        <div class="row justify-content-center mt-4">
+                            <a class="btn btn-primary col-4" asp-controller="Requests" asp-action="CargoRequestDetails" asp-route-id="@request.Id">@Localizer["View"]</a>
+                        </div>
+                    </div>
+                }
+            }
+            else if (Model.SearchWasPerformed)
+            {
+                <h3>@Localizer["No search results"]</h3>
+            }
+        </div>
+    }
+</div>
 
 @section Scripts {
     @* <script>

@@ -16,7 +16,13 @@ public class LaterThanAttribute : ValidationAttribute
         if (value == null) return ValidationResult.Success;
         if (value is DateTime time)
         {
-            var compareValue = validationContext.ObjectInstance.GetType().GetProperty(comparePropertyName)?.GetValue(validationContext.ObjectInstance);
+            var compareProperty = validationContext.ObjectInstance.GetType().GetProperty(comparePropertyName);
+            if (compareProperty == null)
+            {
+                return GetLocalizedError("Invalid property specified", validationContext);
+            }
+            var compareValue = compareProperty.GetValue(validationContext.ObjectInstance);
+            if (compareValue == null) return ValidationResult.Success;
             if (compareValue != null && compareValue is DateTime compareTime)
             {
                 return time >= compareTime ?

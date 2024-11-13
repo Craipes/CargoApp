@@ -291,4 +291,7 @@
   <data name="No recent requests" xml:space="preserve">
     <value>No recent requests</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
 </root>

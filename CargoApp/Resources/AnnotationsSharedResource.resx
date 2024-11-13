@@ -363,4 +363,10 @@
   <data name="Volume Or Dimensions Error" xml:space="preserve">
     <value>Volume or dimensions must be specified</value>
   </data>
+  <data name="Invalid property specified" xml:space="preserve">
+    <value>Invalid property specified</value>
+  </data>
+  <data name="Invalid data format" xml:space="preserve">
+    <value>Invalid data format</value>
+  </data>
 </root>

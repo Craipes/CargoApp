@@ -128,12 +128,6 @@ public class RequestsController : Controller
     }
 
     [HttpGet]
-    public IActionResult CarRequestFromSearch()
-    {
-        return View("CarRequest");
-    }
-
-    [HttpPost]
     public IActionResult CarRequestFromSearch(SearchViewModel? model)
     {
         if (model == null) return View("CarRequest");
@@ -143,19 +137,19 @@ public class RequestsController : Controller
             UserId = null!,
             ContactName = null!,
             ContactPhoneNumber = null!,
-            DeparturePlace = model.CarSearch.DeparturePlace,
-            DestinationPlace = model.CarSearch.DestinationPlace,
+            DeparturePlace = model.Search.DeparturePlace,
+            DestinationPlace = model.Search.DestinationPlace,
             EarlyDepartureDate = (model.CarSearch.EarlyDepartureTime ?? DateTime.UtcNow).Date,
             LateDepartureDate = (model.CarSearch.LateDepartureTime ?? DateTime.UtcNow).Date,
             NeedsGPS = model.CarSearch.NeedsGPS,
             Cargo = new()
             {
-                Volume = model.CarSearch.Volume,
-                Length = model.CarSearch.Length,
-                Width = model.CarSearch.Width,
-                Height = model.CarSearch.Height,
-                Mass = model.CarSearch.Mass ?? 0,
-                TrailerType = model.CarSearch.TrailerType
+                Volume = model.Search.Volume,
+                Length = model.Search.Length,
+                Width = model.Search.Width,
+                Height = model.Search.Height,
+                Mass = model.Search.Mass ?? 0,
+                TrailerType = model.Search.TrailerType
             }
         };
         ModelState.Clear();
@@ -168,12 +162,6 @@ public class RequestsController : Controller
     }
 
     [HttpGet]
-    public IActionResult CargoRequestFromSearch()
-    {
-        return View("CargoRequest");
-    }
-
-    [HttpPost]
     public IActionResult CargoRequestFromSearch(SearchViewModel? model)
     {
         if (model == null) return View("CargoRequest");
@@ -183,17 +171,17 @@ public class RequestsController : Controller
             UserId = null!,
             ContactName = null!,
             ContactPhoneNumber = null!,
-            DeparturePlace = model.CargoSearch.DeparturePlace,
-            DestinationPlace = model.CargoSearch.DestinationPlace,
+            DeparturePlace = model.Search.DeparturePlace,
+            DestinationPlace = model.Search.DestinationPlace,
             DepartureTime = (model.CargoSearch.DepartureTime ?? DateTime.UtcNow).RoundToMinutes(),
             Car = new()
             {
-                MaxVolume = model.CargoSearch.Volume,
-                MaxLength = model.CargoSearch.Length,
-                MaxWidth = model.CargoSearch.Width,
-                MaxHeight = model.CargoSearch.Height,
-                MaxMass = model.CargoSearch.Mass ?? 0,
-                TrailerType = model.CargoSearch.TrailerType,
+                MaxVolume = model.Search.Volume,
+                MaxLength = model.Search.Length,
+                MaxWidth = model.Search.Width,
+                MaxHeight = model.Search.Height,
+                MaxMass = model.Search.Mass ?? 0,
+                TrailerType = model.Search.TrailerType,
                 AvailableGPS = model.CargoSearch.HasGPS
             }
         };
