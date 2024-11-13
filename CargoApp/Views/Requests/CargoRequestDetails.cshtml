@@ -62,9 +62,15 @@
             <span class="col-6">@Html.DisplayFor(model => model.CargoRequest.Price) @Localizer["Hryvnia"] (@Html.DisplayFor(model => model.CargoRequest.PriceType))</span>
         </div>
         <div class="row">
-            <span class="form-label col-6 m-0">@Html.DisplayNameFor(model => model.CargoRequest.AddTime)</span>
-            <span class="col-6 m-0">@Html.DisplayFor(model => model.CargoRequest.AddTime)</span>
+            <span class="form-label col-6">@Html.DisplayNameFor(model => model.CargoRequest.AddTime)</span>
+            <span class="col-6">@Html.DisplayFor(model => model.CargoRequest.AddTime)</span>
         </div>
+        <div class="form-label">@Html.DisplayNameFor(model => model.CargoRequest.Details)</div>
+        <div class="form-label" style="white-space: pre-line">@Html.DisplayFor(model => model.CargoRequest.Details)</div>
+        @if (Model.AllowEditing)
+        {
+            <a class="btn btn-warning mt-2 w-100" asp-action="EditCargoRequest" asp-controller="Requests" asp-route-id="@Model.CargoRequest.Id">@Localizer["Edit"]</a>
+        }
     </div>
 </div>
 

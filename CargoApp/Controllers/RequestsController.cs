@@ -96,7 +96,8 @@ public class RequestsController : Controller
         {
             CarRequest = carRequest,
             UserName = carRequest.User?.Name ?? "",
-            Responses = carRequest.Responses
+            Responses = carRequest.Responses,
+            AllowEditing = requestsService.CanEditRequest(carRequest)
         };
 
         return View(viewModel);
@@ -116,7 +117,8 @@ public class RequestsController : Controller
         {
             CargoRequest = cargoRequest,
             UserName = cargoRequest.User?.Name ?? "",
-            Responses = cargoRequest.Responses
+            Responses = cargoRequest.Responses,
+            AllowEditing = requestsService.CanEditRequest(cargoRequest)
         };
 
         return View(viewModel);
