@@ -132,7 +132,6 @@
     </div>
 </div>
 
-<div id="search-results"></div>
 <div class="mt-5">
     @if (Model != null)
     {
@@ -171,10 +170,12 @@
                         </div>
                     }
                 </div>
+                @await Html.PartialAsync("_PaginationPartial", (Model.Page, Model.MaxPages))
             }
             else if (Model.CargoRequests != null && Model.CargoRequests.Count != 0)
             {
                 <h3 class="text-center">@Localizer["Cargo requests"]</h3>
+                <div class="list-group">
                 @for (int i = 0; i < Model.CargoRequests.Count; i++)
                 {
                     var request = Model.CargoRequests[i];
@@ -200,6 +201,8 @@
                         </div>
                     </div>
                 }
+                </div>
+                @await Html.PartialAsync("_PaginationPartial", (Model.Page, Model.MaxPages))
             }
             else if (Model.SearchWasPerformed)
             {

@@ -78,7 +78,16 @@ public class HomeController : Controller
                 }
 
                 requests = requests.OrderBy(r => r.DepartureTime);
-                model.CargoRequests = await requests.ToListAsync();
+
+                int count = await requests.CountAsync();
+                int pages = (count - 1) / CargoAppConstants.SearchRequestsPerPage + 1;
+                model.Page = Math.Clamp(model.Page, 1, pages);
+                model.MaxPages = pages;
+
+                model.CargoRequests = await requests
+                    .Skip((model.Page - 1) * CargoAppConstants.SearchRequestsPerPage)
+                    .Take(CargoAppConstants.SearchRequestsPerPage)
+                    .ToListAsync();
                 model.SearchWasPerformed = true;
                 return View(model);
             }
@@ -137,7 +146,16 @@ public class HomeController : Controller
                 }
 
                 requests = requests.OrderBy(r => r.EarlyDepartureDate);
-                model.CarRequests = await requests.ToListAsync();
+
+                int count = await requests.CountAsync();
+                int pages = (count - 1) / CargoAppConstants.SearchRequestsPerPage + 1;
+                model.Page = Math.Clamp(model.Page, 1, pages);
+                model.MaxPages = pages;
+
+                model.CarRequests = await requests
+                    .Skip((model.Page - 1) * CargoAppConstants.SearchRequestsPerPage)
+                    .Take(CargoAppConstants.SearchRequestsPerPage)
+                    .ToListAsync();
                 model.SearchWasPerformed = true;
                 return View(model);
             }

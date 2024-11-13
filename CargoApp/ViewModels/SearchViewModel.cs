@@ -10,4 +10,7 @@ public class SearchViewModel
     public CargoSearchRequestViewModel CargoSearch { get; set; } = new();
     public List<CargoRequest>? CargoRequests { get; set; }
     public List<CarRequest>? CarRequests { get; set; }
+
+    public int Page { get; set; }
+    public int MaxPages { get; set; }
 }

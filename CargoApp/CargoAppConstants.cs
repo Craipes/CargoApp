@@ -4,6 +4,7 @@ public static class CargoAppConstants
 {
     public const string AdminRole = "Admin";
 
+    public const int SearchRequestsPerPage = 2;
     public const int RequestsPerPage = 4;
     public const int UsersPerPage = 10;
     public const int LatestRequestsMaxCount = 3;

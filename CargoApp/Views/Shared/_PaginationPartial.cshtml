@@ -1,0 +1,47 @@
+﻿@model (int Page, int MaxPages)
+
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.Page > 1 ? "" : "disabled")">
+            <a class="page-link" page="@(Model.Page - 1)">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        @{
+            int min = Math.Max(1, Model.Page - 2);
+            int max = Math.Min(Model.MaxPages, Model.Page + 2);
+        }
+        @for (int i = min; i <= max; i++)
+        {
+            if (Model.Page == i)
+            {
+                <li class="page-item active">
+                    <a class="page-link">@i</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" page="@i">@i</a>
+                </li>
+            }
+        }
+
+        <li class="page-item  @(Model.Page < Model.MaxPages ? "" : "disabled")">
+            <a class="page-link" page="@(Model.Page + 1)">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+
+    <script>
+        document.querySelectorAll('.page-link').forEach(link => {        
+            let initialLink = "@Html.Raw(Context.Request.Path.Value + Context.Request.QueryString.Value)";
+            let page = link.getAttribute('page');
+            let url = new URL(initialLink, window.location.origin);
+            url.searchParams.set('page', page);
+            link.href = url.toString();
+        });
+    </script>
+</nav>
