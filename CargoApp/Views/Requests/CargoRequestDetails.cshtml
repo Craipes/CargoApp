@@ -12,7 +12,7 @@
         <span class="fs-3 text-white">@Localizer["Request details"]</span>
     </div>
     <div id="car-request-details" class="p-3">
-        <span class="badge bg-secondary mb-2">@Model.CargoRequest.RequestType.GetDisplayNameContext(Context)</span>
+        <span class="badge bg-secondary mb-2">@Html.DisplayFor(model => model.CargoRequest.RequestType)</span>
         <div class="row">
             <span class="form-label col-6">@Html.DisplayNameFor(model => model.UserName)</span>
             <span class="col-6"><a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.CargoRequest.UserId">@Html.DisplayFor(model => model.UserName)</a></span>
@@ -207,7 +207,7 @@
                 <span asp-validation-for="Response.Details" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Response.CargoRequestId" value="@Model.CargoRequest.Id" />
-            <button type="submit" class="btn btn-primary">@Localizer["Confirm changes"]</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Confirm"]</button>
         </form>
     </div>
 }

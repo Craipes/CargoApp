@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using CargoApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CargoApp.Controllers;
@@ -88,21 +89,11 @@ public class RequestsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> CarRequestDetails(int id)
     {
-        var carRequest = await requestsService.NoTrackingCarDetailsAsync(id);
-
-        if (carRequest == null)
+        var viewModel = await GetCarRequestViewModel(id);
+        if (viewModel == null)
         {
             return NotFound();
         }
-
-        var viewModel = new CarRequestViewModel
-        {
-            CarRequest = carRequest,
-            UserName = carRequest.User?.Name ?? "",
-            Responses = carRequest.Responses,
-            AllowEditing = requestsService.CanEditRequest(carRequest)
-        };
-
         return View(viewModel);
     }
 
@@ -298,6 +289,42 @@ public class RequestsController : Controller
     }
 
     [HttpPost]
+    public async Task<IActionResult> CreateCarResponse(CarRequestViewModel request)
+    {
+        responsesService.ValidateVolumeAndDimensions(ModelState, request);
+        if (!ModelState.IsValid)
+        {
+            var viewModel = await GetCarRequestViewModel(request.Response.CarRequestId);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            viewModel.Response = request.Response;
+            return View(nameof(CarRequestDetails), viewModel);
+        }
+
+        if (!await responsesService.CreateCarResponseAsync(request.Response))
+        {
+            return RedirectToAction("Error", "Home");
+        }
+
+        return RedirectToAction(nameof(CarRequestDetails), new { id = request.Response.CarRequestId });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteCargoResponse(int requestId, int responseId)
+    {
+        var userId = userManager.GetUserId(User);
+        if (userId == null) return Forbid();
+        var response = await responsesService.NoTrackingCargoFindAsync(responseId);
+        if (response == null) return NotFound();
+        if (!responsesService.CanDeleteResponse(response)) return Forbid();
+
+        await responsesService.DeleteCargoResponseAsync(response);
+        return RedirectToAction(nameof(CargoRequestDetails), new { id = requestId });
+    }
+
+    [HttpPost]
     public async Task<IActionResult> CreateCargoResponse(CargoRequestViewModel request)
     {
         responsesService.ValidateVolumeAndDimensions(ModelState, request);
@@ -321,19 +348,51 @@ public class RequestsController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> DeleteCargoResponse(int requestId, int responseId)
+    public async Task<IActionResult> DeleteCarResponse(int requestId, int responseId)
     {
         var userId = userManager.GetUserId(User);
         if (userId == null) return Forbid();
-        var response = await responsesService.NoTrackingCargoFindAsync(responseId);
+        var response = await responsesService.NoTrackingCarFindAsync(responseId);
         if (response == null) return NotFound();
         if (!responsesService.CanDeleteResponse(response)) return Forbid();
 
-        if (!await responsesService.DeleteCargoResponseAsync(response))
+        await responsesService.DeleteCarResponseAsync(response);
+        return RedirectToAction(nameof(CarRequestDetails), new { id = requestId });
+    }
+
+    private async Task<CarRequestViewModel?> GetCarRequestViewModel(int id)
+    {
+        var carRequest = await requestsService.NoTrackingCarDetailsAsync(id);
+
+        if (carRequest == null)
         {
-            return RedirectToAction("Error", "Home");
+            return null;
         }
-        return RedirectToAction(nameof(CargoRequestDetails), new { id = requestId });
+
+        string? userId = userManager.GetUserId(User);
+        bool allowEditing = requestsService.CanEditRequest(carRequest);
+        List<CarResponse> responses;
+        if (allowEditing)
+        {
+            responses = carRequest.Responses;
+        }
+        else if (carRequest.Responses.Any(r => r.UserId == userId))
+        {
+            responses = carRequest.Responses.Where(r => r.UserId == userId).ToList();
+        }
+        else
+        {
+            responses = [];
+        }
+        return new CarRequestViewModel
+        {
+            CarRequest = carRequest,
+            UserName = carRequest.User?.Name ?? "",
+            Responses = responses,
+            AllowEditing = allowEditing,
+            AllowResponding = carRequest.CanBeResponded && carRequest.RequestType == RequestType.Visible && userId != null && carRequest.UserId != userId && !carRequest.Responses.Any(r => r.UserId == userId),
+            UserId = userId
+        };
     }
 
     private async Task<CargoRequestViewModel?> GetCargoRequestViewModel(int id)
@@ -366,7 +425,7 @@ public class RequestsController : Controller
             UserName = cargoRequest.User?.Name ?? "",
             Responses = responses,
             AllowEditing = allowEditing,
-            AllowResponding = userId != null && cargoRequest.UserId != userId && !cargoRequest.Responses.Any(r => r.UserId == userId),
+            AllowResponding = cargoRequest.CanBeResponded && cargoRequest.RequestType == RequestType.Visible && userId != null && cargoRequest.UserId != userId && !cargoRequest.Responses.Any(r => r.UserId == userId),
             UserId = userId
         };
     }

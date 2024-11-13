@@ -15,6 +15,34 @@ public class ResponsesService : ServiceBase
         _stringLocalizer = stringLocalizer;
     }
 
+    public async Task<CarResponse?> NoTrackingCarFindAsync(int id)
+    {
+        return await _context.CarResponses
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Id == id);
+    }
+
+    public async Task<bool> CreateCarResponseAsync(CarResponse response)
+    {
+        if (!TryGetUserId(out var userId)) return false;
+
+        var request = await _context.CarRequests.Select(r => new { r.Id, r.UserId }).FirstOrDefaultAsync(r => r.Id == response.CarRequestId);
+        if (request == null) return false;
+        if (request.UserId == userId) return false;
+        if (await _context.CarResponses.AnyAsync(r => r.CarRequestId == response.CarRequestId && r.UserId == userId)) return false;
+        response.UserId = userId!;
+
+        _context.CarResponses.Add(response);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task DeleteCarResponseAsync(CarResponse response)
+    {
+        _context.CarResponses.Remove(response);
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<CargoResponse?> NoTrackingCargoFindAsync(int id)
     {
         return await _context.CargoResponses
@@ -37,11 +65,18 @@ public class ResponsesService : ServiceBase
         return true;
     }
 
-    public async Task<bool> DeleteCargoResponseAsync(CargoResponse response)
+    public async Task DeleteCargoResponseAsync(CargoResponse response)
     {
         _context.CargoResponses.Remove(response);
         await _context.SaveChangesAsync();
-        return true;
+    }
+
+    public void ValidateVolumeAndDimensions(ModelStateDictionary modelState, CarRequestViewModel request)
+    {
+        if (request.Response.Car.MaxVolume == null && (request.Response.Car.MaxLength == null || request.Response.Car.MaxWidth == null || request.Response.Car.MaxHeight == null))
+        {
+            modelState.AddModelError<CarRequestViewModel>(r => r.Response.Car.MaxVolume, _stringLocalizer["Volume Or Dimensions Error"]);
+        }
     }
 
     public void ValidateVolumeAndDimensions(ModelStateDictionary modelState, CargoRequestViewModel request)
