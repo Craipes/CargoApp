@@ -303,4 +303,25 @@
   <data name="Create response" xml:space="preserve">
     <value>Create response</value>
   </data>
+  <data name="Review has already been written" xml:space="preserve">
+    <value>Review has already been written</value>
+  </data>
+  <data name="Create a review" xml:space="preserve">
+    <value>Create a review</value>
+  </data>
+  <data name="Create a review for user:" xml:space="preserve">
+    <value>Create a review for user:</value>
+  </data>
+  <data name="Review creation" xml:space="preserve">
+    <value>Review creation</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="Received reviews of user: " xml:space="preserve">
+    <value>Received reviews of user: </value>
+  </data>
+  <data name="Sent reviews of user:" xml:space="preserve">
+    <value>Sent reviews of user:</value>
+  </data>
 </root>

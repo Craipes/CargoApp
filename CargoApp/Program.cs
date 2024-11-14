@@ -48,6 +48,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 builder.Services.AddScoped<RequestsService>();
 builder.Services.AddScoped<ResponsesService>();
+builder.Services.AddScoped<ReviewsService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSwaggerGen(options =>

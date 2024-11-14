@@ -1,0 +1,39 @@
+﻿@inject IHtmlLocalizer<SharedResource> Localizer
+@model ReviewsViewModel
+@{
+    ViewData["Title"] = Localizer["Sent reviews"];
+}
+
+<h2 class="mb-4">@Localizer["Sent reviews of user:"] <a asp-action="Profile" asp-controller="Account" asp-route-id="@Model.UserId">@Model.UserName</a></h2>
+
+@for (int i = 0; i < Model.Reviews.Count; i++)
+{
+    var review = Model.Reviews[i];
+    <div class="list-group-item">
+        <div class="row">
+            <span class="fw-bold col-6">@Html.DisplayNameFor(model => review.Receiver)</span>
+            <span class="col-6"><a asp-action="Profile" asp-controller="Account" asp-route-id="@review.ReceiverId">@Html.DisplayFor(model => review.Receiver.Name)</a></span>
+        </div>
+        <div class="row">
+            <span class="fw-bold col-6">@Html.DisplayNameFor(model => review.Points)</span>
+            <span class="col-6">@Html.DisplayFor(model => review.Points)</span>
+        </div>
+        <div class="row">
+            <span class="fw-bold col-6">@Html.DisplayNameFor(model => review.Content)</span>
+            <span class="col-6" style="white-space: pre-line">@Html.DisplayFor(model => review.Content)</span>
+        </div>
+        <div class="row">
+            <span class="fw-bold col-6">@Html.DisplayNameFor(model => review.AddTime)</span>
+            <span class="col-6">@Html.DisplayFor(model => review.AddTime)</span>
+        </div>
+        @if (Model.IsAdmin)
+        {
+            <form method="post" asp-action="DeleteReview" asp-controller="Account">
+                <input type="hidden" name="receiverId" value="@review.ReceiverId" />
+                <input type="hidden" name="senderId" value="@review.SenderId" />
+                <input type="hidden" name="returnUrl" value="@Context.Request.Path.Value" />
+                <button class="btn btn-danger mt-2" type="submit">@Localizer["Delete"]</button>
+            </form>
+        }
+    </div>
+}

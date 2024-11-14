@@ -1,0 +1,32 @@
+﻿@inject IHtmlLocalizer<SharedResource> Localizer
+@model CreateUpdateReviewViewModel
+@{
+    ViewData["Title"] = @Localizer["Create a review"];
+}
+
+<h1 class="text-center mb-5">@Localizer["Create a review for user:"] @Model.ReceiverName</h1>
+
+<div class="panel box-shadow mx-auto col-10 text-start">
+    <div class="text-center bg-primary panel-top">
+        <span class="fs-3 text-white">@Localizer["Review creation"]</span>
+    </div>
+    <form method="post" class="p-3 g-3">
+        <input type="hidden" asp-for="ReceiverId" />
+        <input type="hidden" asp-for="ReceiverName" />
+        <div class="form-group mb-3">
+            <label asp-for="Review.Points" class="control-label"></label>
+            <input asp-for="Review.Points" class="form-control" />
+            <span asp-validation-for="Review.Points" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Review.Content" class="control-label"></label>
+            <textarea asp-for="Review.Content" class="form-control" style="height: 100px;"></textarea>
+            <span asp-validation-for="Review.Content" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">@Localizer["Confirm"]</button>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

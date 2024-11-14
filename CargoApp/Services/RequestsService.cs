@@ -5,14 +5,9 @@ namespace CargoApp.Services;
 
 public class RequestsService : ServiceBase
 {
-    private readonly CargoAppContext _context;
-    private readonly IStringLocalizer<AnnotationsSharedResource> _stringLocalizer;
-
     public RequestsService(IHttpContextAccessor contextAccessor, UserManager<User> userManager, CargoAppContext context,
-        IStringLocalizer<AnnotationsSharedResource> stringLocalizer) : base(contextAccessor, userManager)
+        IStringLocalizer<AnnotationsSharedResource> stringLocalizer) : base(contextAccessor, userManager, context, stringLocalizer)
     {
-        _context = context;
-        _stringLocalizer = stringLocalizer;
     }
 
     public async Task<CarRequest?> NoTrackingCarDetailsAsync(int id)

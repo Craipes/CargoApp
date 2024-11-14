@@ -18,7 +18,8 @@ public class UserProfileViewModel
     [Display(Name = "Cargo responses count:")] public int CargoResponsesCount { get; set; }
 
     public bool AllowEditing { get; set; }
-    public IEnumerable<ReviewViewModel> ReviewsReceived { get; set; } = [];
+    public bool CanCreateReview { get; set; }
+    public bool WasReviewCreated { get; set; }
 
     public List<CarRequest> CarRequests { get; set; } = [];
     public List<CargoRequest> CargoRequests { get; set; } = [];

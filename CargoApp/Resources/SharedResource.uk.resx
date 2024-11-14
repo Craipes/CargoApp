@@ -303,4 +303,25 @@
   <data name="Create response" xml:space="preserve">
     <value>Створити відповідь</value>
   </data>
+  <data name="Review has already been written" xml:space="preserve">
+    <value>Відгук вже був написаний</value>
+  </data>
+  <data name="Create a review" xml:space="preserve">
+    <value>Створити відгук</value>
+  </data>
+  <data name="Create a review for user:" xml:space="preserve">
+    <value>Створити відгук для користувача:</value>
+  </data>
+  <data name="Review creation" xml:space="preserve">
+    <value>Створення відгуку</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Рейтинг</value>
+  </data>
+  <data name="Received reviews of user: " xml:space="preserve">
+    <value>Отримані відгуки користувача:</value>
+  </data>
+  <data name="Sent reviews of user:" xml:space="preserve">
+    <value>Написані відгуки користувача:</value>
+  </data>
 </root>

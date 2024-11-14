@@ -369,4 +369,10 @@
   <data name="Invalid data format" xml:space="preserve">
     <value>Неправильний формат даних</value>
   </data>
+  <data name="Sender" xml:space="preserve">
+    <value>Відправник</value>
+  </data>
+  <data name="Receiver" xml:space="preserve">
+    <value>Отримувач</value>
+  </data>
 </root>

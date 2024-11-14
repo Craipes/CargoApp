@@ -369,4 +369,10 @@
   <data name="Invalid data format" xml:space="preserve">
     <value>Invalid data format</value>
   </data>
+  <data name="Sender" xml:space="preserve">
+    <value>Sender</value>
+  </data>
+  <data name="Receiver" xml:space="preserve">
+    <value>Receiver</value>
+  </data>
 </root>
