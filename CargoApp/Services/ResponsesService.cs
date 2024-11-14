@@ -3,7 +3,7 @@ using Microsoft.Extensions.Localization;
 
 namespace CargoApp.Services;
 
-public class ResponsesService : ServiceBase
+public class ResponsesService : ServiceBase, IResponsesService
 {
     public ResponsesService(IHttpContextAccessor contextAccessor, UserManager<User> userManager, CargoAppContext context,
         IStringLocalizer<AnnotationsSharedResource> stringLocalizer) : base(contextAccessor, userManager, context, stringLocalizer)

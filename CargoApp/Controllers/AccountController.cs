@@ -8,16 +8,14 @@ public class AccountController : Controller
 {
     private readonly UserManager<User> userManager;
     private readonly SignInManager<User> signInManager;
-    private readonly RequestsService requestsService;
-    private readonly CargoAppContext db;
-    private readonly ReviewsService reviewsService;
+    private readonly IRequestsService requestsService;
+    private readonly IReviewsService reviewsService;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RequestsService requestsService, CargoAppContext db, ReviewsService reviewsService)
+    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IRequestsService requestsService, IReviewsService reviewsService)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
         this.requestsService = requestsService;
-        this.db = db;
         this.reviewsService = reviewsService;
     }
 
@@ -90,7 +88,7 @@ public class AccountController : Controller
         var currentId = userManager.GetUserId(User);
         if (id == null) return NotFound();
 
-        var user = await db.Users
+        var user = await userManager.Users
             .Include(s => s.CarRequests)
             .Include(s => s.CargoRequests)
             .Include(s => s.CarResponses)
@@ -159,7 +157,7 @@ public class AccountController : Controller
     [HttpGet]
     public async Task<IActionResult> ReceivedReviews(string id)
     {
-        var user = await db.Users.FindAsync(id);
+        var user = await userManager.FindByIdAsync(id);
         if (user == null) return NotFound();
 
         var reviews = await reviewsService.NoTrackingReceivedReviewsAsync(id);
@@ -178,7 +176,7 @@ public class AccountController : Controller
     [HttpGet]
     public async Task<IActionResult> SentReviews(string id)
     {
-        var user = await db.Users.FindAsync(id);
+        var user = await userManager.FindByIdAsync(id);
         if (user == null) return NotFound();
 
         var reviews = await reviewsService.NoTrackingSentReviewsAsync(id);
@@ -200,7 +198,7 @@ public class AccountController : Controller
         var userId = userManager.GetUserId(User);
         if (userId == null) return Forbid();
         if (id == userId) return RedirectToAction(nameof(Profile));
-        var receiver = await db.Users.FindAsync(id);
+        var receiver = await userManager.FindByIdAsync(id);
         if (receiver == null) return NotFound();
 
         if (!await reviewsService.CanCreateReviewAsync(userId, id))

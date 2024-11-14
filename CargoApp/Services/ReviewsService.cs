@@ -2,7 +2,7 @@
 
 namespace CargoApp.Services;
 
-public class ReviewsService : ServiceBase
+public class ReviewsService : ServiceBase, IReviewsService
 {
     public ReviewsService(IHttpContextAccessor contextAccessor, UserManager<User> userManager, CargoAppContext context,
         IStringLocalizer<AnnotationsSharedResource> stringLocalizer) : base(contextAccessor, userManager, context, stringLocalizer)

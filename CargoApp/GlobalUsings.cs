@@ -7,7 +7,6 @@ global using CargoApp.Services;
 global using CargoApp.Resources;
 global using CargoApp.Models;
 global using CargoApp.ViewModels;
-global using CargoApp.ViewModels.Requests;
 
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

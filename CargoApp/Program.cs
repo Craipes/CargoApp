@@ -46,9 +46,9 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     .AddEntityFrameworkStores<CargoAppContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<RequestsService>();
-builder.Services.AddScoped<ResponsesService>();
-builder.Services.AddScoped<ReviewsService>();
+builder.Services.AddScoped<IRequestsService, RequestsService>();
+builder.Services.AddScoped<IResponsesService, ResponsesService>();
+builder.Services.AddScoped<IReviewsService, ReviewsService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSwaggerGen(options =>

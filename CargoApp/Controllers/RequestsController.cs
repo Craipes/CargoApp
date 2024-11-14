@@ -10,10 +10,10 @@ namespace CargoApp.Controllers;
 public class RequestsController : Controller
 {
     private readonly UserManager<User> userManager;
-    private readonly RequestsService requestsService;
-    private readonly ResponsesService responsesService;
+    private readonly IRequestsService requestsService;
+    private readonly IResponsesService responsesService;
 
-    public RequestsController(UserManager<User> userManager, RequestsService requestsService, ResponsesService responsesService)
+    public RequestsController(UserManager<User> userManager, IRequestsService requestsService, IResponsesService responsesService)
     {
         this.userManager = userManager;
         this.requestsService = requestsService;
