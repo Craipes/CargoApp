@@ -26,32 +26,25 @@ namespace CargoAppTests
         private CargoAppContext _context;
         private IStringLocalizer<AnnotationsSharedResource> _stringLocalizer;
         private ReviewsService _reviewsService;
-
-        private static User User1 => new User { Id = "user1", Name = "user1" };
-        private static User User2 => new User { Id = "user2", Name = "user2" };
+        private User user1;
+        private User user2;
 
         [SetUp]
         public void SetUp()
         {
             _contextAccessorMock = new Mock<IHttpContextAccessor>();
-            _userManagerMock = new Mock<UserManager<User>>(
-                Mock.Of<IUserStore<User>>(),
-                Mock.Of<IOptions<IdentityOptions>>(),
-                Mock.Of<IPasswordHasher<User>>(),
-                new IUserValidator<User>[0],
-                new IPasswordValidator<User>[0],
-                Mock.Of<ILookupNormalizer>(),
-                Mock.Of<IdentityErrorDescriber>(),
-                Mock.Of<IServiceProvider>(),
-                Mock.Of<ILogger<UserManager<User>>>()
-            );
+            _userManagerMock = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
 
             var options = new DbContextOptionsBuilder<CargoAppContext>()
                 .UseInMemoryDatabase(databaseName: "TestDatabase")
                 .Options;
             _context = new CargoAppContext(options);
             _context.Database.EnsureCreated();
-            _context.AddRange(User1, User2);
+
+            user1 = new User { Id = "user1", Name = "user1" };
+            user2 = new User { Id = "user2", Name = "user2" };
+
+            _context.AddRange(user1, user2);
             _context.SaveChanges();
 
             _stringLocalizer = Mock.Of<IStringLocalizer<AnnotationsSharedResource>>();
@@ -89,8 +82,8 @@ namespace CargoAppTests
         public async Task CanCreateReviewAsync_ShouldReturnTrue_WhenNoReviewExists()
         {
             // Arrange
-            var userId = User1.Id;
-            var receiverId = User2.Id;
+            var userId = user1.Id;
+            var receiverId = user2.Id;
 
             // Act
             var result = await _reviewsService.CanCreateReviewAsync(userId, receiverId);
@@ -103,8 +96,8 @@ namespace CargoAppTests
         public async Task CanCreateReviewAsync_ShouldReturnFalse_WhenReviewExists()
         {
             // Arrange
-            var senderId = User1.Id;
-            var receiverId = User2.Id;
+            var senderId = user1.Id;
+            var receiverId = user2.Id;
             _context.Reviews.Add(new Review { SenderId = senderId, ReceiverId = receiverId });
             await _context.SaveChangesAsync();
 
@@ -119,37 +112,37 @@ namespace CargoAppTests
         public async Task NoTrackingReceivedReviewsAsync_ShouldReturnReviews()
         {
             // Arrange
-            _context.Reviews.Add(new Review { ReceiverId = User1.Id, SenderId = User2.Id });
+            _context.Reviews.Add(new Review { ReceiverId = user1.Id, SenderId = user2.Id });
             await _context.SaveChangesAsync();
 
             // Act
-            var result = await _reviewsService.NoTrackingReceivedReviewsAsync(User1.Id);
+            var result = await _reviewsService.NoTrackingReceivedReviewsAsync(user1.Id);
 
             // Assert
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.First().ReceiverId, Is.EqualTo(User1.Id));
+            Assert.That(result.First().ReceiverId, Is.EqualTo(user1.Id));
         }
 
         [Test]
         public async Task NoTrackingSentReviewsAsync_ShouldReturnReviews()
         {
             // Arrange
-            _context.Reviews.Add(new Review { ReceiverId = User1.Id, SenderId = User2.Id });
+            _context.Reviews.Add(new Review { ReceiverId = user1.Id, SenderId = user2.Id });
             await _context.SaveChangesAsync();
 
             // Act
-            var result = await _reviewsService.NoTrackingSentReviewsAsync(User2.Id);
+            var result = await _reviewsService.NoTrackingSentReviewsAsync(user2.Id);
 
             // Assert
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.First().SenderId, Is.EqualTo(User2.Id));
+            Assert.That(result.First().SenderId, Is.EqualTo(user2.Id));
         }
 
         [Test]
         public async Task CreateReviewAsync_ShouldReturnFalse_WhenUserIdNotFound()
         {
             // Arrange
-            var review = new Review { ReceiverId = User1.Id, SenderId = User2.Id };
+            var review = new Review { ReceiverId = user1.Id, SenderId = user2.Id };
             SetUserAuthentication(false);
 
             // Act
@@ -163,9 +156,9 @@ namespace CargoAppTests
         public async Task CreateReviewAsync_ShouldReturnFalse_WhenReviewExists()
         {
             // Arrange
-            var review = new Review { ReceiverId = User1.Id, SenderId = User2.Id };
+            var review = new Review { ReceiverId = user1.Id, SenderId = user2.Id };
             SetUserAuthentication(true);
-            _context.Reviews.Add(new Review { ReceiverId = User1.Id, SenderId = User2.Id });
+            _context.Reviews.Add(new Review { ReceiverId = user1.Id, SenderId = user2.Id });
             await _context.SaveChangesAsync();
 
             // Act
@@ -179,9 +172,9 @@ namespace CargoAppTests
         public async Task CreateReviewAsync_ShouldReturnTrue_WhenReviewCreated()
         {
             // Arrange
-            var review = new Review { ReceiverId = User1.Id, SenderId = User2.Id };
+            var review = new Review { ReceiverId = user1.Id, SenderId = user2.Id };
             SetUserAuthentication(true);
-            _userManagerMock.Setup(u => u.GetUserId(It.IsAny<ClaimsPrincipal>())).Returns(User2.Id);
+            _userManagerMock.Setup(u => u.GetUserId(It.IsAny<ClaimsPrincipal>())).Returns(user2.Id);
 
             // Act
             var result = await _reviewsService.CreateReviewAsync(review);
@@ -194,8 +187,8 @@ namespace CargoAppTests
         public async Task DeleteReviewAsync_ShouldDeleteReview_WhenReviewExists()
         {
             // Arrange
-            var senderId = User1.Id;
-            var receiverId = User2.Id;
+            var senderId = user1.Id;
+            var receiverId = user2.Id;
             var review = new Review { SenderId = senderId, ReceiverId = receiverId };
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
@@ -212,8 +205,8 @@ namespace CargoAppTests
         public async Task DeleteReviewAsync_ShouldNotDeleteReview_WhenReviewNotExists()
         {
             // Arrange
-            var senderId = User1.Id;
-            var receiverId = User2.Id;
+            var senderId = user1.Id;
+            var receiverId = user2.Id;
 
             // Act
             await _reviewsService.DeleteReviewAsync(senderId, receiverId);
