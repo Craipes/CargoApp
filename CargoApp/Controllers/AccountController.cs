@@ -154,6 +154,7 @@ public class AccountController : Controller
         return View(nameof(Profile), model);
     }
 
+    [Authorize(Roles = CargoAppConstants.AdminRole)]
     public async Task<IActionResult> Users(string? search, int page = 1)
     {
         int count = await userManager.Users.CountAsync();
