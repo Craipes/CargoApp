@@ -41,6 +41,7 @@ public class AccountController : Controller
                 }
                 return RedirectToAction("Search", "Home");
             }
+            ViewData["Error"] = "Register Error";
         }
         return View(model);
     }
@@ -69,6 +70,7 @@ public class AccountController : Controller
                     return RedirectToAction("Search", "Home");
                 }
             }
+            ViewData["Error"] = "Login Error";
         }
         return View(model);
     }

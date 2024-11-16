@@ -349,7 +349,7 @@
     <value>Поле "{0}" обов'язкове</value>
   </data>
   <data name="Max Length Error" xml:space="preserve">
-    <value>Максимальне значення поля "{0}" повинно бути {1}</value>
+    <value>Максимальна довжина поля "{0}" повинно бути {1}</value>
   </data>
   <data name="Phone Error" xml:space="preserve">
     <value>Поле "{0}" має бути номером телефону</value>
@@ -374,5 +374,11 @@
   </data>
   <data name="Receiver" xml:space="preserve">
     <value>Отримувач</value>
+  </data>
+  <data name="Min Length Error" xml:space="preserve">
+    <value>Мінімальна довжина поля "{0}" повинно бути {1}</value>
+  </data>
+  <data name="Compare Error" xml:space="preserve">
+    <value>"{0}" і "{1}" не сходяться</value>
   </data>
 </root>

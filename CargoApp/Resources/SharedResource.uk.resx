@@ -324,4 +324,10 @@
   <data name="Sent reviews of user:" xml:space="preserve">
     <value>Написані відгуки користувача:</value>
   </data>
+  <data name="Register Error" xml:space="preserve">
+    <value>Сталася помилка, можливо, обліковий запис з такою електроною адресою вже зареєстровано</value>
+  </data>
+  <data name="Login Error" xml:space="preserve">
+    <value>Сталася помилка, можливо, обліковий запис не зареєстровано або пароль невірний</value>
+  </data>
 </root>

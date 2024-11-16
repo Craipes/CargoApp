@@ -213,12 +213,5 @@
 </div>
 
 @section Scripts {
-    @* <script>
-        const carDepartureAutocomplete = getSettlementAutocomplete("#car-departure", "Місце відбуття...");
-        const carDestinationAutocomplete = getSettlementAutocomplete("#car-destination", "Місце прибуття...");
-
-        const cargoDepartureAutocomplete = getSettlementAutocomplete("#cargo-departure", "Місце відбуття...");
-        const cargoDestinationAutocomplete = getSettlementAutocomplete("#cargo-destination", "Місце прибуття...");
-    </script> *@
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

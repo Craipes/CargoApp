@@ -6,13 +6,19 @@
 
 <h3>@Localizer["Login"]</h3>
 <form method="post">
+    @if (ViewData["Error"] != null)
+    {
+        <span class="text-danger">@Localizer[ViewData["Error"]!.ToString() ?? string.Empty]</span>
+    }
     <div class="mb-3">
         <label class="form-label" asp-for=Email></label>
         <input class="form-control" asp-for=Email />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label class="form-label" asp-for=Password></label>
         <input class="form-control" asp-for=Password />
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="mb-3 form-check">
         <label class="form-check-label" asp-for=RememberMe></label>
@@ -20,3 +26,7 @@
     </div>
     <button class="btn btn-primary" type="submit">@Localizer["Confirm"]</button>
 </form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

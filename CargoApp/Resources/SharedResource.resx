@@ -324,4 +324,10 @@
   <data name="Sent reviews of user:" xml:space="preserve">
     <value>Sent reviews of user:</value>
   </data>
+  <data name="Register Error" xml:space="preserve">
+    <value>An error happened, perhaps account with this email is already registered</value>
+  </data>
+  <data name="Login Error" xml:space="preserve">
+    <value>An error happened, perhaps account is not registered or password is incorrect</value>
+  </data>
 </root>
