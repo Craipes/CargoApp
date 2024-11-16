@@ -318,9 +318,6 @@
   <data name="Rating" xml:space="preserve">
     <value>Рейтинг</value>
   </data>
-  <data name="Received reviews of user: " xml:space="preserve">
-    <value>Отримані відгуки користувача:</value>
-  </data>
   <data name="Sent reviews of user:" xml:space="preserve">
     <value>Написані відгуки користувача:</value>
   </data>
@@ -329,5 +326,8 @@
   </data>
   <data name="Login Error" xml:space="preserve">
     <value>Сталася помилка, можливо, обліковий запис не зареєстровано або пароль невірний</value>
+  </data>
+  <data name="Received reviews of user:" xml:space="preserve">
+    <value>Отримані відгуки користувача:</value>
   </data>
 </root>

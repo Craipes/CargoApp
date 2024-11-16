@@ -318,9 +318,6 @@
   <data name="Rating" xml:space="preserve">
     <value>Rating</value>
   </data>
-  <data name="Received reviews of user: " xml:space="preserve">
-    <value>Received reviews of user: </value>
-  </data>
   <data name="Sent reviews of user:" xml:space="preserve">
     <value>Sent reviews of user:</value>
   </data>
@@ -329,5 +326,8 @@
   </data>
   <data name="Login Error" xml:space="preserve">
     <value>An error happened, perhaps account is not registered or password is incorrect</value>
+  </data>
+  <data name="Received reviews of user:" xml:space="preserve">
+    <value>Received reviews of user:</value>
   </data>
 </root>
