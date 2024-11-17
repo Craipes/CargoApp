@@ -129,7 +129,7 @@ else
 
         @if (!isCreating)
         {
-            <div class="h5 text-center">@Localizer["Status"]: @Model!.RequestType</div>
+            <div class="h5 text-center">@Localizer["Status"]: @Html.DisplayFor(model => Model!.RequestType)</div>
             @if (Model!.RequestType == RequestType.HiddenByAdmin && !User.IsInRole(CargoAppConstants.AdminRole))
             {
                 <div class="h6 mb-3 text-center">@Localizer["Can't change status"]</div>

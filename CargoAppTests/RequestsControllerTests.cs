@@ -80,12 +80,6 @@ namespace CargoAppTests
                 DeparturePlace = "test",
                 DestinationPlace = "test"
             });
-            responsesServiceMock.Setup(s => s.NoTrackingCarFindAsync(It.IsAny<int>())).ReturnsAsync(new CarResponse
-            {
-                UserId = "test",
-                ContactName = "test",
-                ContactPhoneNumber = "test"
-            });
 
             // Act
             var result = await controller.CarRequestDetails(1);
