@@ -5,7 +5,7 @@ public class UserProfileViewModel
 {
     public required string Id { get; set; }
     [Display(Name = "Email")][EmailAddress] public required string Email { get; set; }
-    [Display(Name = "Default phone number")][RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Phone Number.")][Phone] public string? Phone { get; set; }
+    [Display(Name = "Default phone number")][RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Phone Number")][Phone] public string? Phone { get; set; }
 
     [Display(Name = "Name")][MaxLength(64)] public required string Name { get; set; }
 

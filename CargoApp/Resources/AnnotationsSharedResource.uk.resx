@@ -381,4 +381,7 @@
   <data name="Compare Error" xml:space="preserve">
     <value>"{0}" і "{1}" не сходяться</value>
   </data>
+  <data name="Invalid Phone Number" xml:space="preserve">
+    <value>Неправильний формат номеру телефону</value>
+  </data>
 </root>

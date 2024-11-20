@@ -381,4 +381,7 @@
   <data name="Compare Error" xml:space="preserve">
     <value>"{0}" and "{1}" do not match</value>
   </data>
+  <data name="Invalid Phone Number" xml:space="preserve">
+    <value>Invalid Phone Number</value>
+  </data>
 </root>
